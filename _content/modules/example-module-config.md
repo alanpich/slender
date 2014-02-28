@@ -30,12 +30,16 @@ module:
   # Module namespace - not required, but advised
   namespace: MyVendor\MyModule
 
-  # You can add any other data you want to the module here and it will be available
+  # You can add any other data you want here and it will be available
   version: 1.0.0
   foo: bar
 
+  # Classes to invoke when the module is loaded
+  invoke:
+    - MyVendor\MyModule\MyInvokableClass
+
   # Modules can register namespaces to be autoloaded
- # Supports PSR-0 and PSR-4 autoloading
+  # Supports PSR-0 and PSR-4 autoloading
   autoload:
     psr-4:
    # Would look for MyVendor/MyModule/MyClass in ./src/MyClass.php
@@ -68,6 +72,11 @@ return array(
         'version' => '1.0.0',
         'foo' => 'bar',
 
+        // Classes to invoke when the module is loaded
+        'invoke' => array(
+            'MyVendor\MyModule\MyInvokableClass'
+        ),
+
         // Modules can register namespaces to be autoloaded
         // Supports PSR-0 and PSR-4 autoloading
         'autoload' => array(
@@ -94,6 +103,9 @@ return array(
         "namespace": "MyVendor\\MyModule",
         "version": "1.0.0",
         "foo": "bar",
+        "invoke": [
+            "MyVendor\MyModule\MyInvokableClass"
+        ],
         "autoload": {
             "psr-4": {
                 "MyVendor\\MyModule\\": ".\/src"

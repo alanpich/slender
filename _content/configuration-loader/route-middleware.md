@@ -10,6 +10,7 @@ for discussion.
 
 
 ### Idea #1 - Simplified API access
+This could potentially be submitted to Slim directly as a PR
 ```php
 $app->getRoute('users')->addMiddleware(function(){
     // Middleware function

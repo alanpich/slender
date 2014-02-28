@@ -210,7 +210,7 @@
                 <li><a href="../modules/defining-a-module.html">Defining a Module</a></li>
                 <li><a href="../modules/loading-modules.html">Loading Modules</a></li>
                 <li><a href="../modules/module-config-file.html">Module configuration</a></li>
-                <li><a href="../modules/example-module-config.html">Config file</a></li>
+                <li><a href="../modules/example-module-config.html">Example Config file</a></li>
                 <li><a href="../modules/module-hooks.html">Module Invokables</a></li>
             </ul>
         </li>
@@ -251,12 +251,16 @@ module:
   # Module namespace - not required, but advised
   namespace: MyVendor\MyModule
 
-  # You can add any other data you want to the module here and it will be available
+  # You can add any other data you want here and it will be available
   version: 1.0.0
   foo: bar
 
+  # Classes to invoke when the module is loaded
+  invoke:
+    - MyVendor\MyModule\MyInvokableClass
+
   # Modules can register namespaces to be autoloaded
- # Supports PSR-0 and PSR-4 autoloading
+  # Supports PSR-0 and PSR-4 autoloading
   autoload:
     psr-4:
    # Would look for MyVendor/MyModule/MyClass in ./src/MyClass.php
@@ -285,6 +289,11 @@ return array(
         &#39;version&#39; =&gt; &#39;1.0.0&#39;,
         &#39;foo&#39; =&gt; &#39;bar&#39;,
 
+        // Classes to invoke when the module is loaded
+        &#39;invoke&#39; =&gt; array(
+            &#39;MyVendor\MyModule\MyInvokableClass&#39;
+        ),
+
         // Modules can register namespaces to be autoloaded
         // Supports PSR-0 and PSR-4 autoloading
         &#39;autoload&#39; =&gt; array(
@@ -307,6 +316,9 @@ return array(
         &quot;namespace&quot;: &quot;MyVendor\\MyModule&quot;,
         &quot;version&quot;: &quot;1.0.0&quot;,
         &quot;foo&quot;: &quot;bar&quot;,
+        &quot;invoke&quot;: [
+            &quot;MyVendor\MyModule\MyInvokableClass&quot;
+        ],
         &quot;autoload&quot;: {
             &quot;psr-4&quot;: {
                 &quot;MyVendor\\MyModule\\&quot;: &quot;.\/src&quot;
