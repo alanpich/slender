@@ -1,0 +1,22 @@
+##
+# Config file settings
+config:
+
+  ##
+  # Array of paths to search in for config files to autoload
+  autoload:
+    - ./config
+
+  ##
+  # Filepath to save config cache to
+  # Will be ignored in development mode
+  cache: ./data/cache/config.php
+
+
+
+
+##
+# View Template directories
+#
+view-paths:
+  - ./view

@@ -1,0 +1,17 @@
+{
+    "name": "slender/twig",
+    "authors": [
+        {
+            "name": "Alan Pich",
+            "email": "alan.pich@gmail.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Slender\\Modules\\Twig\\": "src/"
+        }
+    }
+}

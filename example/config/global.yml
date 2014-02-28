@@ -1,0 +1,8 @@
+debug: true
+
+modules:
+  - twig
+
+module-directories:
+  - ./module
+  - ./core/module

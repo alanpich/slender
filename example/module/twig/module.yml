@@ -1,0 +1,7 @@
+module:
+  name: twig
+  author: Alan Pich <alan.pich@gmail.com>
+  autoload: composer
+
+services:
+  view: Slender\Modules\Twig\Factories\ViewFactory
