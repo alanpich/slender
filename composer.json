@@ -20,5 +20,8 @@
         "psr-4": {
             "Slender\\": "src/"
         }
+    },
+    "require-dev": {
+        "phpunit": "*"
     }
 }
