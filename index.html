@@ -94,6 +94,15 @@
             color: #710909;
             color:#888;
         }
+
+        #build-buttons {
+            position: fixed;
+            top: 4px;
+            right: 4px;
+            max-width: 100%;
+            width: 100%;
+            text-align:right;
+        }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
@@ -105,33 +114,49 @@
     <header>
         <h1>Slender</h1>
 <h3>Slim, but with a bit more meat.</h3>
-<img src="https://poser.pugx.org/slender/slender/license.png"/>
-<img src="https://poser.pugx.org/slender/slender/downloads.png"/><br />
-<img src="https://poser.pugx.org/slender/slender/v/stable.png"/>
-<img src="https://travis-ci.org/alanpich/slender.png?branch=master" />
+
+
+<aside id="build-buttons">
+    <a href="https://packagist.org/packages/slender/slender">
+        <img src="https://poser.pugx.org/slender/slender/v/stable.png"/>
+    </a>
+    <a href="https://travis-ci.org/alanpich/slender">
+        <img src="https://travis-ci.org/alanpich/slender.png?branch=master"/>
+    </a>
+    <a href="https://packagist.org/packages/slender/slender">
+        <img src="https://poser.pugx.org/slender/slender/downloads.png"/>
+    </a>
+    <a href="https://github.com/alanpich/slender/blob/master/LICENSE">
+        <img src="https://poser.pugx.org/slender/slender/license.png"/>
+    </a>
+</aside>
 
 <p class="view" style="margin-top:2em; margin-bottom:2em">
     <a href="index.html">Overview</a><br/>
     <a href="setup/overview.html">Installation & Usage</a><br/>
     <span style="font-size: .8em">
-        <a href="setup/overview.html"  style="margin-left:1em">- Overview</a><br />
-        <a href="setup/folder-structure.html" style="margin-left:1em">- Folder Structure</a><br />
-        <a href="setup/configuration.html" style="margin-left:1em">- Configuration</a><br />
-        <a href="setup/app.html" style="margin-left:1em">- Application Initialization</a><br />
+        <a href="setup/overview.html" style="margin-left:1em">- Overview</a><br/>
+        <a href="setup/folder-structure.html" style="margin-left:1em">- Folder Structure</a><br/>
+        <a href="setup/configuration.html" style="margin-left:1em">- Configuration</a><br/>
+        <a href="setup/app.html" style="margin-left:1em">- Application Initialization</a><br/>
     </span>
-    <a>Configuration Loader</a><br />
+    <a>Configuration Loader</a><br/>
     <span style="font-size: .8em">
-        <a href="configuration-loader/default-configuration.html" style="margin-left:1em">- Default Configuration</a><br />
-        <a href="configuration-loader/service-configuration.html" style="margin-left:1em">- Services & Factories</a><br />
-        <a href="configuration-loader/route-configuration.html" style="margin-left:1em">- Route definitions</a><br />
+        <a href="configuration-loader/default-configuration.html" style="margin-left:1em">- Default
+            Configuration</a><br/>
+        <a href="configuration-loader/service-configuration.html" style="margin-left:1em">- Services &
+            Factories</a><br/>
+        <a href="configuration-loader/route-configuration.html" style="margin-left:1em">- Route
+            definitions</a><br/>
     </span>
-    <a>Modules</a><br />
+    <a>Modules</a><br/>
     <span style="font-size: .8em">
-        <a href="modules/defining-a-module.html" style="margin-left:1em">- Defining a Module</a><br />
-        <a href="modules/loading-modules.html" style="margin-left:1em">- Loading Modules</a><br />
-        <a href="modules/module-config-file.html" style="margin-left:1em">- Module configuration</a><br />
-        <a href="modules/example-module-config.html" style="margin-left:1em">- Config file examples</a><br />
-        <a href="modules/module-hooks.html" style="margin-left:1em">- Module Invokables</a><br />
+        <a href="modules/defining-a-module.html" style="margin-left:1em">- Defining a Module</a><br/>
+        <a href="modules/loading-modules.html" style="margin-left:1em">- Loading Modules</a><br/>
+        <a href="modules/module-config-file.html" style="margin-left:1em">- Module configuration</a><br/>
+        <a href="modules/example-module-config.html" style="margin-left:1em">- Config file
+            examples</a><br/>
+        <a href="modules/module-hooks.html" style="margin-left:1em">- Module Invokables</a><br/>
     </span>
 
 </p>
