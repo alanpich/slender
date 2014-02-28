@@ -201,6 +201,7 @@
                 <li><a href="../configuration-loader/default-configuration.html">Default Configuration</a></li>
                 <li><a href="../configuration-loader/service-configuration.html">Services & Factories</a></li>
                 <li><a href="../configuration-loader/route-configuration.html">Route Definitions</a></li>
+                <li><a href="../configuration-loader/route-middleware.html">Route Middleware</a></li>
             </ul>
         </li>
         <li>
@@ -227,27 +228,20 @@
     </header>
     <section id="content" class="lang-yaml">
         <h1 id="configuring-http-routes">Configuring HTTP Routes</h1>
-<p><code>How to set up routes in config files</code></p>
-<p><code>haven&#39;t quite figured the format out yet</code></p>
-<pre><code class="lang-yaml">routes:
-    home:
-        route: /
-        controller: IndexController
-        action: index
-    users:
-        route: /users
-          controller: UserController
-        GET:
-          action: index
-</code></pre>
-<h2 id="a-bit-nicer-to-read-perhaps-">A bit nicer to read perhaps...</h2>
+<p>You can configure http routes in your configuration files by specifying a
+controller Class and action method to execute on each route.</p>
+<p><strong>Note:</strong> Route Middleware can&#39;t currently be configured in this way due
+          to not being able to write closures in text files.
+          See <a href="route-middleware.html">Route Middleware</a> for more info</p>
+<h2 id="example-route-configurations">Example route configurations</h2>
 <h3 id="yaml">YAML</h3>
 <pre><code class="lang-yaml">
 # NOTE: YAML uses &#39;@&#39; instead of &#39;:&#39; for specifying route parameters
 #       This is to avoid conflicts with the yaml parser
 
 routes:
-  - route: /users/@id
+  users:
+    route: /users(/@id)
     controller: UserController
     action: getUser
     methods:
@@ -255,16 +249,24 @@ routes:
       - POST
       - PUT
 
-  - route: /users
+  logout:
+    route: /logout
     controller: UserController
     action: index
     methods:
       - ANY
+
+  archive.year:
+    route: /archive/:year
+    controller: ArchiveController
+    action: getYear
+    conditions:
+        year: (19|20)\d\d
 </code></pre>
 <h3 id="php">PHP</h3>
 <pre><code class="lang-php">return array(
     &#39;routes&#39; =&gt; array(
-        array(
+        &#39;users&#39; =&gt; array(
             &#39;route&#39; =&gt; &#39;/users/:id&#39;,
             &#39;controller&#39; =&gt; &#39;UserController&#39;,
             &#39;action&#39; =&gt; &#39;getUser&#39;,
@@ -273,7 +275,7 @@ routes:
             );
         ),
 
-        array(
+        &#39;logout&#39; =&gt; array(
             &#39;route&#39; =&gt; &#39;/users&#39;,
             &#39;controller&#39; =&gt; &#39;UserController&#39;,
             &#39;action&#39; =&gt; &#39;index&#39;,
@@ -284,17 +286,20 @@ routes:
 </code></pre>
 <h3 id="json">JSON</h3>
 <pre><code class="lang-javascript">{
-    &quot;routes&quot;: [{
+    &quot;routes&quot;: {
+        &quot;users&quot;: {
             &quot;route&quot;: &quot;/users/:id&quot;,
             &quot;controller&quot;: &quot;UserController&quot;,
             &quot;action&quot;: &quot;getUser&quot;,
             &quot;methods&quot;: [&quot;GET&quot;,&quot;POST&quot;,&quot;PUT&quot;]
-       },{
+        },
+       &quot;logout&quot;: {
             &quot;route&quot;: &quot;/users&quot;,
             &quot;controller&quot;: &quot;UserController&quot;,
             &quot;action&quot;: &quot;index&quot;,
             &quot;methods&quot;: [&quot;ANY&quot;]
-       }]
+       }
+    }
 }
 </code></pre>
 

@@ -4,30 +4,17 @@ title: Route Configuration
 
 # Configuring HTTP Routes
 
-`How to set up routes in config files`
+You can configure http routes in your configuration files by specifying a
+controller Class and action method to execute on each route.
 
-
-`haven't quite figured the format out yet`
-
-
-```yaml
-routes:
-    home:
-        route: /
-        controller: IndexController
-        action: index
-    users:
-        route: /users
-          controller: UserController
-        GET:
-          action: index
+**Note:** Route Middleware can't currently be configured in this way due
+          to not being able to write closures in text files.
+          See [Route Middleware](route-middleware.html) for more info
 
 
 
-```
+## Example route configurations
 
-
-## A bit nicer to read perhaps...
 
 
 ### YAML
@@ -37,7 +24,8 @@ routes:
 #       This is to avoid conflicts with the yaml parser
 
 routes:
-  - route: /users/@id
+  users:
+    route: /users(/@id)
     controller: UserController
     action: getUser
     methods:
@@ -45,11 +33,19 @@ routes:
       - POST
       - PUT
 
-  - route: /users
+  logout:
+    route: /logout
     controller: UserController
     action: index
     methods:
       - ANY
+
+  archive.year:
+    route: /archive/:year
+    controller: ArchiveController
+    action: getYear
+    conditions:
+        year: (19|20)\d\d
 
 ```
 
@@ -58,7 +54,7 @@ routes:
 ```php
 return array(
     'routes' => array(
-        array(
+        'users' => array(
             'route' => '/users/:id',
             'controller' => 'UserController',
             'action' => 'getUser',
@@ -67,7 +63,7 @@ return array(
             );
         ),
 
-        array(
+        'logout' => array(
             'route' => '/users',
             'controller' => 'UserController',
             'action' => 'index',
@@ -81,16 +77,19 @@ return array(
 ### JSON
 ```javascript
 {
-    "routes": [{
+    "routes": {
+        "users": {
             "route": "/users/:id",
             "controller": "UserController",
             "action": "getUser",
             "methods": ["GET","POST","PUT"]
-       },{
+        },
+       "logout": {
             "route": "/users",
             "controller": "UserController",
             "action": "index",
             "methods": ["ANY"]
-       }]
+       }
+    }
 }
 ```

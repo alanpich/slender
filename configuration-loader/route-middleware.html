@@ -227,37 +227,36 @@
 
     </header>
     <section id="content" class="lang-yaml">
-        <h1 id="default-configuration">Default configuration</h1>
-<p>This is the vanilla config used as defaults by Slender. This is how the configuration
-looks before any application or module config files are loaded.</p>
-<pre><code>
-# Defaults to development mode
-mode: development
-debug: true
-
-
-# Customize the ConfigurationLoader
-config:
-
-  # An array of directory paths which should be scanned for config files on startup
-  autoload:
-    - ./config
-
-  # File names to match in autoload directories
-  # Note: Uses Symfony\Finder::name()
-  files:
-    - global.*
-    - local.*
-
-  # Path to cache directory.
-  # Note: Cache is automatically disabled in development mode
-  cache: ./data/cache/config
-
-
-# Array of paths to use as view template directories
-viewPaths:
-    - ./views
+        <h1 id="route-middleware">Route Middleware</h1>
+<p>Route Middleware can&#39;t currently be controller via config files due to not being able to write
+closures in text files. Until a brainwave strikes, this page will hold ideas and concepts
+for discussion.</p>
+<h3 id="idea-1-simplified-api-access">Idea #1 - Simplified API access</h3>
+<pre><code class="lang-php">$app-&gt;getRoute(&#39;users&#39;)-&gt;addMiddleware(function(){
+    // Middleware function
+})
 </code></pre>
+<h3 id="idea-2-class-based-registration">Idea #2 - Class based registration</h3>
+<pre><code class="lang-yaml"># config
+
+routes:
+    example:
+        route: /foo
+        ...
+        middleware:
+            - MyVendor\Middleware\MyMiddleware
+</code></pre>
+<pre><code class="lang-php">interface Slender\MiddlewareInterface {
+    public static function run();
+}
+
+class MyMiddleware implements MiddlewareInterface {
+    public function __run(){
+        // Do stuff
+    }
+}
+</code></pre>
+
     </section>
     <footer>
         <p>This project is maintained by <a href="https://github.com/alanpich">alanpich</a></p>
