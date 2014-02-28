@@ -1,0 +1,204 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Slender by alanpich</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,700,600' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Cutive+Mono|PT+Mono' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../assets/styles/main.css">
+    <link rel="stylesheet" type="text/css" href="../assets/lib/prism/prism.css" />
+    
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+
+    <script src="../assets/lib/prism/prism.js"></script>
+    <script>
+        Prism.languages.yaml = {
+            comment: /#.*/ig,
+            key: /^\s*[^\s]+:/igm,
+            string: /(?:"[a-z][^"]*"|[a-z][\w\s<>&\.;="]*)/ig,
+            number: /\b[0-9]+\b/ig,
+            keyword: /(?:^\s*-|\[|\]|\||\s>)/
+        };
+
+        Prism.languages.tree = {
+            branch: /\│|\├|\─|\└+/ig,
+            folder: /.+\//ig,
+            comment: /#.*/ig,
+            key: /^\s*[^\s]+:/igm,
+            string: /(?:"[a-z][^"]*"|[a-z][\w\s<>&\.;="]*)/ig,
+            number: /\b[0-9]+\b/ig,
+            keyword: /(?:^\s*-|\[|\]|\||\s>)/,
+        };
+
+
+        $(function(){
+            $('#content').find('h1,h2,h3,h4,h5,h6').each(function(){
+                if($(this).attr('id')){
+                    var id = $(this).attr('id'),
+                        anchor = document.createElement('a');
+                    anchor.name = id;
+                    $(anchor).insertBefore(this);
+                }
+            })
+        })
+    </script>
+
+    <style>
+        html,body {
+            font-family:Open Sans;
+        }
+
+        h1,h2,h3,h4,h5,h6 {
+            font-weight: 400;
+            margin-top: 1em;
+            margin-bottom: .5em;
+        }
+
+        h3 {
+            padding-bottom: .4em;
+            border-bottom: 1px solid #f4f4f4;
+        }
+
+        pre[class*="language-"] {
+            margin: 2em auto;
+        }
+        code[class*="language-"] {
+            font-family: PT Mono;
+        }
+
+
+        pre.language-tree {
+            line-height: 1.3em;
+        }
+
+        pre.language-tree .branch {
+            color: #bbb;
+            text-shadow: 1px 1px 1px #fff;
+        }
+
+        pre.language-tree .folder {
+            color: #690;
+        }
+
+        pre.language-tree .string {
+            color:#710909;
+        }
+
+        code .token.comment {
+            font-family: PT Mono;
+            font-size:.8em;
+            color: #710909;
+            color:#888;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="wrapper">
+    <header>
+        <h1>Slender</h1>
+<h3>Slim, but with a bit more meat.</h3>
+<img src="https://poser.pugx.org/slender/slender/license.png"/>
+<img src="https://poser.pugx.org/slender/slender/downloads.png"/>
+<img src="https://poser.pugx.org/slender/slender/v/stable.png"/>
+
+
+<p class="view" style="margin-top:2em; margin-bottom:2em">
+    <a href="../index.html">Overview</a><br/>
+    <a href="../setup/overview.html">Installation & Usage</a><br/>
+    <span style="font-size: .8em">
+        <a href="../setup/overview.html"  style="margin-left:1em">- Overview</a><br />
+        <a href="../setup/folder-structure.html" style="margin-left:1em">- Folder Structure</a><br />
+        <a href="../setup/configuration.html" style="margin-left:1em">- Configuration</a><br />
+        <a href="../setup/app.html" style="margin-left:1em">- Application Initialization</a><br />
+    </span>
+    <a>Configuration Loader</a><br />
+    <span style="font-size: .8em">
+        <a href="../configuration-loader/default-configuration.html" style="margin-left:1em">- Default Configuration</a><br />
+        <a href="../configuration-loader/service-configuration.html" style="margin-left:1em">- Services & Factories</a><br />
+        <a href="../configuration-loader/route-configuration.html" style="margin-left:1em">- Route definitions</a><br />
+    </span>
+    <a>Modules</a><br />
+    <span style="font-size: .8em">
+        <a href="../modules/defining-a-module.html" style="margin-left:1em">- Defining a Module</a><br />
+        <a href="../modules/loading-modules.html" style="margin-left:1em">- Loading Modules</a><br />
+        <a href="../modules/module-config-file.html" style="margin-left:1em">- Module configuration</a><br />
+        <a href="../modules/example-module-config.html" style="margin-left:1em">- Config file examples</a><br />
+        <a href="../modules/module-hooks.html" style="margin-left:1em">- Module Invokables</a><br />
+    </span>
+
+</p>
+
+
+<p class="view">
+    <a href="https://github.com/alanpich/slender">View the Project on GitHub
+        <small>alanpich/slender</small>
+    </a>
+</p>
+
+
+    </header>
+    <section id="content" class="lang-yaml">
+        <h1 id="module-invokables">Module Invokables</h1>
+<p>Modules can also register invokable classes, which are instanciated when
+the module is loaded and passed the <code>Slender\App</code> instance in order to
+perform additional logic on the app.</p>
+<p>Invokable classes are called <em>after</em> Slim has been initialized, but <em>before</em> the
+Slender constructor returns.</p>
+<h2 id="registering-invokable-classes">Registering invokable classes</h2>
+<p>Module invokables are registered in the <code>invoke</code> section of the module
+configuration file. It is an array of classes that should be instanciated
+when the Module is loaded.</p>
+<pre><code class="lang-`yml">module:
+    name: my-module
+    namespace: MyVendor\MyModule
+    autoload:
+        psr-4:
+            MyVendor\MyModule: ./src
+    invoke:
+        - MyVendor\MyModule\MyInvokableClass
+</code></pre>
+<p>If the module config also contains a <code>namespace</code> definition, or the module
+was loaded via ClassLookup, Slender will automatically look
+for a class of <code>NAMESPACE\SlenderModule</code> and try to invoke it.</p>
+<h2 id="invokable-class-signature">Invokable class signature</h2>
+<p>All classes registered as invokable MUST implement the following interface:</p>
+<pre><code class="lang-php">interface Slender\InvokableInterface {
+    public function invoke(\Slender\App $app);
+}
+</code></pre>
+<p>An example invokable class that sets the app version setting from composer.json</p>
+<pre><code class="lang-php">// ./module/my-module/src/SlenderModule.php
+namespace MyVendor\MyModule;
+
+use Slender\InvokableInterface;
+use Slender\App;
+
+class SlenderModule implements InvokableInterface {
+    public function invoke(App $app){
+        $composerData = json_decode(file_get_content(&#39;./package.json&#39;));
+        $version = $composerData[&#39;version&#39;];
+        $app-&gt;config(&#39;version&#39;,$version);
+
+        // $app[&#39;settings&#39;][&#39;version&#39;] === $version
+    }
+}
+</code></pre>
+
+    </section>
+    <footer>
+        <p>This project is maintained by <a href="https://github.com/alanpich">alanpich</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+    </footer>
+</div>
+<script src="../javascripts/scale.fix.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "moment": "2.3.x",
+    "underscore": "1.4.x",
+    "typogr": "0.5.x",
+    "wintersmith-handlebars": "0.0.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "none"
+  },
+  "name": "slender-docs",
+  "version": "0.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alan Pich <alan.pich@gmail.com> (https://github.com/alanpich)",
+  "license": "ISC",
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-templator": "~0.1.0"
+  }
+}
