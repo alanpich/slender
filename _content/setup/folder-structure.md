@@ -10,12 +10,37 @@ The following tree represents the default Slender directory structure
 ├─ config/
 │   # autoload config files from here
 │   └ global.yml
+│
+├─ data/
+│    └─ cache/
+│        └─ config/
+│            # Generated configuration cache
+│            └ config.cache.php
+│
 ├─ module/
 │   # local modules stored here
 │   └─ my-module/
 │       └ slender.module.yml
+│
 ├─ public/
 │   └ index.php # main http gateway
-└─ view/
-    # contains view templates
+│
+├─ view/
+│   # contains view templates
+│   └ layout.twig
+│
+├─ vendor/
+│   # composer dependencies
+│   └ ...
+│
+│
+│
+├ composer.json
+│
+├
+│
+│
+│
+│
+
 ```

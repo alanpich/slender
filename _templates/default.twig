@@ -103,6 +103,53 @@
             width: 100%;
             text-align:right;
         }
+
+
+        #sidebar ul {
+            background: none;
+            margin:0;
+            padding:0;
+            border:none;
+            height: auto;
+            box-shadow: none;
+            width: auto;
+            border-radius: inherit;
+            margin-bottom: 1em;
+        }
+
+        #sidebar ul li {
+            padding:0;
+            margin:0;
+            float:none;
+            display:block;
+            border:none;
+            line-height: auto;
+            width: auto;
+            height: auto;
+        }
+
+        #sidebar ul li a {
+            color: #39c;
+            font-size: inherit;
+            height: auto;
+            padding: 0;
+            line-height: inherit;
+            text-align:inherit;
+            margin-bottom:.5em;
+        }
+
+        #sidebar ul ul {
+            font-size: .8em;
+            padding-left: 2em;
+        }
+
+        #sidebar ul ul li a:before {
+            content: "- ";
+            position: absolute;
+            margin-left:-1em;
+            margin-top:-1px;
+            width: 1em;
+        }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
@@ -111,7 +158,7 @@
 </head>
 <body>
 <div class="wrapper">
-    <header>
+    <header id="sidebar">
         {% include 'bits/sidebar.twig' %}
     </header>
     <section id="content" class="lang-yaml">

@@ -2,50 +2,62 @@
 <h3>Slim, but with a bit more meat.</h3>
 
 {# Travis & Packagist badges #}
+<a href="https://github.com/alanpich/slender/blob/master/LICENSE">
+    <img src="https://poser.pugx.org/slender/slender/license.png"/>
+</a>
+<a href="https://packagist.org/packages/slender/slender">
+    <img src="http://img.shields.io/packagist/v/slender/slender.svg" />
+</a>
+
+
 <aside id="build-buttons">
-    <a href="https://packagist.org/packages/slender/slender">
-        <img src="https://poser.pugx.org/slender/slender/v/stable.png"/>
-    </a>
     <a href="https://travis-ci.org/alanpich/slender">
         <img src="https://travis-ci.org/alanpich/slender.png?branch=master"/>
     </a>
     <a href="https://packagist.org/packages/slender/slender">
-        <img src="https://poser.pugx.org/slender/slender/downloads.png"/>
+        <img src="https://poser.pugx.org/slender/slender/v/stable.png"/>
     </a>
-    <a href="https://github.com/alanpich/slender/blob/master/LICENSE">
-        <img src="https://poser.pugx.org/slender/slender/license.png"/>
-    </a>
+    {#
+        <a href="https://packagist.org/packages/slender/slender">
+            <img src="https://poser.pugx.org/slender/slender/downloads.png"/>
+        </a>
+    #}
 </aside>
 
-<p class="view" style="margin-top:2em; margin-bottom:2em">
-    <a href="{{ url('index.html') }}">Overview</a><br/>
-    <a href="{{ url('setup/overview.html') }}">Installation & Usage</a><br/>
-    <span style="font-size: .8em">
-        <a href="{{ url('setup/overview.html') }}" style="margin-left:1em">- Overview</a><br/>
-        <a href="{{ url('setup/folder-structure.html') }}" style="margin-left:1em">- Folder Structure</a><br/>
-        <a href="{{ url('setup/configuration.html') }}" style="margin-left:1em">- Configuration</a><br/>
-        <a href="{{ url('setup/app.html') }}" style="margin-left:1em">- Application Initialization</a><br/>
-    </span>
-    <a>Configuration Loader</a><br/>
-    <span style="font-size: .8em">
-        <a href="{{ url('configuration-loader/default-configuration.html') }}" style="margin-left:1em">- Default
-            Configuration</a><br/>
-        <a href="{{ url('configuration-loader/service-configuration.html') }}" style="margin-left:1em">- Services &
-            Factories</a><br/>
-        <a href="{{ url('configuration-loader/route-configuration.html') }}" style="margin-left:1em">- Route
-            definitions</a><br/>
-    </span>
-    <a>Modules</a><br/>
-    <span style="font-size: .8em">
-        <a href="{{ url('modules/defining-a-module.html') }}" style="margin-left:1em">- Defining a Module</a><br/>
-        <a href="{{ url('modules/loading-modules.html') }}" style="margin-left:1em">- Loading Modules</a><br/>
-        <a href="{{ url('modules/module-config-file.html') }}" style="margin-left:1em">- Module configuration</a><br/>
-        <a href="{{ url('modules/example-module-config.html') }}" style="margin-left:1em">- Config file
-            examples</a><br/>
-        <a href="{{ url('modules/module-hooks.html') }}" style="margin-left:1em">- Module Invokables</a><br/>
-    </span>
-
-</p>
+<nav>
+    <ul>
+        <li>
+            <a href="{{ url('index.html') }}">Overview</a>
+        </li>
+        <li>
+            <a href="{{ url('setup/overview.html') }}">Installation & Usage</a>
+            <ul>
+                <li><a href="{{ url('setup/overview.html') }}">Overview</a></li>
+                <li><a href="{{ url('setup/folder-structure.html') }}">Folder Structure</a></li>
+                <li><a href="{{ url('setup/configuration.html') }}">Configuration</a></li>
+                <li><a href="{{ url('setup/app.html') }}">Application Initialization</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="">Configuration Loader</a>
+            <ul>
+                <li><a href="{{ url('configuration-loader/default-configuration.html') }}">Default Configuration</a></li>
+                <li><a href="{{ url('configuration-loader/service-configuration.html') }}">Services & Factories</a></li>
+                <li><a href="{{ url('configuration-loader/route-configuration.html') }}">Route Definitions</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="">Modules</a>
+            <ul>
+                <li><a href="{{ url('modules/defining-a-module.html') }}">Defining a Module</a></li>
+                <li><a href="{{ url('modules/loading-modules.html') }}">Loading Modules</a></li>
+                <li><a href="{{ url('modules/module-config-file.html') }}">Module configuration</a></li>
+                <li><a href="{{ url('modules/example-module-config.html') }}">Config file</a></li>
+                <li><a href="{{ url('modules/module-hooks.html') }}">Module Invokables</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
 
 
 <p class="view">
