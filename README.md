@@ -1,4 +1,4 @@
-slender
+[Slender](http://alanpich.github.io/slender)
 =======
 
 Slim, but with a bit more meat

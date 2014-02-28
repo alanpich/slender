@@ -4,6 +4,7 @@
     "description": "Micro Application Framework",
     "keywords": ["app","framework","slim","slender"],
     "license": "MIT",
+    "homepage": "http://alanpich.github.io/slender",
     "authors": [
         {
             "name": "Alan Pich",
