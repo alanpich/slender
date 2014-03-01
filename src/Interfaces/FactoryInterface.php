@@ -1,6 +1,6 @@
 <?php
 
-namespace Slender;
+namespace Slender\Interfaces;
 
 interface FactoryInterface
 {

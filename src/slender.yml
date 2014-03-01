@@ -7,6 +7,10 @@ config:
   autoload:
     - ./config
 
+  files:
+    - slender.*
+    - slender.local.*
+
   ##
   # Filepath to save config cache to
   # Will be ignored in development mode
@@ -20,3 +24,12 @@ config:
 #
 view-paths:
   - ./view
+
+
+
+modules: []
+
+
+modulePaths:
+  - ./module
+
