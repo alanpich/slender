@@ -43,7 +43,7 @@ class ResolverStackTest extends PHPUnit_Framework_TestCase
 
         $allResolvers = $property->getValue($stack);
         $theResolver = array_shift($allResolvers);
-        $this->assertInstanceOf('Slender\Core\ModuleResolver\ModuleResolverInterface',$theResolver);
+        $this->assertInstanceOf('Slender\Interface\ModuleResolverInterface',$theResolver);
     }
 
 
