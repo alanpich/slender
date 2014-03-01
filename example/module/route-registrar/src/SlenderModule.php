@@ -18,8 +18,19 @@ class SlenderModule implements ModulePathProviderInterface,
         return dirname(__DIR__);
     }
 
-    public function invoke()
+    public function invoke( \Slender\App $app)
     {
-        echo "<pre>RouteRegistrar invoked</pre>";
+        $routes = array();
+        foreach($app['settings']['routes'] as $name => $r){
+            if(is_array($r) && isset($r['route'])){
+                $r['name'] = $name;
+                $routes[] = $r;
+            }
+        }
+
+        foreach($routes as $route){
+            $app['route-registrar']->addRoute($route);
+        }
+
     }
 }

@@ -7,3 +7,15 @@ modules:
 modulePaths:
   - ./module
   - ./core/module
+
+
+
+routes:
+  home:
+    route: /
+    controller: HomepageController
+    action: index
+    methods:
+      - GET
+      - POST
+      - PUT

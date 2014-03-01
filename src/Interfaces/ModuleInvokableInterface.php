@@ -1,9 +1,9 @@
 <?php
 namespace Slender\Interfaces;
 
-interface ModuleInvokableInterface
+interface  ModuleInvokableInterface
 {
 
-    public function invoke();
+    public function invoke(\Slender\App $app);
 
 } 

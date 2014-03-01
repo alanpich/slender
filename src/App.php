@@ -10,6 +10,7 @@ use Slender\Core\ModuleResolver\ResolverStack;
 use Slender\Core\ConfigParser;
 use Slender\Interfaces\ConfigFileFinderInterface;
 use Slender\Interfaces\ConfigFileParserInterface;
+use Slender\Interfaces\ModuleInvokableInterface;
 use Slender\Interfaces\ModuleLoaderInterface;
 use Slender\Interfaces\FactoryInterface;
 use Slender\Interfaces\ModuleResolverInterface;
@@ -87,6 +88,7 @@ class App extends \Slim\App
         foreach($moduleConfigs as $mConf){
             if(isset($mConf['invoke'])){
                 foreach($mConf['invoke'] as $class){
+                    /** @var ModuleInvokableInterface $obj */
                     $obj = new $class;
                     $obj->invoke($this);
                 }
@@ -94,6 +96,7 @@ class App extends \Slim\App
         }
 
 
+        dump($this['router']);
     }
 
 

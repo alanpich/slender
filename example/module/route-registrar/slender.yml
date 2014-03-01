@@ -3,3 +3,16 @@ module:
   namespace: Slender\Module\RouteRegistrar
   version: 1.0.0
   author: Alan Pich <alan.pich@gmail.com>
+
+
+services:
+  route-registrar: Slender\Module\RouteRegistrar\Factory
+
+
+routes:
+  foo:
+    route: /foo
+    controller: FooController
+    action: fooAction
+    methods:
+      - GET
