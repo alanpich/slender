@@ -8,7 +8,9 @@ class HomepageController
 
     public function index(App $app)
     {
-        $app->render('layout');
+        $app->render('home',array(
+                'foo' => 'bar'
+            ));
     }
 
 } 
