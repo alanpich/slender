@@ -14,12 +14,10 @@ class ModuleLoader implements ModuleLoaderInterface
     /** @var  \Slim\Configuration */
     protected $config;
 
-    /**
-     * @var ClassLoader
-     */
+    /** @var ClassLoader */
     protected $classLoader;
 
-    /** @var array  */
+    /** @var array */
     protected $loadedModules = array();
 
     public function loadModule($module)
@@ -29,7 +27,7 @@ class ModuleLoader implements ModuleLoaderInterface
         }
 
         // Resolve module path
-        $path = $this->resolver->getPath($module);
+        $path = $modulePath = $this->resolver->getPath($module);
 
         if($path === false){
             throw new ModuleLoaderException("Unable to resolve path to $module");
@@ -91,11 +89,13 @@ class ModuleLoader implements ModuleLoaderInterface
 
         if(isset($mConf['autoload']['psr-4'])){
             foreach($mConf['autoload']['psr-4'] as $ns => $path){
+                $path = $modulePath.DIRECTORY_SEPARATOR.preg_replace("/^\.\//","",$path);
                 $this->classLoader->registerNamespace($ns,$path,'psr-4');
             }
         }
         if(isset($mConf['autoload']['psr-0'])){
             foreach($mConf['autoload']['psr-0'] as $ns => $path){
+                $path = $modulePath.DIRECTORY_SEPARATOR.preg_replace("/^\.\//","",$path);
                 $this->classLoader->registerNamespace($ns,$path,'psr-4');
             }
         }

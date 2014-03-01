@@ -14,7 +14,7 @@ modulePaths:
 routes:
   home:
     route: /
-    controller: HomepageController
+    controller: Skeleton\HomepageController
     action: index
     methods:
       - GET

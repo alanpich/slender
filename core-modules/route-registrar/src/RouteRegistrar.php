@@ -43,13 +43,18 @@ class RouteRegistrar
             // Get the controller instance from DI Container
             return function() use ($app,$controller,$action){
                 $controller = $app[$controller];
-                call_user_func_array(array($controller,$action),func_get_args());
+                $args = func_get_args();
+                $args = array_unshift($args,$app);
+                call_user_func_array(array($controller,$action),$args);
             };
         } else {
             // Instantiate controller class ourselves
             return function() use ($app,$controller,$action){
                 $controller = new $controller;
-                call_user_func_array(array($controller,$action),func_get_args());
+                $args = func_get_args();
+                array_unshift($args,$app);
+
+                call_user_func_array(array($controller,$action),$args);
             };
         }
     }
