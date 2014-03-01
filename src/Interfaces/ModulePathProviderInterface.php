@@ -1,9 +1,8 @@
 <?php
-namespace Slender\Core;
+namespace Slender\Interfaces;
 
 interface ModulePathProviderInterface
 {
-
     /**
      * Returns path to module root
      *

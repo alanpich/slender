@@ -1,6 +1,8 @@
 <?php
 namespace Slender;
 
+use Slender\Core\Autoload\MultiFormatAutoloader;
+use Slender\Core\Autoload\PSR4;
 use Slender\Core\ModuleLoader\ModuleLoader;
 use Slender\Core\ModuleResolver\DirectoryResolver;
 use Slender\Core\ModuleResolver\NamespaceResolver;
@@ -11,6 +13,7 @@ use Slender\Interfaces\ConfigFileParserInterface;
 use Slender\Interfaces\ModuleLoaderInterface;
 use Slender\Interfaces\FactoryInterface;
 use Slender\Interfaces\ModuleResolverInterface;
+use Slender\Util\Util;
 
 class App extends \Slim\App
 {
@@ -36,7 +39,6 @@ class App extends \Slim\App
         $userSettings = array_merge_recursive($defaults, $userSettings);
         $this['settings']->setArray($userSettings);
 
-
         /**
          * Load any application config files
          *
@@ -48,13 +50,12 @@ class App extends \Slim\App
             if(is_readable($path)){
                 $parsedFile = $parser->parseFile($path);
                 if($parsedFile !== false){
-                    $userSettings = array_merge_recursive($userSettings, $parsedFile);
+                    $this->addConfig($parsedFile);
                 }
             } else {
                 echo "Invalid path $path\n";
             }
         }
-        $this['settings']->setArray($userSettings);
 
 
         /**
@@ -83,6 +84,14 @@ class App extends \Slim\App
          * Call module Invokables
          */
         $moduleConfigs = $this['settings']['module-config'];
+        foreach($moduleConfigs as $mConf){
+            if(isset($mConf['invoke'])){
+                foreach($mConf['invoke'] as $class){
+                    $obj = new $class;
+                    $obj->invoke($this);
+                }
+            }
+        }
 
 
     }
@@ -126,6 +135,40 @@ class App extends \Slim\App
                 return $obj;
             }
         };
+    }
+
+    /**
+     * Recursively merge array of settings into app
+     * config. This is needed because \Slim\ConfigurationHander doesn't
+     * seem to like recursing...
+     *
+     * @param array $conf
+     */
+    public function addConfig(array $conf = array())
+    {
+        $appConfig =& $this['settings'];
+
+        // Iterate through new top-level keys
+        foreach($conf as $key => $value){
+
+            // If doesnt exist yet, create it
+            if(!isset($appConfig[$key])){
+                $appConfig[$key] = $value;
+                continue;
+            }
+
+            // If it exists, and is already an array
+            if(is_array($appConfig[$key])){
+                $mergedArray = array_merge_recursive($appConfig[$key],$value);
+                $appConfig[$key] = $mergedArray;
+                continue;
+            }
+
+            //@TODO check for iterators?
+
+            // Just set the value already!
+            $appConfig[$key] = $value;
+        }
     }
 
 
@@ -197,7 +240,16 @@ class App extends \Slim\App
                  $loader = new ModuleLoader();
                  $loader->setResolver($app['module-resolver']);
                  $loader->setConfig($app['settings']);
+                 $loader->setClassLoader($app['autoloader']);
                  return $loader;
+            });
+
+
+        $this['autoloader'] = $this->share(function($app){
+                $autoload = new MultiFormatAutoloader(array(
+                    'psr-4' => new PSR4()
+                ));
+                return $autoload;
             });
 
     }

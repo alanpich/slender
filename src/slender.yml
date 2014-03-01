@@ -26,8 +26,11 @@ view-paths:
   - ./view
 
 
+# Core modules required by Slender
+modules:
+  - Slender\Module\RouteRegistrar
 
-modules: []
+
 services: []
 factories: []
 

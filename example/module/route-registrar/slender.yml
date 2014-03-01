@@ -1,0 +1,5 @@
+module:
+  name: route-registrar
+  namespace: Slender\Module\RouteRegistrar
+  version: 1.0.0
+  author: Alan Pich <alan.pich@gmail.com>

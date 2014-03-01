@@ -13,6 +13,8 @@ class ModuleLoader implements ModuleLoaderInterface
     /** @var  \Slim\Configuration */
     protected $config;
 
+    protected $classLoader;
+
     /** @var array  */
     protected $loadedModules = array();
 
@@ -54,26 +56,76 @@ class ModuleLoader implements ModuleLoaderInterface
         // Check for an auto-invoke class
         // __NAMESPACE__\SlenderModule
         if(isset($mConf['namespace']) && class_exists($mConf['namespace'].'\\SlenderModule')){
-            $mConf['invoke'][] = $mConf['namespace'].'\\SlenderModule';
+            $class = $mConf['namespace'].'\\SlenderModule';
+            $reflector = new \ReflectionClass($class);
+            $interfaces = $reflector->getInterfaceNames();
+            if(!is_array($interfaces)){
+                $interface = array($interfaces);
+            }
+            if(in_array('Slender\Interfaces\ModuleInvokableInterface',$interfaces)){
+                $mConf['invoke'][] = $mConf['namespace'].'\\SlenderModule';
+            }
         }
 
         // Merge non-module config with app
-        $this->config->setArray($conf);
+        $this->addConfig($conf);
 
         // Store module config
-        $this->config->setArray(array(
+        $this->addConfig(array(
                'module-config' => array(
                    $module => $mConf
                )
             ));
 
-
         // Register any autoloaders
         if(in_array('composer',$mConf['autoload'])){
             require $path.'/vendor/autoload.php';
         }
+        if(isset($mConf['autoload']['psr-4'])){
+            foreach($mConf['autoload']['psr-4'] as $ns => $path){
+                //@TODO Implement autoloaders
+                die("Register psr-4 namespace $ns");
+            }
+        }
+
 
     }
+
+    /**
+     * Recursively merge array of settings into app
+     * config. This is needed because \Slim\ConfigurationHander doesn't
+     * seem to like recursing...
+     *
+     * @param array $conf
+     */
+    public function addConfig(array $conf = array())
+    {
+        $appConfig =& $this->config;
+
+        // Iterate through new top-level keys
+        foreach($conf as $key => $value){
+
+            // If doesnt exist yet, create it
+            if(!isset($appConfig[$key])){
+                $appConfig[$key] = $value;
+                continue;
+            }
+
+            // If it exists, and is already an array
+            if(is_array($appConfig[$key])){
+                $mergedArray = array_merge_recursive($appConfig[$key],$value);
+                $appConfig[$key] = $mergedArray;
+                continue;
+            }
+
+            //@TODO check for iterators?
+
+            // Just set the value already!
+            $appConfig[$key] = $value;
+        }
+    }
+
+
 
     public function setResolver(ModuleResolverInterface $resolver)
     {
@@ -84,4 +136,23 @@ class ModuleLoader implements ModuleLoaderInterface
     {
         $this->config = $conf;
     }
+
+    /**
+     * @param mixed $classLoader
+     */
+    public function setClassLoader($classLoader)
+    {
+        $this->classLoader = $classLoader;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getClassLoader()
+    {
+        return $this->classLoader;
+    }
+
+
+
 }

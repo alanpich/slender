@@ -1,0 +1,9 @@
+debug: true
+
+modules:
+  - test-invoke
+  - twig
+
+modulePaths:
+  - ./module
+  - ./core/module

@@ -34,6 +34,10 @@ class DirectoryResolver extends AbstractResolver
     {
         $dir = $this->dir . DIRECTORY_SEPARATOR . $module;
 
+        if(!is_dir($dir)){
+            return false;
+        }
+
         $find = new Finder();
         $files = $find->files()
                     ->in($dir)

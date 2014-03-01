@@ -22,8 +22,12 @@ class NamespaceResolver extends AbstractResolver
         // Try to find class for path
         if(class_exists($class) ){
             $reflector = new \ReflectionClass($class);
-            if(in_array($reflector->getInterfaceNames(),'\Slender\Core\Module\ModulePathProviderInterface')){
-                return call_user_func($class,'getModulePath');
+            $interfaces = $reflector->getInterfaceNames();
+            if(is_string($interfaces)){
+                $interfaces = array($interfaces);
+            }
+            if(in_array('Slender\Interfaces\ModulePathProviderInterface',$interfaces)){
+                return call_user_func(array($class,'getModulePath'));
             }
         }
 
