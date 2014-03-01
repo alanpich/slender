@@ -20,7 +20,7 @@
     "autoload": {
         "psr-4": {
             "Slender\\": "src/",
-            "Slender\\Module\\RouteRegistrar\\": "example/module/route-registrar/src"
+            "Slender\\Module\\RouteRegistrar\\": "core-modules/route-registrar/src"
         }
     },
     "require-dev": {
