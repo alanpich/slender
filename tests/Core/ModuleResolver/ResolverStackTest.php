@@ -41,7 +41,8 @@ class ResolverStackTest extends PHPUnit_Framework_TestCase
         $stack->addResolver(new NamespaceResolver());
         $this->assertAttributeCount(1,'resolvers',$stack);
 
-        $theResolver = array_shift($property->getValue($stack));
+        $allResolvers = $property->getValue($stack);
+        $theResolver = array_shift($allResolvers);
         $this->assertInstanceOf('Slender\Core\ModuleResolver\ModuleResolverInterface',$theResolver);
     }
 
@@ -60,7 +61,8 @@ class ResolverStackTest extends PHPUnit_Framework_TestCase
 
         $this->assertAttributeContains($prependedResolver,'resolvers',$stack,"Stack resolvers contains prepended resolver");
 
-        $this->assertEquals($prependedResolver, array_shift($property->getValue($stack)));
+        $allResolvers = $property->getValue($stack);
+        $this->assertEquals($prependedResolver, array_shift($allResolvers));
 
     }
 
