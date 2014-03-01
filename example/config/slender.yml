@@ -1,8 +1,9 @@
 debug: true
 
 modules:
-  - test-invoke
-  - twig
+  - Slender\Module\Twig
+  - skeleton-layout
+  - app
 
 modulePaths:
   - ./module

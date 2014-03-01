@@ -9,15 +9,14 @@ config:
 
   files:
     - slender.*
-    - slender.local.*
+    - slender.local.*   # this seems futile...
 
   ##
   # Filepath to save config cache to
   # Will be ignored in development mode
   cache: ./data/cache/config.php
 
-
-
+  ##
 
 ##
 # View Template directories
@@ -25,16 +24,21 @@ config:
 view-paths:
   - ./view
 
-
+##
 # Core modules required by Slender
+#
 modules:
   - Slender\Module\RouteRegistrar
 
-
+##
+# Service & Factory Registry
+#
 services: []
 factories: []
 
-
+##
+# Paths to look for modules in
+#
 modulePaths:
   - ./module
 

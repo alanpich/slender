@@ -1,13 +1,14 @@
 <?php
 namespace Slender\Modules\Twig\Factories;
 
+use Slender\App;
 use Slender\Interfaces\FactoryInterface;
 use Slender\Modules\Twig\View;
 
 class ViewFactory implements FactoryInterface
 {
 
-    public function create(\Slender\App $app)
+    public function create(App $app)
     {
         $view = new View;
 

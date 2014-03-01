@@ -1,6 +1,7 @@
 <?php
 namespace Slender\Core\ModuleLoader;
 
+use Slender\Core\Autoloader\ClassLoader;
 use Slender\Exception\ModuleLoaderException;
 use Slender\Interfaces\ModuleLoaderInterface;
 use Slender\Interfaces\ModuleResolverInterface;
@@ -13,6 +14,9 @@ class ModuleLoader implements ModuleLoaderInterface
     /** @var  \Slim\Configuration */
     protected $config;
 
+    /**
+     * @var ClassLoader
+     */
     protected $classLoader;
 
     /** @var array  */
@@ -77,14 +81,22 @@ class ModuleLoader implements ModuleLoaderInterface
                )
             ));
 
-        // Register any autoloaders
-        if(in_array('composer',$mConf['autoload'])){
+        /**
+         * Copy autoloader settings to global collection ready for registering
+         *
+         */
+        if($mConf === 'composer' || in_array('composer',$mConf['autoload'])){
             require $path.'/vendor/autoload.php';
         }
+
         if(isset($mConf['autoload']['psr-4'])){
             foreach($mConf['autoload']['psr-4'] as $ns => $path){
-                //@TODO Implement autoloaders
-                die("Register psr-4 namespace $ns");
+                $this->classLoader->registerNamespace($ns,$path,'psr-4');
+            }
+        }
+        if(isset($mConf['autoload']['psr-0'])){
+            foreach($mConf['autoload']['psr-0'] as $ns => $path){
+                $this->classLoader->registerNamespace($ns,$path,'psr-4');
             }
         }
 

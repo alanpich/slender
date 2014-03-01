@@ -1,5 +1,7 @@
 <?php
-namespace Slender\Core\Autoload;
+
+namespace Slender\Core\Autoloader;
+
 
 /**
  * An example of a general-purpose implementation that includes the optional
@@ -45,7 +47,7 @@ namespace Slender\Core\Autoload;
  *      <?php
  *      new \Foo\Bar\Qux\QuuxTest;
  */
-class PSR4
+class PSR4ClassLoader
 {
     /**
      * An associative array where the key is a namespace prefix and the value

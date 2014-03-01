@@ -58,7 +58,6 @@ class App extends \Slim\App
             }
         }
 
-
         /**
          * Load modules
          */
@@ -79,7 +78,6 @@ class App extends \Slim\App
         foreach($this['settings']['factories'] as $factory => $class){
             $this->registerFactory($factory,$class);
         }
-
 
         /**
          * Call module Invokables
@@ -210,6 +208,11 @@ class App extends \Slim\App
             });
 
 
+
+        $this->registerService('autoloader','Slender\Core\Autoloader\AutoloaderFactory');
+        $this->registerService('autoloader.psr4','Slender\Core\Autoloader\PSR4Factory');
+
+
         /**
          * ModuleResolver is used for tracking down a module's path
          * from it's name
@@ -237,21 +240,15 @@ class App extends \Slim\App
          * @param \Slender\App $app
          * @return ModuleLoaderInterface
          */
-        $this['module-loader'] = $this->share(function($app){
-                 $loader = new ModuleLoader();
-                 $loader->setResolver($app['module-resolver']);
-                 $loader->setConfig($app['settings']);
-                 $loader->setClassLoader($app['autoloader']);
-                 return $loader;
-            });
+        $this->registerService('module-loader','Slender\Core\ModuleLoader\Factory');
 
 
-        $this['autoloader'] = $this->share(function($app){
-                $autoload = new MultiFormatAutoloader(array(
-                    'psr-4' => new PSR4()
-                ));
-                return $autoload;
-            });
+//        $this['autoloader'] = $this->share(function($app){
+//                $autoload = new MultiFormatAutoloader(array(
+//                    'psr-4' => new PSR4()
+//                ));
+//                return $autoload;
+//            });
 
     }
 

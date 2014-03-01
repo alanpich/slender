@@ -1,0 +1,10 @@
+module:
+  name: app
+  namespace: Skeleton
+  autoload:
+    psr-4:
+      Skeleton: ./src
+
+
+#services:
+#  controller.app: Skeleton\Controller\AppController
