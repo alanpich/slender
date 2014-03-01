@@ -23,8 +23,4 @@ require dirname(dirname(__DIR__)).'/vendor/autoload.php';
 $app = new Slender\App();
 
 
-$app->get('/',function() use ($app){
-        $app->render('hello');
-    });
-
 $app->run();

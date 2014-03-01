@@ -13,6 +13,7 @@ class Factory implements FactoryInterface
         // get the Slim\Router object
         $router = &$app['router'];
         $registrar->setRouter($router);
+        $registrar->setApp($app);
 
         return $registrar;
     }

@@ -8,6 +8,9 @@ class RouteRegistrar
     /** @var  \Slim\Router Router instance to register routes to */
     protected $router;
 
+    /** @var  \Slender\App */
+    protected $app;
+
     public function addRoute($rConf)
     {
         $rConf = array_replace_recursive(array(
@@ -15,28 +18,40 @@ class RouteRegistrar
                 'name' => null,
                 'controller' => null,
                 'action' => null,
-                'methods' => array(),
+                'methods' => array('GET'),
                 'conditions' => array()
             ),$rConf);
 
-
-//        dump($rConf);
-
         // Prepare callback
-        $handler = function(){
-            die("HANDLER");
-        };
+        $handler = $this->getCallableControllerAction($rConf['controller'],$rConf['action']);
 
         // Create Route
-        $route = new Route($rConf['route'],$handler);
+        $route = $this->app->map($rConf['route'],$handler);
 
         $route->setName($rConf['name']);
         $route->setConditions($rConf['conditions']);
-        $route->setHttpMethods($rConf['methods']);
+        call_user_func_array(array($route,'setHttpMethods'),$rConf['methods']);
 
-        // Add to app
-        $this->router->map($route);
+    }
 
+
+    public function getCallableControllerAction($controller,$action)
+    {
+        $app = $this->app;
+        // Check if controller is registered to the IoC container
+        if(isset($app[$controller])){
+            // Get the controller instance from DI Container
+            return function() use ($app,$controller,$action){
+                $controller = $app[$controller];
+                call_user_func_array(array($controller,$action),func_get_args());
+            };
+        } else {
+            // Instantiate controller class ourselves
+            return function() use ($app,$controller,$action){
+                $controller = new $controller;
+                call_user_func_array(array($controller,$action),func_get_args());
+            };
+        }
     }
 
 
@@ -54,6 +69,22 @@ class RouteRegistrar
     public function getRouter()
     {
         return $this->router;
+    }
+
+    /**
+     * @param \Slender\App $app
+     */
+    public function setApp($app)
+    {
+        $this->app = $app;
+    }
+
+    /**
+     * @return \Slender\App
+     */
+    public function getApp()
+    {
+        return $this->app;
     }
 
 

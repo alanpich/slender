@@ -95,8 +95,6 @@ class App extends \Slim\App
             }
         }
 
-
-        dump($this['router']);
     }
 
 
