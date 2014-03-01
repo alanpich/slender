@@ -159,7 +159,7 @@
 <body>
 <div class="wrapper">
     <header id="sidebar">
-        <h1>Slender</h1>
+        <h1 style="font-size:3em">Slender</h1>
 <h3>Slim, but with a bit more meat.</h3>
 
 
@@ -231,9 +231,17 @@
     </header>
     <section id="content" class="lang-yaml">
         <h1 id="configuring-http-routes">Configuring HTTP Routes</h1>
-<p>You can configure http routes in your configuration files by specifying a
-controller Class and action method to execute on each route.</p>
-<p><strong>Note:</strong> Route Middleware can&#39;t currently be configured in this way due
+<p>Slender core comes with the <strong>route-registrar</strong> module which makes it easy to
+set up http routes from within config files.</p>
+<p>RouteRegistrar routing if centered around the idea of <strong>Controllers</strong> and <strong>Actions</strong> that
+you will probably recognise from other frameworks.</p>
+<p><strong>Controllers</strong> are classes that are invoked to handle requests, and <strong>actions</strong> are the methods
+of the controller that should be executed to respond to the request.</p>
+<p>When defining the <strong>controller</strong> to use for a route, it can be either the (FQCN) name of a class
+that should be instantiated, or the identifier of a Factory or Service registered to the IoC
+container.</p>
+<p>The <strong>action</strong> method will then be called on the controller instance</p>
+<p><strong>Note:</strong> Route Middleware can&#39;t currently be used with RouteRegistrar due
           to not being able to write closures in text files.
           See <a href="route-middleware.html">Route Middleware</a> for more info</p>
 <h2 id="example-route-configurations">Example route configurations</h2>

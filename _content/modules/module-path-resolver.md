@@ -20,7 +20,7 @@ directory. A 'suitable directory' is defined as one matching the following rules
 ### Namespace Resolver
 If all file paths are searched and the module is still not found, it is handed over to
 the Namespace Resolver to track down. This resolver treats the module name as a PHP
-namespace, and attempts to track the module down using a special class within the namespace.
+namespace, and attempts to find the module using a special class within the namespace.
 
 The resolver checks for the existence of a class `NAMESPACE\SlenderModule`. If the class exists,
 and implements `Slender\Core\ModulePathProviderInterface` then the corresponding `::getModulePath()`

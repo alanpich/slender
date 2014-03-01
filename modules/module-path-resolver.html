@@ -159,7 +159,7 @@
 <body>
 <div class="wrapper">
     <header id="sidebar">
-        <h1>Slender</h1>
+        <h1 style="font-size:3em">Slender</h1>
 <h3>Slim, but with a bit more meat.</h3>
 
 
@@ -246,7 +246,7 @@ directory. A &#39;suitable directory&#39; is defined as one matching the followi
 <h3 id="namespace-resolver">Namespace Resolver</h3>
 <p>If all file paths are searched and the module is still not found, it is handed over to
 the Namespace Resolver to track down. This resolver treats the module name as a PHP
-namespace, and attempts to track the module down using a special class within the namespace.</p>
+namespace, and attempts to find the module using a special class within the namespace.</p>
 <p>The resolver checks for the existence of a class <code>NAMESPACE\SlenderModule</code>. If the class exists,
 and implements <code>Slender\Core\ModulePathProviderInterface</code> then the corresponding <code>::getModulePath()</code>
 static method is called and the return value used as module path.</p>
