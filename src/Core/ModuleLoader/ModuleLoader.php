@@ -30,7 +30,15 @@ class ModuleLoader implements ModuleLoaderInterface
         }
 
         // Get module config content
-        $conf = $this->resolver->getConfig($module);
+        $conf = array_merge_recursive(array(
+            'module' => array(
+                'name' => null,
+                'version' => '0.0.0',
+                'author' => 'unknown',
+                'autoload' => [],
+                'invoke' => []
+            ),
+        ),$this->resolver->getConfig($module));
 
         // Extract module block from config
         $mConf = $conf['module'];
@@ -43,6 +51,12 @@ class ModuleLoader implements ModuleLoaderInterface
             }
         }
 
+        // Check for an auto-invoke class
+        // __NAMESPACE__\SlenderModule
+        if(isset($mConf['namespace']) && class_exists($mConf['namespace'].'\\SlenderModule')){
+            $mConf['invoke'][] = $mConf['namespace'].'\\SlenderModule';
+        }
+
         // Merge non-module config with app
         $this->config->setArray($conf);
 
@@ -53,8 +67,9 @@ class ModuleLoader implements ModuleLoaderInterface
                )
             ));
 
+
         // Register any autoloaders
-        if($mConf['autoload'] == 'composer'){
+        if(in_array('composer',$mConf['autoload'])){
             require $path.'/vendor/autoload.php';
         }
 

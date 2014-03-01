@@ -28,6 +28,8 @@ view-paths:
 
 
 modules: []
+services: []
+factories: []
 
 
 modulePaths:

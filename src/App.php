@@ -71,13 +71,31 @@ class App extends \Slim\App
             $this->registerService($service,$class);
         }
 
+        /**
+         * Register Factory
+         */
+        foreach($this['settings']['factories'] as $factory => $class){
+            $this->registerFactory($factory,$class);
+        }
+
 
         /**
-         * Call module invokables now everything is ready
+         * Call module Invokables
          */
+        $moduleConfigs = $this['settings']['module-config'];
+
 
     }
 
+
+    /**
+     * Register a Service to the DI container.
+     * Services are singletons, and the same instance
+     * is returned every time the identifier is requested
+     *
+     * @param string $service identifier
+     * @param string $class Class to create
+     */
     public function registerService($service,$class)
     {
         $this[$service] = $this->share(function($app) use ($class){
@@ -88,6 +106,26 @@ class App extends \Slim\App
                 return $inst;
             }
         });
+    }
+
+    /**
+     * Register a Factory to the DI container.
+     * Factories return a new instance of a class each
+     * time they are called
+     *
+     * @param string $factory identifier
+     * @param string $class Class to create
+     */
+    public function registerFactory($factory,$class)
+    {
+        $this[$factory] = function($app) use ($class){
+            $obj = new $class;
+            if($obj instanceof FactoryInterface){
+                return $obj->create($app);
+            } else {
+                return $obj;
+            }
+        };
     }
 
 
