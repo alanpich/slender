@@ -230,37 +230,34 @@
 
     </header>
     <section id="content" class="lang-yaml">
-        <h2 id="modules">Modules</h2>
-<p>Modules help to break up an app into managable blocks of functionality or scope. Most frameworks support some sort of modularization of code, but many require a large amount of boilerplate code.</p>
-<h4 id="configuration">Configuration</h4>
-<p>All modules MUST have a module.yml config file in their root directory. This is used to resolve the module paths, autoload classes and add configuration to the application. An example module config file</p>
-<pre><code class="lang-yaml"># /modules/my-module/module.yml
-module:
-    name: my-module
-    namespace: MyModule
-    autoload:
-        psr-4:
-            MyModule: ./src
-
-# Services are registered as Shared resources in the Slim DI container
-# If the class registered implements Slender\FactoryInterface then
-# the factory will be run to create the instance, otherwise the
-# class listed will be initialized
-services:
-    MyService: MyModule\ServiceFactory
-
-# Factories are registered as resources in the Slim DI container.
-# A new instance is created each time this object is requested.
-# If the class registered implements FactoryInterface, then the
-# object returned will be the result of the factory method, not
-# the factory class
-factories:
-    NewObject:  MyModule\Object
+        <h1 id="module-path-resolver">Module Path Resolver</h1>
+<p>The Module Path Resolver service is used internally to find the filesystem directory
+that contains a Slender module, and returns the path to a module directory.</p>
+<p>A resolver service MUST implement <code>Slender\Interfaces\ModuleResolverInterface</code></p>
+<p>By default, Slender uses a stack to allow chaining of multiple resolvers
+when searching for modules. The default flow is as follows:</p>
+<h3 id="directory-resolver">Directory Resolver</h3>
+<p>Each path set in App <code>modulePaths</code> settings (<code>$basePath</code>) will be checked to see if it contains a suitable
+directory. A &#39;suitable directory&#39; is defined as one matching the following rules:</p>
+<ul>
+<li><code>$basePath/$moduleName</code> is a directory</li>
+<li><code>$basePath/$moduleName/slender.yml|php|json</code> exists and is readable</li>
+</ul>
+<h3 id="namespace-resolver">Namespace Resolver</h3>
+<p>If all file paths are searched and the module is still not found, it is handed over to
+the Namespace Resolver to track down. This resolver treats the module name as a PHP
+namespace, and attempts to track the module down using a special class within the namespace.</p>
+<p>The resolver checks for the existence of a class <code>NAMESPACE\SlenderModule</code>. If the class exists,
+and implements <code>Slender\Core\ModulePathProviderInterface</code> then the corresponding <code>::getModulePath()</code>
+static method is called and the return value used as module path.</p>
+<p>This means that you could require another using only it&#39;s namespace, and letting the autoloader do
+all of the work. Most of Slender&#39;s internal modules are loaded in this way after being included as
+composer dependencies</p>
+<pre><code class="lang-yaml"># ./config/slender.yml
+...
+modules:
+  - MyVendor\MyNamespace
 </code></pre>
-<h4 id="bootstrapping">Bootstrapping</h4>
-<p>Modules often need to listen to application lifecycle events etc..
-When loading a module, Slender will look for a class called Slender
-in the namespace defined in the module</p>
 
     </section>
     <footer>

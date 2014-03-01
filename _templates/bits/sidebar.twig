@@ -2,6 +2,7 @@
 <h3>Slim, but with a bit more meat.</h3>
 
 {# Travis & Packagist badges #}
+<div style="margin-bottom:1em">
 <a href="https://github.com/alanpich/slender/blob/master/LICENSE">
     <img src="https://poser.pugx.org/slender/slender/license.png"/>
 </a>
@@ -23,6 +24,7 @@
         </a>
     #}
 </aside>
+</div>
 
 <nav>
     <ul>
@@ -39,7 +41,7 @@
             </ul>
         </li>
         <li>
-            <a href="">Configuration Loader</a>
+            <a href="{{ url('configuration-loader/default-configuration.html') }}">Configuration Loader</a>
             <ul>
                 <li><a href="{{ url('configuration-loader/default-configuration.html') }}">Default Configuration</a></li>
                 <li><a href="{{ url('configuration-loader/service-configuration.html') }}">Services & Factories</a></li>
@@ -48,10 +50,11 @@
             </ul>
         </li>
         <li>
-            <a href="">Modules</a>
+            <a href="{{ url('modules/defining-a-module.html') }}">Modules</a>
             <ul>
                 <li><a href="{{ url('modules/defining-a-module.html') }}">Defining a Module</a></li>
                 <li><a href="{{ url('modules/loading-modules.html') }}">Loading Modules</a></li>
+                <li><a href="{{ url('modules/module-path-resolver.html') }}">Module Path Resolver</a></li>
                 <li><a href="{{ url('modules/module-config-file.html') }}">Module configuration</a></li>
                 <li><a href="{{ url('modules/example-module-config.html') }}">Example Config file</a></li>
                 <li><a href="{{ url('modules/module-hooks.html') }}">Module Invokables</a></li>

@@ -26,4 +26,3 @@ module:
     - asset-exposer
 ```
 
-`Overview of how a module is loaded, paths it can load from and namespace loading`
