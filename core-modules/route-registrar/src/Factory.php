@@ -14,6 +14,7 @@ class Factory implements FactoryInterface
         $router = &$app['router'];
         $registrar->setRouter($router);
         $registrar->setApp($app);
+        $registrar->setEventManager($app['event-manager']);
 
         return $registrar;
     }

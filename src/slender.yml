@@ -28,6 +28,7 @@ view-paths:
 # Core modules required by Slender
 #
 modules:
+  - Slender\Module\Controllers
   - Slender\Module\RouteRegistrar
 
 ##

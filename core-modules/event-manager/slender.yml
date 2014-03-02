@@ -1,0 +1,8 @@
+module:
+  name: event-manager
+  namespace: Slender\Module\EventManager
+  version: 1.0.0
+  author: Alan Pich <https://github.com/alanpich>
+
+services:
+  event-manager: Slender\Module\EventManager\Factory

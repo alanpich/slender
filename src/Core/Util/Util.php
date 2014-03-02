@@ -1,23 +1,20 @@
 <?php
-namespace Slender\Util;
+namespace Slender\Core\Util;
 
 class Util
 {
 
-    public static function merge($target,$new)
+
+
+
+    public function implementsInterface($subjectClass,$interfaceName)
     {
-        foreach($new as $key => $value){
-            if(!isset($target[$key])){
-                $target[$key] = $value;
-                continue;
-            }
-            if(is_array($target[$key])){
-                $target[$key] = self::merge($target[$key],$value);
-                continue;
-            }
-            $target[$key] = $key;
+        if(!is_string($subjectClass)){
+            $subjectClass = get_class($subjectClass);
         }
-        return $target;
+
+        $reflector = new \ReflectionClass($subjectClass);
+        return $reflector->implementsInterface($interfaceName);
     }
 
 } 

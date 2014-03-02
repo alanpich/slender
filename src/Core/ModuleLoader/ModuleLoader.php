@@ -51,6 +51,10 @@ class ModuleLoader implements ModuleLoaderInterface
         $mConf = $conf['module'];
         unset($conf['module']);
 
+
+        $this->loadedModules[$module] = true;
+
+
         // Check for any dependencies
         if (isset($mConf['requires'])) {
             foreach ($mConf['requires'] as $dependency) {
@@ -106,7 +110,6 @@ class ModuleLoader implements ModuleLoaderInterface
                 $this->classLoader->registerNamespace($ns, $path, 'psr-4');
             }
         }
-
 
     }
 

@@ -13,7 +13,7 @@ modulePaths:
 
 routes:
   home:
-    route: /
+    route: /(:id)
     controller: Skeleton\HomepageController
     action: index
     methods:

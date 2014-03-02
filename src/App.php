@@ -14,7 +14,7 @@ use Slender\Interfaces\ModuleInvokableInterface;
 use Slender\Interfaces\ModuleLoaderInterface;
 use Slender\Interfaces\FactoryInterface;
 use Slender\Interfaces\ModuleResolverInterface;
-use Slender\Util\Util;
+use Slender\Core\Util\Util;
 
 class App extends \Slim\App
 {
@@ -47,10 +47,10 @@ class App extends \Slim\App
          */
         $loader = $this['config-finder'];
         $userSettings = array();
-        foreach($loader->findFiles() as $path){
-            if(is_readable($path)){
+        foreach ($loader->findFiles() as $path) {
+            if (is_readable($path)) {
                 $parsedFile = $parser->parseFile($path);
-                if($parsedFile !== false){
+                if ($parsedFile !== false) {
                     $this->addConfig($parsedFile);
                 }
             } else {
@@ -61,31 +61,31 @@ class App extends \Slim\App
         /**
          * Load modules
          */
-        foreach($this['settings']['modules'] as $module){
+        foreach ($this['settings']['modules'] as $module) {
             $this['module-loader']->loadModule($module);
         }
 
         /**
          * Register Services & Factories
          */
-        foreach($this['settings']['services'] as $service => $class){
-            $this->registerService($service,$class);
+        foreach ($this['settings']['services'] as $service => $class) {
+            $this->registerService($service, $class);
         }
 
         /**
          * Register Factory
          */
-        foreach($this['settings']['factories'] as $factory => $class){
-            $this->registerFactory($factory,$class);
+        foreach ($this['settings']['factories'] as $factory => $class) {
+            $this->registerFactory($factory, $class);
         }
 
         /**
          * Call module Invokables
          */
         $moduleConfigs = $this['settings']['module-config'];
-        foreach($moduleConfigs as $mConf){
-            if(isset($mConf['invoke'])){
-                foreach($mConf['invoke'] as $class){
+        foreach ($moduleConfigs as $mConf) {
+            if (isset($mConf['invoke'])) {
+                foreach ($mConf['invoke'] as $class) {
                     /** @var ModuleInvokableInterface $obj */
                     $obj = new $class;
                     $obj->invoke($this);
@@ -102,18 +102,20 @@ class App extends \Slim\App
      * is returned every time the identifier is requested
      *
      * @param string $service identifier
-     * @param string $class Class to create
+     * @param string $class   Class to create
      */
-    public function registerService($service,$class)
+    public function registerService($service, $class)
     {
-        $this[$service] = $this->share(function($app) use ($class){
-            $inst = new $class;
-            if($inst instanceof FactoryInterface){
-                return $inst->create($app) ;
-            } else {
-                return $inst;
+        $this[$service] = $this->share(
+            function ($app) use ($class) {
+                $inst = new $class;
+                if ($inst instanceof FactoryInterface) {
+                    return $inst->create($app);
+                } else {
+                    return $inst;
+                }
             }
-        });
+        );
     }
 
     /**
@@ -122,13 +124,13 @@ class App extends \Slim\App
      * time they are called
      *
      * @param string $factory identifier
-     * @param string $class Class to create
+     * @param string $class   Class to create
      */
-    public function registerFactory($factory,$class)
+    public function registerFactory($factory, $class)
     {
-        $this[$factory] = function($app) use ($class){
+        $this[$factory] = function ($app) use ($class) {
             $obj = new $class;
-            if($obj instanceof FactoryInterface){
+            if ($obj instanceof FactoryInterface) {
                 return $obj->create($app);
             } else {
                 return $obj;
@@ -148,17 +150,17 @@ class App extends \Slim\App
         $appConfig =& $this['settings'];
 
         // Iterate through new top-level keys
-        foreach($conf as $key => $value){
+        foreach ($conf as $key => $value) {
 
             // If doesnt exist yet, create it
-            if(!isset($appConfig[$key])){
+            if (!isset($appConfig[$key])) {
                 $appConfig[$key] = $value;
                 continue;
             }
 
             // If it exists, and is already an array
-            if(is_array($appConfig[$key])){
-                $mergedArray = array_merge_recursive($appConfig[$key],$value);
+            if (is_array($appConfig[$key])) {
+                $mergedArray = array_merge_recursive($appConfig[$key], $value);
                 $appConfig[$key] = $mergedArray;
                 continue;
             }
@@ -176,6 +178,10 @@ class App extends \Slim\App
      */
     protected function registerCoreServices()
     {
+        $this['util'] = function ($app) {
+            return new \Slender\Core\Util\Util();
+        };
+
         /**
          * The configParser is used to translate various file
          * formats into PHP arrays
@@ -183,13 +189,15 @@ class App extends \Slim\App
          * @var ConfigFileParserInterface
          * @return \Slender\Core\ConfigParser\Stack
          */
-        $this['config-parser'] = $this->share(function(){
+        $this['config-parser'] = $this->share(
+            function () {
                 return new ConfigParser\Stack(array(
                     'yml' => new ConfigParser\YAML,
                     'php' => new ConfigParser\PHP,
                     'json' => new ConfigParser\JSON,
                 ));
-            });
+            }
+        );
 
 
         /**
@@ -199,18 +207,19 @@ class App extends \Slim\App
          * @var ConfigFileFinderInterface
          * @return ConfigFileFinderInterface
          */
-        $this['config-finder'] = $this->share(function($app) {
+        $this['config-finder'] = $this->share(
+            function ($app) {
                 $configLoader = new \Slender\Core\ConfigFinder\ConfigFinder(
                     $this['settings']['config']['autoload'],
                     $this['settings']['config']['files']
                 );
                 return $configLoader;
-            });
+            }
+        );
 
 
-
-        $this->registerService('autoloader','Slender\Core\Autoloader\AutoloaderFactory');
-        $this->registerService('autoloader.psr4','Slender\Core\Autoloader\PSR4Factory');
+        $this->registerService('autoloader', 'Slender\Core\Autoloader\AutoloaderFactory');
+        $this->registerService('autoloader.psr4', 'Slender\Core\Autoloader\PSR4Factory');
 
 
         /**
@@ -220,17 +229,19 @@ class App extends \Slim\App
          * @var ModuleResolverInterface
          * @return \Slender\Core\ModuleResolver\ResolverStack
          */
-        $this['module-resolver'] = $this->share(function($app){
+        $this['module-resolver'] = $this->share(
+            function ($app) {
                 $stack = new ResolverStack(new NamespaceResolver);
                 $stack->setConfigParser($app['config-parser']);
-                foreach($this['settings']['modulePaths'] as $path){
-                    if(is_readable($path)){
+                foreach ($this['settings']['modulePaths'] as $path) {
+                    if (is_readable($path)) {
                         $stack->prependResolver(new DirectoryResolver($path));
                     }
                 }
 
                 return $stack;
-            });
+            }
+        );
 
         /**
          * ModuleLoader is used to load modules & their dependencies,
@@ -240,7 +251,7 @@ class App extends \Slim\App
          * @param \Slender\App $app
          * @return ModuleLoaderInterface
          */
-        $this->registerService('module-loader','Slender\Core\ModuleLoader\Factory');
+        $this->registerService('module-loader', 'Slender\Core\ModuleLoader\Factory');
 
 
 //        $this['autoloader'] = $this->share(function($app){
@@ -251,7 +262,6 @@ class App extends \Slim\App
 //            });
 
     }
-
 
 
 }

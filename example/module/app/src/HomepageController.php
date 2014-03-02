@@ -2,15 +2,13 @@
 namespace Skeleton;
 
 use Slender\App;
+use Slender\Module\Controllers\Controller;
 
-class HomepageController
+class HomepageController extends Controller
 {
-
-    public function index(App $app)
+    public function indexAction($id)
     {
-        $app->render('home',array(
-                'foo' => 'bar'
-            ));
+        //@TODO   This needs to be improved somehow...
+        die($this->get('view')->render('home',array()));
     }
-
 } 

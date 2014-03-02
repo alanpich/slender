@@ -1,0 +1,8 @@
+module:
+  name: route-registrar
+  namespace: Slender\Module\Controllers
+  version: 1.0.0
+  author: Alan Pich <https://github.com/alanpich>
+
+services:
+  event-manager: Slender\Module\EventManager\Factory
