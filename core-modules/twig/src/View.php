@@ -78,10 +78,10 @@ class View extends \Slender\View
      * This method will output the rendered template content
      *
      * @param   string $template The path to the Twig template, relative to the Twig templates directory.
-     * @param null $data
+     * @param array $data
      * @return  void
      */
-    public function render($template, $data = null)
+    public function render($template, array $data = array())
     {
         // Append .twig to end of path
         if(substr($template,-5)!='.twig'){

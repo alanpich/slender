@@ -48,8 +48,9 @@ class DirectoryResolver extends AbstractResolver
             return false;
         }
 
+        $filesIterator = iterator_to_array($files->getIterator());
+        $iterator = array_shift($filesIterator);
 
-        $iterator = $files->getIterator();
-       return array_shift(iterator_to_array($iterator))->getPath();
+        return $iterator->getPath();
     }
 }

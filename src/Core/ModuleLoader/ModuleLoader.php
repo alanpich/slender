@@ -88,8 +88,10 @@ class ModuleLoader implements ModuleLoaderInterface
          * Copy autoloader settings to global collection ready for registering
          *
          */
-        if ($mConf === 'composer' || in_array('composer', $mConf['autoload'])) {
-            require $path . '/vendor/autoload.php';
+
+        $composerAutoload = $path.'/vendor/autoload.php';
+        if(($mConf === 'composer' || in_array('composer',$mConf['autoload'])) && file_exists($composerAutoload)){
+            require $composerAutoload;
         }
 
         if (isset($mConf['autoload']['psr-4'])) {
