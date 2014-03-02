@@ -23,7 +23,21 @@ class SlenderModule implements ModulePathProviderInterface,
         $routes = array();
         foreach($app['settings']['routes'] as $name => $r){
             if(is_array($r) && isset($r['route'])){
+                $group = null;
                 $r['name'] = $name;
+
+                array_walk($routes, function ($value, $key) use (&$group, $name)
+                {
+                    $length = strlen($value['name']);
+                    if (substr($name, 0, $length) === $value['name']) {
+                        $group = $value['route'];
+                    }
+                });
+
+                if (!empty($group)) {
+                    $r['route'] = $group . $r['route'];
+                }
+
                 $routes[] = $r;
             }
         }
