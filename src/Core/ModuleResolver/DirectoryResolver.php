@@ -16,6 +16,7 @@ class DirectoryResolver extends AbstractResolver
 
     /**
      * Constructor
+     *
      * @param string $baseDir Path to search in
      */
     public function __construct($baseDir)
@@ -34,19 +35,21 @@ class DirectoryResolver extends AbstractResolver
     {
         $dir = $this->dir . DIRECTORY_SEPARATOR . $module;
 
-        if(!is_dir($dir)){
+        if (!is_dir($dir)) {
             return false;
         }
 
         $find = new Finder();
         $files = $find->files()
-                    ->in($dir)
-                    ->name('slender.*');
+            ->in($dir)
+            ->name('slender.*');
 
-        if($files->count()<1){
+        if ($files->count() < 1) {
             return false;
         }
 
-       return array_shift(iterator_to_array($files->getIterator()))->getPath();
+
+        $iterator = $files->getIterator();
+       return array_shift(iterator_to_array($iterator))->getPath();
     }
 }

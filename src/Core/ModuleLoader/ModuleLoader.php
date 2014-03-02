@@ -22,50 +22,53 @@ class ModuleLoader implements ModuleLoaderInterface
 
     public function loadModule($module)
     {
-        if(isset($this->loadedModules[$module])){
+        if (isset($this->loadedModules[$module])) {
             return;
         }
 
         // Resolve module path
         $path = $modulePath = $this->resolver->getPath($module);
 
-        if($path === false){
+        if ($path === false) {
             throw new ModuleLoaderException("Unable to resolve path to $module");
         }
 
         // Get module config content
-        $conf = array_merge_recursive(array(
-            'module' => array(
-                'name' => null,
-                'version' => '0.0.0',
-                'author' => 'unknown',
-                'autoload' => [],
-                'invoke' => []
+        $conf = array_merge_recursive(
+            array(
+                'module' => array(
+                    'name' => null,
+                    'version' => '0.0.0',
+                    'author' => 'unknown',
+                    'autoload' => [],
+                    'invoke' => []
+                ),
             ),
-        ),$this->resolver->getConfig($module));
+            $this->resolver->getConfig($module)
+        );
 
         // Extract module block from config
         $mConf = $conf['module'];
         unset($conf['module']);
 
         // Check for any dependencies
-        if(isset($mConf['requires'])){
-            foreach($mConf['requires'] as $dependency){
+        if (isset($mConf['requires'])) {
+            foreach ($mConf['requires'] as $dependency) {
                 $this->loadModule($dependency);
             }
         }
 
         // Check for an auto-invoke class
         // __NAMESPACE__\SlenderModule
-        if(isset($mConf['namespace']) && class_exists($mConf['namespace'].'\\SlenderModule')){
-            $class = $mConf['namespace'].'\\SlenderModule';
+        if (isset($mConf['namespace']) && class_exists($mConf['namespace'] . '\\SlenderModule')) {
+            $class = $mConf['namespace'] . '\\SlenderModule';
             $reflector = new \ReflectionClass($class);
             $interfaces = $reflector->getInterfaceNames();
-            if(!is_array($interfaces)){
+            if (!is_array($interfaces)) {
                 $interface = array($interfaces);
             }
-            if(in_array('Slender\Interfaces\ModuleInvokableInterface',$interfaces)){
-                $mConf['invoke'][] = $mConf['namespace'].'\\SlenderModule';
+            if (in_array('Slender\Interfaces\ModuleInvokableInterface', $interfaces)) {
+                $mConf['invoke'][] = $mConf['namespace'] . '\\SlenderModule';
             }
         }
 
@@ -73,30 +76,32 @@ class ModuleLoader implements ModuleLoaderInterface
         $this->addConfig($conf);
 
         // Store module config
-        $this->addConfig(array(
-               'module-config' => array(
-                   $module => $mConf
-               )
-            ));
+        $this->addConfig(
+            array(
+                'module-config' => array(
+                    $module => $mConf
+                )
+            )
+        );
 
         /**
          * Copy autoloader settings to global collection ready for registering
          *
          */
-        if($mConf === 'composer' || in_array('composer',$mConf['autoload'])){
-            require $path.'/vendor/autoload.php';
+        if ($mConf === 'composer' || in_array('composer', $mConf['autoload'])) {
+            require $path . '/vendor/autoload.php';
         }
 
-        if(isset($mConf['autoload']['psr-4'])){
-            foreach($mConf['autoload']['psr-4'] as $ns => $path){
-                $path = $modulePath.DIRECTORY_SEPARATOR.preg_replace("/^\.\//","",$path);
-                $this->classLoader->registerNamespace($ns,$path,'psr-4');
+        if (isset($mConf['autoload']['psr-4'])) {
+            foreach ($mConf['autoload']['psr-4'] as $ns => $path) {
+                $path = $modulePath . DIRECTORY_SEPARATOR . preg_replace("/^\.\//", "", $path);
+                $this->classLoader->registerNamespace($ns, $path, 'psr-4');
             }
         }
-        if(isset($mConf['autoload']['psr-0'])){
-            foreach($mConf['autoload']['psr-0'] as $ns => $path){
-                $path = $modulePath.DIRECTORY_SEPARATOR.preg_replace("/^\.\//","",$path);
-                $this->classLoader->registerNamespace($ns,$path,'psr-4');
+        if (isset($mConf['autoload']['psr-0'])) {
+            foreach ($mConf['autoload']['psr-0'] as $ns => $path) {
+                $path = $modulePath . DIRECTORY_SEPARATOR . preg_replace("/^\.\//", "", $path);
+                $this->classLoader->registerNamespace($ns, $path, 'psr-4');
             }
         }
 
@@ -115,17 +120,17 @@ class ModuleLoader implements ModuleLoaderInterface
         $appConfig =& $this->config;
 
         // Iterate through new top-level keys
-        foreach($conf as $key => $value){
+        foreach ($conf as $key => $value) {
 
             // If doesnt exist yet, create it
-            if(!isset($appConfig[$key])){
+            if (!isset($appConfig[$key])) {
                 $appConfig[$key] = $value;
                 continue;
             }
 
             // If it exists, and is already an array
-            if(is_array($appConfig[$key])){
-                $mergedArray = array_merge_recursive($appConfig[$key],$value);
+            if (is_array($appConfig[$key])) {
+                $mergedArray = array_merge_recursive($appConfig[$key], $value);
                 $appConfig[$key] = $mergedArray;
                 continue;
             }
@@ -136,7 +141,6 @@ class ModuleLoader implements ModuleLoaderInterface
             $appConfig[$key] = $value;
         }
     }
-
 
 
     public function setResolver(ModuleResolverInterface $resolver)
@@ -164,7 +168,6 @@ class ModuleLoader implements ModuleLoaderInterface
     {
         return $this->classLoader;
     }
-
 
 
 }
