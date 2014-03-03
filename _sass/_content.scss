@@ -16,6 +16,9 @@
     position:relative;
     cursor: default;
 
+    margin-top: 2em;
+    margin-bottom: .5em;
+
     &:before {
       content: '\f078';
 //      content: '\f054';

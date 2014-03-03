@@ -169,35 +169,92 @@
                 
                     <h1>Modules</h1>
                     <p>Modules help to break up an app into managable blocks of functionality or scope. Most frameworks support some sort of modularization of code, but many require a large amount of boilerplate code.</p>
+<p>Slender aims to made modularization of code as easy as possible. All
+that is required for a module is a directory to call it&#39;s own, and a
+<code>slender.yml</code> config file.</p>
 <h2 id="configuration">Configuration</h2>
 <p>All modules MUST have a module.yml config file in their root directory. This is used to resolve the module paths, autoload classes and add configuration to the application. An example module config file</p>
-<pre><code class="lang-yaml"># /modules/my-module/module.yml
+<pre><code class="lang-yaml"># /modules/my-module/slender.yml
 module:
     name: my-module
-    namespace: MyModule
+    namespace: MyVendor\\MyModule
     autoload:
         psr-4:
             MyModule: ./src
+</code></pre>
+<h2 id="extending-application-settings">Extending application settings</h2>
+<p>A modules&#39;s slender.yml config file can also contain other settings,
+outside the <code>module</code> block. This can be used to overload or merge
+with existing application configuration, such as adding additional
+services to register, or defining a new http route.</p>
+<pre><code class="lang-yaml">module:
+  name: my-module
+  ...
 
-# Services are registered as Shared resources in the Slim DI container
-# If the class registered implements Slender\FactoryInterface then
-# the factory will be run to create the instance, otherwise the
-# class listed will be initialized
+##
+# Any values placed outside the module block
+# will automatically be merged with the application
+# config at the time the module is loaded
+#
 services:
-    MyService: MyModule\ServiceFactory
-
-# Factories are registered as resources in the Slim DI container.
-# A new instance is created each time this object is requested.
-# If the class registered implements FactoryInterface, then the
-# object returned will be the result of the factory method, not
-# the factory class
-factories:
-    NewObject:  MyModule\Object
+  foo-service: MyVendor\MyModule\FooServiceFactory
 </code></pre>
 <h2 id="bootstrapping">Bootstrapping</h2>
 <p>Modules often need to listen to application lifecycle events etc..
-When loading a module, Slender will look for a class called Slender
-in the namespace defined in the module</p>
+When loading a module, Slender will look for a class called SlenderModule
+in the namespace defined in the module and try to load it:</p>
+<pre><code class="lang-php">// Vague pseudocode, but you get the idea...
+$class = $module-&gt;namespace . &quot;\SlenderModule
+if(class_exists($class)){
+    if($class instanceof Slender\Interfaces\ModuleInvokableInterface){
+        $bootstrap = new $class();
+        $bootstrap-&gt;invoke( Slender\App $app );
+    }
+}
+</code></pre>
+<p>You can also configure additional classes to be invoked on application
+startup by adding them to the <code>invoke</code> block of a module config file.</p>
+<pre><code class="lang-yaml"># /modules/my-module/slender.yml
+module:
+  namespace: MyVendor\MyModule
+  ...
+  ##
+  # Array of classes to invoke on startup. Must implement
+  #
+  #    Slender\Interfaces\ModuleInvokableInterface
+  #
+  # If class __MODULE_NAMSPACE__\SlenderModule exists, and
+  # also implements the interface, then this class is
+  # prepended to the invoke array
+  #
+  invoke:
+    # MyVendor\MyModule\SlenderModule  is added automatically
+    - MyVendor\MyModule\SomeOtherInvokable
+</code></pre>
+<h2 id="interacting-with-slender">Interacting with Slender</h2>
+<p>When Slender invokes a class implementing <code>Slender\Interfaces\ModuleInvokableInterface</code>
+it passes the <code>Slender\App</code> instance so the invokable has full access to both Slender
+and the underlying Slim API. This might be handy for people migrating Slim code to Slender.</p>
+<pre><code class="lang-php">class MyClass implements Slender\Interfaces\ModuleInvokableInterface
+{
+    public function invoke(Slender\App $app){
+
+        // You can dig straight into the Slim API
+        $app-&gt;get(&#39;/foo/:bar&#39;,function($bar) {
+            die( $bar );
+        });
+
+        // Or use a service from the DI container
+        $foo_cache_value = $app[&#39;cache&#39;]-&gt;get(&#39;foo&#39;);
+
+        // Or hook a Slim runtime event
+        $app-&gt;hook(&#39;slim.before.dispatch&#39;,function(){
+            die(&quot;Died before dispatch&quot;);
+        });
+
+    }
+}
+</code></pre>
 
                 
             </div>

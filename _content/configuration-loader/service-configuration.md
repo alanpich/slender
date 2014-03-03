@@ -17,11 +17,23 @@ Registering services from config files is easy, simply add them to the
 `services` block in the form $identifier=>$class
 
 ```yaml
-...
+# Services are registered as Shared resources in the Slim DI container
+# If the class registered implements Slender\FactoryInterface then
+# the factory will be run to create the instance, otherwise the
+# class listed will be initialized
 services:
-    MyService: MyVendor/MyNamespace/MyService
-    OtherService: MyVendor/MyNamespace/OtherServiceFactory
+    MyService: MyModule\ServiceFactory
+
+# Factories are registered as resources in the Slim DI container.
+# A new instance is created each time this object is requested.
+# If the class registered implements FactoryInterface, then the
+# object returned will be the result of the factory method, not
+# the factory class
+factories:
+    NewObject:  MyModule\Object
 ```
+
+
 
 Once a service is registered, you can retrieve it using the $app IoC container:
 
