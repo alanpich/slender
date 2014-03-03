@@ -54,15 +54,14 @@
     <script>
     $(document).ready(function () {
         $labels = $('.tree .folder label');
-        $labels.each(function(){
-            $(this).parent().children('ul').toggle(0)
-        });
         $labels.click(function () {
             $(this).parent()
                     .toggleClass('open')
                     .children('ul').toggle(100);
+        });
 
-            console.log('clicj');
+        $labels.each(function(){
+            $(this).parent().children('ul').toggle(0)
         });
     });
 </script>

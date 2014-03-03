@@ -153,11 +153,15 @@
 
 
     $(document).ready(function(){
-        var h2s = $('#page h2');
+        var h2s = $('#page h2'),
+            width = $(window).outerWidth();
+        console.log(width);
         h2s.each(function(){
             $el = $(this);
-
             $el.click(h2CollapseToggle);
+            if(width<=479){
+                $el.click();
+            }
         });
     });
 
