@@ -1,0 +1,46 @@
+#homepage {
+
+  position: relative;
+
+  h1.brand {
+    font-size: 4em;
+    font-weight: bold;
+
+    padding-bottom:.2em;
+    margin-bottom: .1em;
+
+    span {
+      font-size:.4em;
+      display:block;
+    }
+  }
+
+
+  .badges {
+    margin: 0;
+    border: 0 solid #555;
+//    border-bottom-width: 1px;
+//    border-top-width: 1px;
+    line-height:1.4em;
+    vertical-align: middle;
+    height: 30px;
+    padding-top:4px;
+    position: relative;
+
+    a,
+    iframe {
+      height: 20px;
+      display: inline-block;
+    }
+
+    a {
+      position: relative;
+      top: -0.43em;
+    }
+
+    a img {
+      vertical-align:bottom !important;
+    }
+
+  }
+}

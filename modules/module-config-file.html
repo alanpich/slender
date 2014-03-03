@@ -66,21 +66,22 @@
     <!-- top navbar -->
     <div id="header" class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".sidebar-nav">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <div class="navbar-brand">
-                    <a title="Link to the Slender GitHub repository"
-                       href="https://github.com/alanpich/slender"
-                       target="_blank">Slender</a>/docs
-                </div>
-
-            </div>
-
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".sidebar-nav">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <div class="navbar-brand">
+            <a title="Link to the Slender GitHub repository"
+               href="https://github.com/alanpich/slender"
+               target="_blank">Slender</a>/docs
         </div>
+
+    </div>
+
+</div>
+
     </div>
 
     <div class="container">
@@ -89,6 +90,9 @@
             <!-- sidebar -->
             <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
                 <ul class="tree">
+    <li>
+        <a href="../">Overview</a>
+    </li>
     <li class="folder">
         <label>Introduction</label>
         <ul>
@@ -164,8 +168,9 @@
 
             <!-- main area -->
             <div class="col-xs-12 col-sm-9" id="page">
-                <h1>Module Config Files</h1>
-                <p><code>Describe module config file and available options</code></p>
+                
+                    <h1>Module Config Files</h1>
+                    <p><code>Describe module config file and available options</code></p>
 <h2 id="declaring-dependencies">Declaring Dependencies</h2>
 <p>Modules can sometimes rely on other modules as dependencies. Module dependencies are
 loaded before the dependant module automatically. To define module dependencies, add
@@ -177,7 +182,7 @@ module:
     - asset-exposer
 </code></pre>
 
-
+                
             </div>
             <!-- /.col-xs-12 main -->
         </div>

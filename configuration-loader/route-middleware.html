@@ -66,21 +66,22 @@
     <!-- top navbar -->
     <div id="header" class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".sidebar-nav">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <div class="navbar-brand">
-                    <a title="Link to the Slender GitHub repository"
-                       href="https://github.com/alanpich/slender"
-                       target="_blank">Slender</a>/docs
-                </div>
-
-            </div>
-
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".sidebar-nav">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <div class="navbar-brand">
+            <a title="Link to the Slender GitHub repository"
+               href="https://github.com/alanpich/slender"
+               target="_blank">Slender</a>/docs
         </div>
+
+    </div>
+
+</div>
+
     </div>
 
     <div class="container">
@@ -89,6 +90,9 @@
             <!-- sidebar -->
             <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
                 <ul class="tree">
+    <li>
+        <a href="../">Overview</a>
+    </li>
     <li class="folder">
         <label>Introduction</label>
         <ul>
@@ -164,8 +168,9 @@
 
             <!-- main area -->
             <div class="col-xs-12 col-sm-9" id="page">
-                <h1>Route Middleware</h1>
-                <p>Route Middleware can&#39;t currently be controller via config files due to not being able to write
+                
+                    <h1>Route Middleware</h1>
+                    <p>Route Middleware can&#39;t currently be controller via config files due to not being able to write
 closures in text files. Until a brainwave strikes, this page will hold ideas and concepts
 for discussion.</p>
 <h3 id="idea-1-simplified-api-access">Idea #1 - Simplified API access</h3>
@@ -195,7 +200,7 @@ class MyMiddleware implements MiddlewareInterface {
 }
 </code></pre>
 
-
+                
             </div>
             <!-- /.col-xs-12 main -->
         </div>

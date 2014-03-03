@@ -3,15 +3,10 @@ title: Example Module Config Files
 ---
 
 Here are example module configuration files in all supported languages
-- [PHP](#php)
-- [YAML](#yaml)
-- [JSON](#json)
 
 
-## Examples
 
-
-### YAML
+## YAML
 ```yaml
 ########################################
 #  Example Module config file
@@ -46,7 +41,7 @@ module:
 
 
 
-### PHP
+## PHP
 ```php
 <?php
 /**
@@ -92,7 +87,7 @@ return array(
 ```
 
 
-### JSON
+## JSON
 ```javascript
 // ./module/my-module/slender.module.json
 {

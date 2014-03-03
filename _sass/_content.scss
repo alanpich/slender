@@ -14,16 +14,28 @@
   h2 {
     border-bottom: 1px solid #eee;
     position:relative;
+    cursor: default;
 
     &:before {
-      content: '\f054';
+      content: '\f078';
+//      content: '\f054';
       font-family: 'FontAwesome';
       font-size:0.6em;
       line-height: 1.8em;
       color: #ddd;
       position: absolute;
-      left: -1em;
+      left: -1.3em;
       top: 1px;
+      -webkit-transition: all 0.3s
+    }
+
+    &.collapsed:before {
+      -webkit-transform: rotate(-90deg);
+      -webkit-transform-origin: center center;
+    }
+
+    &.collapsed:hover:before {
+      color: #88f;
     }
 
   }

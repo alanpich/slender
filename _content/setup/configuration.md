@@ -2,9 +2,6 @@
 title: Configuration Options
 ---
 
-## Configuration Options
-
-
 
 ### config.autoload
 An array of directory paths which should be scanned for config files on

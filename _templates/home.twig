@@ -1,0 +1,37 @@
+{% extends "default.twig" %}
+
+{% block page %}
+    <div id="homepage">
+
+        <h1 class="brand">
+            Slender
+            <span>Slim, but with a bit more meat.</span>
+        </h1>
+
+        <div class="badges">
+            <iframe src="http://ghbtns.com/github-btn.html?user=alanpich&repo=slender&type=fork&count=false"
+                    allowtransparency="true" frameborder="0" scrolling="0" width="62" height="20"></iframe>
+            <a href="https://travis-ci.org/alanpich/slender" target="_blank">
+                <img src="https://travis-ci.org/alanpich/slender.png?branch=master"/>
+            </a>
+            <a href="https://packagist.org/packages/slender/slender" target="_blank">
+                <img src="https://poser.pugx.org/slender/slender/v/stable.png"/>
+            </a>
+            <a href="https://github.com/alanpich/slender/blob/master/LICENSE" target="_blank">
+                <img src="https://poser.pugx.org/slender/slender/license.png"/>
+            </a>
+{#
+            <a href="https://packagist.org/packages/slender/slender">
+                <img src="http://img.shields.io/packagist/v/slender/slender.svg"/>
+            </a>
+#}
+{#
+            <a href="https://packagist.org/packages/slender/slender">
+                <img src="https://poser.pugx.org/slender/slender/downloads.png"/>
+            </a>
+#}
+        </div>
+
+
+    </div>
+{% endblock %}

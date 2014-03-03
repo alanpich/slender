@@ -66,21 +66,22 @@
     <!-- top navbar -->
     <div id="header" class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".sidebar-nav">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <div class="navbar-brand">
-                    <a title="Link to the Slender GitHub repository"
-                       href="https://github.com/alanpich/slender"
-                       target="_blank">Slender</a>/docs
-                </div>
-
-            </div>
-
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".sidebar-nav">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <div class="navbar-brand">
+            <a title="Link to the Slender GitHub repository"
+               href="https://github.com/alanpich/slender"
+               target="_blank">Slender</a>/docs
         </div>
+
+    </div>
+
+</div>
+
     </div>
 
     <div class="container">
@@ -89,6 +90,9 @@
             <!-- sidebar -->
             <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
                 <ul class="tree">
+    <li>
+        <a href="../">Overview</a>
+    </li>
     <li class="folder">
         <label>Introduction</label>
         <ul>
@@ -164,25 +168,37 @@
 
             <!-- main area -->
             <div class="col-xs-12 col-sm-9" id="page">
-                <h1>Installation &amp; Setup</h1>
-                <h1 id="installation-setup">Installation &amp; Setup</h1>
-<h3 id="via-composer">via Composer</h3>
-<pre><code class="lang-bash">$&gt;  php composer.phar require slender/slender
+                
+                    <h1>Installation &amp; Setup</h1>
+                    <h2 id="overview">Overview</h2>
+<p>Slender is an extension of the excellent <a href="http://slimframework.com">Slim</a> framework. It provides a few
+additional utilities to assist with modular application development, while trying to
+avoid some of the bloat &amp; bootstrapping incurred with some larger frameworks like Zend or Symfony.</p>
+<p>Slender extends Slim directly, and as such can be used in exactly the same way.</p>
+<pre><code class="lang-php">$app = new Slender\App();
+$app-&gt;get(&#39;/&#39;,function() use($app){
+    echo &#39;HELLO WORLD&#39;;
+}
+$app-&gt;run();
 </code></pre>
-<h3 id="skeleton-application-not-iplemented-yet-">Skeleton Application <code>NOT IPLEMENTED YET</code></h3>
-<p>Slender provides a skeleton application that can be installed via composer.</p>
-<pre><code class="lang-bash">$&gt; php composer.phar create-project slender/skeleton path/to/project
-</code></pre>
-<h3 id="yeoman-generator-not-iplemented-yet-">Yeoman Generator <code>NOT IPLEMENTED YET</code></h3>
-<p>Use a generator to skeleton your next app</p>
-<pre><code class="lang-bash"># Creates a new app skeleton at path/to/project
-$&gt; yo slender:app path/to/project
+<h2 id="the-utilities">The Utilities</h2>
+<p>Broadly speaking, Slender currently provides 2 utilities to help with application development.</p>
+<h3 id="configuration-loader">Configuration Loader</h3>
+<p>The Configuration loader provide a mechanism for defining application config in arrays. Multiple configuration
+files will automatically be merged together. Files can be written as PHP Arrays, YML or JSON.</p>
+<p>The configuration loaders also provide several extra config settings to speed things up:</p>
+<h4 id="service-definitions">Service definitions</h4>
+<p>Services &amp; Factories can be defined in config that will be automatically registered to the
+Dependency Injection container.</p>
+<h4 id="route-definitions">Route definitions</h4>
+<p>HTTP Routes can also be defined in config, and will be automatically registered on application startup.</p>
+<h3 id="modules">Modules</h3>
+<p>Slender has a module system built in to make it easier to load additional functionality into your application
+while keeping the codebase tidy and managable. The only requirement of a module is a config file, and can be
+loaded by path (for local modules) or by namespace (for 3rd-party/composer-installed modules).
+For more information on modules, see the <a href="modules">Modules</a> section.</p>
 
-# Creates a new modules skeleton at path/to/module
-$&gt; yo slender:module path/to/module
-</code></pre>
-
-
+                
             </div>
             <!-- /.col-xs-12 main -->
         </div>
