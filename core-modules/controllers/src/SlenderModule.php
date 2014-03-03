@@ -25,7 +25,6 @@ class SlenderModule implements ModuleInvokableInterface,
                 }
             }
         );
-
     }
 
     /**

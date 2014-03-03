@@ -26,18 +26,17 @@ class SlenderModule implements ModulePathProviderInterface,
                 $group = null;
                 $r['name'] = $name;
 
-                array_walk(
-                    $routes,
-                    function ($value, $key) use (&$group, $name) {
-                        $length = strlen($value['name']);
-                        if (substr($name, 0, $length) === $value['name']) {
-                            $group = $value['route'];
-                        }
+                array_walk($routes, function ($value, $key) use (&$group, $name)
+                {
+                    $length = strlen($value['name']);
+                    if (substr($name, 0, $length) === $value['name']) {
+                        $group = $value;
                     }
-                );
+                });
 
                 if (!empty($group)) {
-                    $r['route'] = $group . $r['route'];
+                    $r['route'] = $group['route'] . $r['route'];
+                    $r = array_merge($group, $r);
                 }
 
                 $routes[] = $r;
