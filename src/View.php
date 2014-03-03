@@ -1,5 +1,11 @@
 <?php
 /**
+ * Slender - Slim, but with a bit more meat
+ *
+ * This class is mostly lifted directly from Slim\View,
+ * with a few minor changes to allow mutliple template
+ * paths. Original copyright notice maintained below.
+ *
  * Slim - a micro PHP 5 framework
  *
  * @author      Josh Lockhart <info@slimframework.com>
