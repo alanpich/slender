@@ -97,6 +97,7 @@
         <label>Introduction</label>
         <ul>
             <li><a href="setup/overview.html">Overview</a></li>
+            <li><a href="setup/application-process-flow.html">Process Flow</a></li>
             <li><a href="setup/folder-structure.html">Folder Structure</a></li>
             <li><a href="setup/configuration.html">Configuration</a></li>
             <li><a href="setup/app.html">Application Initialization</a></li>
@@ -125,13 +126,10 @@
 
 
     <li class="folder">
-        <label>Core Modules</label>
+        <label>Core Services</label>
         <ul>
             <li><a href="core-modules/introduction.html">Introduction</a></li>
-            <li class="folder">
-                <label>Route Registrar</label>
-                <ul><code>@TODO</code></ul>
-            </li>
+            <li><a href="core-modules/route-registrar.html">Route Registrar</a></li>
             <li class="folder">
                 <label>Service Registrar</label>
                 <ul><code>@TODO</code></ul>
@@ -192,6 +190,31 @@
 
         </div>
 
+        <p>Slender is lightweight but rapid application development framework for PHP (&gt;=5.4)</p>
+<p>Built on top of the excellent <a href="http://slimframework.com">Slim</a> micro-framework, Slender
+aims to provide all the tools you&#39;d expect from a full-blown application framework like
+Zend or Symfony, but without a lot of the bloat and endless bootstrapping that can waste
+a lot of time when trying to add a new feature to your app.</p>
+<h2 id="features">Features</h2>
+<div class="col-md-6">
+    <h4>Configuration Manager</h4>
+    <p>
+        Configure your application using config
+        files in the format you prefer. Currently
+        supporting YAML,JSON and PHP Arrays, config
+        files are merged as they are loaded so
+        overloading or extending settings is a doddle.
+    </p>
+</div>
+<div class="col-md-6">
+    <h4>Module System</h4>
+    <p>
+        Organise your code into modules to group
+        features, functionality or just to keep
+        things tidy. Slender Modules are as easy
+        as writing 3 lines in a text file.
+    </p>
+</div>
 
     </div>
 

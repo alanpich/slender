@@ -1,9 +1,14 @@
 ---
-title: Introduction to the Core Modules
+title: Introduction to the Core Services
 ---
 
 In an effort to eat its own dogfood, the majority of core Slender
-functionality is loaded via the public Module system.
+functionality is loaded via the public Module system. Some services,
+however, are required before the ModuleLoader has been initialized and
+so must be included in the Slender core.
+
+These services are required for Slender to run, but you can override them
+with your own classes as long as they implement the relevant interface.
 
 ## The Services
 

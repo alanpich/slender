@@ -167,47 +167,34 @@
             <!-- main area -->
             <div class="col-xs-12 col-sm-9" id="page">
                 
-                    <h1>Services &amp; Factories</h1>
-                    <p>Slim, and Slender by inheritance, use Pimple as an IoC container. It is very powerful, but can be
-cumbersome to configure. Slender ConfigLoader helps to automate this process by allowing service
-and factory classes to be registered inside config files.</p>
-<h2 id="services">Services</h2>
-<p>Services are singleton class instances that are shared across an
-application. The are lazy-loaded; not created until the first time
-they are asked for.</p>
-<p>Registering services from config files is easy, simply add them to the
-<code>services</code> block in the form $identifier=&gt;$class</p>
-<pre><code class="lang-yaml">...
-services:
-    MyService: MyVendor/MyNamespace/MyService
-    OtherService: MyVendor/MyNamespace/OtherServiceFactory
-</code></pre>
-<p>Once a service is registered, you can retrieve it using the $app IoC container:</p>
-<pre><code class="lang-php">/** @var $app Slender\App */
-$myService = $app[&#39;MyService&#39;];
-$secondTime = $app[&#39;MyService&#39;];
-$myService === $secondTime; // TRUE
-</code></pre>
-<h2 id="factories">Factories</h2>
-<p>Factories work in pretty much the same way as Services, with the exception that
-each time a factory class is requested from the IoC container, a completely new
-instance is returned.</p>
-<p>Registering services from config files is easy, simply add them to the
-<code>factories</code> block in the form $identifier=&gt;$class</p>
-<pre><code class="lang-yaml">...
-factories:
-    NewObject: MyVendor/MyNamespace/MyObject
-</code></pre>
-<p>Once a service is registered, you can retrieve it using the $app IoC container:</p>
-<pre><code class="lang-php">/** @var $app Slender\App */
-$myService = $app[&#39;NewObject&#39;];
-$secondTime = $app[&#39;NewObject&#39;];
-$myService === $secondTime; // FALSE
-</code></pre>
-<h2 id="service-factories">Service Factories</h2>
-<p>If a registered Service or Factory class implements <code>Slender\FactoryInterface</code>, the
-return value of the class&#39; <code>create()</code> method will be used instead of the class itself.</p>
-<p>This allows runtime configuration of service classes</p>
+                    <h1>Application Process Flow</h1>
+                    <p>This is an outline of the process flow that happens when
+a <code>Slender\App</code> instance is created in the normal way.</p>
+<h3 id="application-instance-created">Application instance created</h3>
+<p>An instance of <code>Slender\App</code> is created, passing it the root
+level config options such as where to find the base config file.</p>
+<h3 id="normal-slim-constructor-called">Normal Slim constructor called</h3>
+<p>Slender calls the native <code>Slim\App::__construct</code> method to set
+up the application object ready for use.</p>
+<h3 id="core-slender-services-registered">Core Slender Services registered</h3>
+<p>Registers core services that are required for configuration
+and module loading.</p>
+<h3 id="load-configuration-files">Load configuration files</h3>
+<p>ConfigLoader service searches for and loads config files.
+Each file that it loads are merged in order found into
+the application settings</p>
+<h3 id="load-modules">Load Modules</h3>
+<p>ModuleLoader service resolves paths to all modules required
+by the application, and once found merges their configurations
+into the application settings</p>
+<h3 id="register-services-factories">Register Services &amp; Factories</h3>
+<p>ServiceRegistrar is run to register any configured Services or
+Factories.</p>
+<h3 id="register-routes">Register Routes</h3>
+<p>RouteRegistrar service is run to register any configured http routes.</p>
+<h3 id="invoke-any-module-classes">Invoke any module classes</h3>
+<p>Any invokable module classes are invoked, allowing the modules
+access to the App object before it is run</p>
 
                 
             </div>

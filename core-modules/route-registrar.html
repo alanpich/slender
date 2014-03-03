@@ -167,47 +167,98 @@
             <!-- main area -->
             <div class="col-xs-12 col-sm-9" id="page">
                 
-                    <h1>Services &amp; Factories</h1>
-                    <p>Slim, and Slender by inheritance, use Pimple as an IoC container. It is very powerful, but can be
-cumbersome to configure. Slender ConfigLoader helps to automate this process by allowing service
-and factory classes to be registered inside config files.</p>
-<h2 id="services">Services</h2>
-<p>Services are singleton class instances that are shared across an
-application. The are lazy-loaded; not created until the first time
-they are asked for.</p>
-<p>Registering services from config files is easy, simply add them to the
-<code>services</code> block in the form $identifier=&gt;$class</p>
-<pre><code class="lang-yaml">...
-services:
-    MyService: MyVendor/MyNamespace/MyService
-    OtherService: MyVendor/MyNamespace/OtherServiceFactory
+                    <h1>Route Registrar</h1>
+                    <p><code>Slender\Module\RouteRegistrar</code></p>
+<hr>
+<p>The RouteRegistrar module is bundled within the Slender core and is responsible for
+registering route definitions configured in application settings as actual HTTP
+routes in the application.</p>
+<p>Configuring routes via configuration files makes adding new pages and areas of the
+application lightning-fast and very configurable</p>
+<h2 id="anatomy-of-a-route">Anatomy of a route</h2>
+<p>Routes are what links a request URL to the PHP functionality that should be executed
+when a user visits it. When constructing routes using the RouteRegistrar service,
+a route is comprised of the following fields:</p>
+<h4 id="name">Name</h4>
+<p>A unique identifier representing the route. This is used for accessing the route object
+at a later time, and for nesting routes</p>
+<h4 id="route">Route</h4>
+<p>The URL pattern to match for this route, including any captured params.</p>
+<h4 id="controller">Controller</h4>
+<p>The name of registered Service, or the FQCN of a class to handle the request</p>
+<h4 id="action">Action</h4>
+<p>The name of a method to call on the Controller class</p>
+<h4 id="methods">Methods</h4>
+<p>An array of HTTP method verbs (all caps) that this route is applicable for. Accepts
+any values that $slim-&gt;map()-&gt;via(XXX) would.</p>
+<h4 id="conditions">Conditions</h4>
+<p>Restrict route params by filtering them based on a Regular Expression</p>
+<h2 id="configuring-a-route">Configuring a route</h2>
+<p>All routes are configured under the <code>routes</code> block inside a slender config file.</p>
+<pre><code class="lang-yaml"># /config/slender.yml
+...
+routes:
+  my-route-name:
+    route: /my-route
+    controller: MyController
+    action: index
+    methods:
+      - GET
+      - POST
 </code></pre>
-<p>Once a service is registered, you can retrieve it using the $app IoC container:</p>
-<pre><code class="lang-php">/** @var $app Slender\App */
-$myService = $app[&#39;MyService&#39;];
-$secondTime = $app[&#39;MyService&#39;];
-$myService === $secondTime; // TRUE
+<h2 id="nesting-routes">Nesting routes</h2>
+<p>Routes can be nested (emulating Slim&#39;s group() feature) to form groups of urls inheriting
+from each other.</p>
+<p>Take the following example</p>
+<pre><code class="lang-yaml"># config/slender.yml
+...
+routes:
+  users:
+    route: /users
+    controller: UserController
+    action: index
+    methods:
+        - GET
+        - POST
+  users.user:
+    route: /:id
+    action: user
+    methods:
+        - GET
+        - PUT
+        - DELETE
 </code></pre>
-<h2 id="factories">Factories</h2>
-<p>Factories work in pretty much the same way as Services, with the exception that
-each time a factory class is requested from the IoC container, a completely new
-instance is returned.</p>
-<p>Registering services from config files is easy, simply add them to the
-<code>factories</code> block in the form $identifier=&gt;$class</p>
-<pre><code class="lang-yaml">...
-factories:
-    NewObject: MyVendor/MyNamespace/MyObject
+<p>See how the dot notation is used in the route name to imply that <code>users.user</code> is descended from
+<code>users</code>? That&#39;s exactly how Slender sees it too! Controllers &amp; action properties are inherited
+from the parent so they don&#39;t need to be specified explicitely in the child route definition.</p>
+<p>This means that in the config above, the following urls would be handled</p>
+<pre><code class="lang-http">GET /users
+    - Calls UserController::index()
+POST /users
+    - Calls UserController::index()
+PUT /users
+    - 404 Page Not Found
+
+GET /users/123
+    - Calls UserController::user()
+POST /users/123
+    - 404 Page Not Found
 </code></pre>
-<p>Once a service is registered, you can retrieve it using the $app IoC container:</p>
-<pre><code class="lang-php">/** @var $app Slender\App */
-$myService = $app[&#39;NewObject&#39;];
-$secondTime = $app[&#39;NewObject&#39;];
-$myService === $secondTime; // FALSE
+<h2 id="route-parameter-constraints">Route Parameter Constraints</h2>
+<p>Sometime you might wish to restrict a route parameter to make sure it is of the correct type.
+For instance, in the route <code>/users/:id</code> you may wish to ensure <code>$id</code> is an integer.</p>
+<p>Route conditions allow you to specify Regular Expression patterns that must pass for a url
+to satisfy a route definition. The example below requires the <code>$id</code> pattern be composed of
+1 or more numbers and nothing else. THis means that <code>/users/123</code> will match, but <code>/users/fred</code>
+or even <code>/users/12b</code> won&#39;t.</p>
+<pre><code class="lang-yaml"># config/slender.yml
+...
+routes:
+    user:
+        route: /users/:id
+        contraints:
+            id: [0-9]+
 </code></pre>
-<h2 id="service-factories">Service Factories</h2>
-<p>If a registered Service or Factory class implements <code>Slender\FactoryInterface</code>, the
-return value of the class&#39; <code>create()</code> method will be used instead of the class itself.</p>
-<p>This allows runtime configuration of service classes</p>
 
                 
             </div>
