@@ -1,8 +1,6 @@
 ---
-title: Module Hooks
+title: Module Invokables
 ---
-
-# Module Invokables
 
 Modules can also register invokable classes, which are instanciated when
 the module is loaded and passed the `Slender\App` instance in order to

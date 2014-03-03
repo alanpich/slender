@@ -1,8 +1,7 @@
 ---
-title: Service Configuration
+title: Services & Factories
 ---
 
-# Service & Factory Configuration
 
 Slim, and Slender by inheritance, use Pimple as an IoC container. It is very powerful, but can be
 cumbersome to configure. Slender ConfigLoader helps to automate this process by allowing service

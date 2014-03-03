@@ -2,8 +2,6 @@
 title: Module Config Files
 ---
 
-# Module Config Files
-
 `Describe module config file and available options`
 
 

@@ -2,8 +2,6 @@
 title: Route Configuration
 ---
 
-# Configuring HTTP Routes
-
 Slender core comes with the **route-registrar** module which makes it easy to
 set up http routes from within config files.
 
@@ -31,13 +29,9 @@ The **action** method will then be called on the controller instance
 
 ### YAML
 ```yaml
-
-# NOTE: YAML uses '@' instead of ':' for specifying route parameters
-#       This is to avoid conflicts with the yaml parser
-
 routes:
   users:
-    route: /users(/@id)
+    route: /users(/:id)
     controller: UserController
     action: getUser
     methods:

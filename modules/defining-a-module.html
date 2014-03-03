@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html>
 <head>
@@ -6,12 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>Slender; Slim, but with a bit more meat.</title>
 
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,700,600' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Cutive+Mono|PT+Mono' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="../assets/styles/main.css">
-    <link rel="stylesheet" type="text/css" href="../assets/lib/prism/prism.css" />
     
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,700,600' rel='stylesheet'
+          type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Cutive+Mono|PT+Mono' rel='stylesheet' type='text/css'>
 
+
+    
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../assets/lib/prism/prism.css"/>
+    <link rel="stylesheet" href="../assets/styles/main.css">
+
+    <script src="../assets/vendor/jquery/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 
     <script src="../assets/lib/prism/prism.js"></script>
@@ -35,11 +43,11 @@
         };
 
 
-        $(function(){
-            $('#content').find('h1,h2,h3,h4,h5,h6').each(function(){
-                if($(this).attr('id')){
+        $(function () {
+            $('#content').find('h1,h2,h3,h4,h5,h6').each(function () {
+                if ($(this).attr('id')) {
                     var id = $(this).attr('id'),
-                        anchor = document.createElement('a');
+                            anchor = document.createElement('a');
                     anchor.name = id;
                     $(anchor).insertBefore(this);
                 }
@@ -47,192 +55,119 @@
         })
     </script>
 
-    <style>
-        html,body {
-            font-family:Open Sans;
-        }
-
-        h1,h2,h3,h4,h5,h6 {
-            font-weight: 400;
-            margin-top: 1em;
-            margin-bottom: .5em;
-        }
-
-        h3 {
-            padding-bottom: .4em;
-            border-bottom: 1px solid #f4f4f4;
-        }
-
-        pre[class*="language-"] {
-            margin: 2em auto;
-        }
-        code[class*="language-"] {
-            font-family: PT Mono;
-        }
-
-
-        pre.language-tree {
-            line-height: 1.3em;
-        }
-
-        pre.language-tree .branch {
-            color: #bbb;
-            text-shadow: 1px 1px 1px #fff;
-        }
-
-        pre.language-tree .folder {
-            color: #690;
-        }
-
-        pre.language-tree .string {
-            color:#710909;
-        }
-
-        code .token.comment {
-            font-family: PT Mono;
-            font-size:.8em;
-            color: #710909;
-            color:#888;
-        }
-
-        #build-buttons {
-            position: fixed;
-            top: 4px;
-            right: 4px;
-            max-width: 100%;
-            width: 100%;
-            text-align:right;
-        }
-
-
-        #sidebar ul {
-            background: none;
-            margin:0;
-            padding:0;
-            border:none;
-            height: auto;
-            box-shadow: none;
-            width: auto;
-            border-radius: inherit;
-            margin-bottom: 1em;
-        }
-
-        #sidebar ul li {
-            padding:0;
-            margin:0;
-            float:none;
-            display:block;
-            border:none;
-            line-height: auto;
-            width: auto;
-            height: auto;
-        }
-
-        #sidebar ul li a {
-            color: #39c;
-            font-size: inherit;
-            height: auto;
-            padding: 0;
-            line-height: inherit;
-            text-align:inherit;
-            margin-bottom:.5em;
-        }
-
-        #sidebar ul ul {
-            font-size: .8em;
-            padding-left: 2em;
-        }
-
-        #sidebar ul ul li a:before {
-            content: "- ";
-            position: absolute;
-            margin-left:-1em;
-            margin-top:-1px;
-            width: 1em;
-        }
-    </style>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 </head>
 <body>
-<div class="wrapper">
-    <header id="sidebar">
-        <h1 style="font-size:3em">Slender</h1>
-<h3>Slim, but with a bit more meat.</h3>
+<div class="page-container">
+
+    <!-- top navbar -->
+    <div id="header" class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".sidebar-nav">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="navbar-brand">
+                    <a title="Link to the Slender GitHub repository"
+                       href="https://github.com/alanpich/slender"
+                       target="_blank">Slender</a>/docs
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row row-offcanvas row-offcanvas-left">
+
+            <!-- sidebar -->
+            <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+                <ul class="tree">
+    <li class="folder">
+        <label>Introduction</label>
+        <ul>
+            <li><a href="../setup/overview.html">Overview</a></li>
+            <li><a href="../setup/folder-structure.html">Folder Structure</a></li>
+            <li><a href="../setup/configuration.html">Configuration</a></li>
+            <li><a href="../setup/app.html">Application Initialization</a></li>
+        </ul>
+    </li>
+    <li class="folder">
+        <label>Configuration Loader</label>
+        <ul>
+            <li><a href="../configuration-loader/default-configuration.html">Default Configuration</a></li>
+            <li><a href="../configuration-loader/service-configuration.html">Services & Factories</a></li>
+            <li><a href="../configuration-loader/route-configuration.html">Route Definitions</a></li>
+            <li><a href="../configuration-loader/route-middleware.html">Route Middleware</a></li>
+        </ul>
+    </li>
+    <li class="folder">
+        <label>Module System</label>
+        <ul>
+            <li><a href="../modules/defining-a-module.html">Defining a Module</a></li>
+            <li><a href="../modules/loading-modules.html">Loading Modules</a></li>
+            <li><a href="../modules/module-path-resolver.html">Module Path Resolver</a></li>
+            <li><a href="../modules/module-config-file.html">Module configuration</a></li>
+            <li><a href="../modules/example-module-config.html">Example Config file</a></li>
+            <li><a href="../modules/module-hooks.html">Module Invokables</a></li>
+        </ul>
+    </li>
 
 
-<div style="margin-bottom:1em">
-<a href="https://github.com/alanpich/slender/blob/master/LICENSE">
-    <img src="https://poser.pugx.org/slender/slender/license.png"/>
-</a>
-<a href="https://packagist.org/packages/slender/slender">
-    <img src="http://img.shields.io/packagist/v/slender/slender.svg" />
-</a>
+    <li class="folder">
+        <label>Core Modules</label>
+        <ul>
+            <li><a href="../core-modules/introduction.html">Introduction</a></li>
+            <li class="folder">
+                <label>Route Registrar</label>
+                <ul><code>@TODO</code></ul>
+            </li>
+            <li class="folder">
+                <label>Service Registrar</label>
+                <ul><code>@TODO</code></ul>
+            </li>
+            <li class="folder">
+                <label>Event Manager</label>
+                <ul><code>@TODO</code></ul>
+            </li>
+        </ul>
+    </li>
 
 
-<aside id="build-buttons">
-    <a href="https://travis-ci.org/alanpich/slender">
-        <img src="https://travis-ci.org/alanpich/slender.png?branch=master"/>
-    </a>
-    <a href="https://packagist.org/packages/slender/slender">
-        <img src="https://poser.pugx.org/slender/slender/v/stable.png"/>
-    </a>
-    
-</aside>
-</div>
 
-<nav>
-    <ul>
-        <li>
-            <a href="../index.html">Overview</a>
-        </li>
-        <li>
-            <a href="../setup/overview.html">Installation & Usage</a>
-            <ul>
-                <li><a href="../setup/overview.html">Overview</a></li>
-                <li><a href="../setup/folder-structure.html">Folder Structure</a></li>
-                <li><a href="../setup/configuration.html">Configuration</a></li>
-                <li><a href="../setup/app.html">Application Initialization</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="../configuration-loader/default-configuration.html">Configuration Loader</a>
-            <ul>
-                <li><a href="../configuration-loader/default-configuration.html">Default Configuration</a></li>
-                <li><a href="../configuration-loader/service-configuration.html">Services & Factories</a></li>
-                <li><a href="../configuration-loader/route-configuration.html">Route Definitions</a></li>
-                <li><a href="../configuration-loader/route-middleware.html">Route Middleware</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="../modules/defining-a-module.html">Modules</a>
-            <ul>
-                <li><a href="../modules/defining-a-module.html">Defining a Module</a></li>
-                <li><a href="../modules/loading-modules.html">Loading Modules</a></li>
-                <li><a href="../modules/module-path-resolver.html">Module Path Resolver</a></li>
-                <li><a href="../modules/module-config-file.html">Module configuration</a></li>
-                <li><a href="../modules/example-module-config.html">Example Config file</a></li>
-                <li><a href="../modules/module-hooks.html">Module Invokables</a></li>
-            </ul>
-        </li>
-    </ul>
-</nav>
+    <script>
+    $(document).ready(function () {
+        $labels = $('.tree .folder label');
+        $labels.each(function(){
+            $(this).parent().children('ul').toggle(0)
+        });
+        $labels.click(function () {
+            $(this).parent()
+                    .toggleClass('open')
+                    .children('ul').toggle(100);
+
+            console.log('clicj');
+        });
+    });
+</script>
 
 
-<p class="view">
-    <a href="https://github.com/alanpich/slender">View the Project on GitHub
-        <small>alanpich/slender</small>
-    </a>
-</p>
 
 
-    </header>
-    <section id="content" class="lang-yaml">
-        <h2 id="modules">Modules</h2>
-<p>Modules help to break up an app into managable blocks of functionality or scope. Most frameworks support some sort of modularization of code, but many require a large amount of boilerplate code.</p>
-<h4 id="configuration">Configuration</h4>
+
+            </div>
+
+            <!-- main area -->
+            <div class="col-xs-12 col-sm-9" id="page">
+                <h1>Modules</h1>
+                <p>Modules help to break up an app into managable blocks of functionality or scope. Most frameworks support some sort of modularization of code, but many require a large amount of boilerplate code.</p>
+<h2 id="configuration">Configuration</h2>
 <p>All modules MUST have a module.yml config file in their root directory. This is used to resolve the module paths, autoload classes and add configuration to the application. An example module config file</p>
 <pre><code class="lang-yaml"># /modules/my-module/module.yml
 module:
@@ -257,26 +192,76 @@ services:
 factories:
     NewObject:  MyModule\Object
 </code></pre>
-<h4 id="bootstrapping">Bootstrapping</h4>
+<h2 id="bootstrapping">Bootstrapping</h2>
 <p>Modules often need to listen to application lifecycle events etc..
 When loading a module, Slender will look for a class called Slender
 in the namespace defined in the module</p>
 
-    </section>
-    <footer>
-    </footer>
-</div>
-<script src="../javascripts/scale.fix.js"></script>
 
+            </div>
+            <!-- /.col-xs-12 main -->
+        </div>
+        <!--/.row-->
+    </div>
+    <!--/.container-->
+</div>
+<!--/.page-container-->
 
 <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    $(document).ready(function () {
+        $('[data-toggle=offcanvas]').click(function () {
+            $('.row-offcanvas').toggleClass('active');
+        });
+    });
+
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
     ga('create', 'UA-45002484-2', 'alanpich.github.io');
     ga('send', 'pageview');
+
+</script>
+
+<script>
+
+
+    function h2CollapseToggle()
+    {
+        $el = $(this);
+        $section = $el.nextUntil('h2');
+        if($el.data('collapsed')){
+            // Open it!
+            $el
+              .data('collapsed',false)
+              .removeClass('collapsed');
+            $section.slideDown();
+        } else {
+            // Collapse it!
+            $el.data('collapsed',true);
+            $el.addClass('collapsed');
+            $section.slideUp();
+        }
+    }
+
+
+    $(document).ready(function(){
+        var h2s = $('#page h2');
+        h2s.each(function(){
+            $el = $(this);
+
+            $el.click(h2CollapseToggle);
+        });
+    });
 
 </script>
 </body>

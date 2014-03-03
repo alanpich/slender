@@ -3,7 +3,8 @@
     "moment": "2.3.x",
     "underscore": "1.4.x",
     "typogr": "0.5.x",
-    "wintersmith-handlebars": "0.0.5"
+    "wintersmith-handlebars": "0.0.5",
+    "grunt-contrib-watch": "~0.5.3"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,8 @@
   "license": "ISC",
   "devDependencies": {
     "grunt": "~0.4.2",
-    "grunt-templator": "~0.1.0"
+    "grunt-templator": "~0.1.0",
+    "grunt-contrib-sass": "~0.7.2",
+    "grunt-concurrent": "~0.4.3"
   }
 }

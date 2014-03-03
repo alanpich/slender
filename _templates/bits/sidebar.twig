@@ -1,7 +1,103 @@
+<ul class="tree">
+    <li class="folder">
+        <label>Introduction</label>
+        <ul>
+            <li><a href="{{ url('setup/overview.html') }}">Overview</a></li>
+            <li><a href="{{ url('setup/folder-structure.html') }}">Folder Structure</a></li>
+            <li><a href="{{ url('setup/configuration.html') }}">Configuration</a></li>
+            <li><a href="{{ url('setup/app.html') }}">Application Initialization</a></li>
+        </ul>
+    </li>
+    <li class="folder">
+        <label>Configuration Loader</label>
+        <ul>
+            <li><a href="{{ url('configuration-loader/default-configuration.html') }}">Default Configuration</a></li>
+            <li><a href="{{ url('configuration-loader/service-configuration.html') }}">Services & Factories</a></li>
+            <li><a href="{{ url('configuration-loader/route-configuration.html') }}">Route Definitions</a></li>
+            <li><a href="{{ url('configuration-loader/route-middleware.html') }}">Route Middleware</a></li>
+        </ul>
+    </li>
+    <li class="folder">
+        <label>Module System</label>
+        <ul>
+            <li><a href="{{ url('modules/defining-a-module.html') }}">Defining a Module</a></li>
+            <li><a href="{{ url('modules/loading-modules.html') }}">Loading Modules</a></li>
+            <li><a href="{{ url('modules/module-path-resolver.html') }}">Module Path Resolver</a></li>
+            <li><a href="{{ url('modules/module-config-file.html') }}">Module configuration</a></li>
+            <li><a href="{{ url('modules/example-module-config.html') }}">Example Config file</a></li>
+            <li><a href="{{ url('modules/module-hooks.html') }}">Module Invokables</a></li>
+        </ul>
+    </li>
+
+
+    <li class="folder">
+        <label>Core Modules</label>
+        <ul>
+            <li><a href="{{ url('core-modules/introduction.html') }}">Introduction</a></li>
+            <li class="folder">
+                <label>Route Registrar</label>
+                <ul><code>@TODO</code></ul>
+            </li>
+            <li class="folder">
+                <label>Service Registrar</label>
+                <ul><code>@TODO</code></ul>
+            </li>
+            <li class="folder">
+                <label>Event Manager</label>
+                <ul><code>@TODO</code></ul>
+            </li>
+        </ul>
+    </li>
+
+
+
+    <script>
+    $(document).ready(function () {
+        $labels = $('.tree .folder label');
+        $labels.each(function(){
+            $(this).parent().children('ul').toggle(0)
+        });
+        $labels.click(function () {
+            $(this).parent()
+                    .toggleClass('open')
+                    .children('ul').toggle(100);
+
+            console.log('clicj');
+        });
+    });
+</script>
+
+
+
+{#
+
+
+<ul class="nav nav-sidebar">
+    <li><a href="{{ url('setup/overview.html') }}">Overview</a></li>
+    <li><a href="{{ url('setup/folder-structure.html') }}">Folder Structure</a></li>
+    <li><a href="{{ url('setup/configuration.html') }}">Configuration</a></li>
+    <li><a href="{{ url('setup/app.html') }}">Application Initialization</a></li>
+</ul>
+<ul class="nav nav-sidebar">
+    <li><a href="{{ url('configuration-loader/default-configuration.html') }}">Default Configuration</a></li>
+    <li><a href="{{ url('configuration-loader/service-configuration.html') }}">Services & Factories</a></li>
+    <li><a href="{{ url('configuration-loader/route-configuration.html') }}">Route Definitions</a></li>
+    <li><a href="{{ url('configuration-loader/route-middleware.html') }}">Route Middleware</a></li>
+</ul>
+<ul class="nav nav-sidebar">
+    <li><a href="{{ url('modules/defining-a-module.html') }}">Defining a Module</a></li>
+    <li><a href="{{ url('modules/loading-modules.html') }}">Loading Modules</a></li>
+    <li><a href="{{ url('modules/module-path-resolver.html') }}">Module Path Resolver</a></li>
+    <li><a href="{{ url('modules/module-config-file.html') }}">Module configuration</a></li>
+    <li><a href="{{ url('modules/example-module-config.html') }}">Example Config file</a></li>
+    <li><a href="{{ url('modules/module-hooks.html') }}">Module Invokables</a></li>
+</ul>
+
+
 <h1 style="font-size:3em">Slender</h1>
 <h3>Slim, but with a bit more meat.</h3>
 
-{# Travis & Packagist badges #}
+&#123;&#35; Travis & Packagist badges &#35;&#125;
 <div style="margin-bottom:1em">
 <a href="https://github.com/alanpich/slender/blob/master/LICENSE">
     <img src="https://poser.pugx.org/slender/slender/license.png"/>
@@ -18,11 +114,11 @@
     <a href="https://packagist.org/packages/slender/slender">
         <img src="https://poser.pugx.org/slender/slender/v/stable.png"/>
     </a>
-    {#
+    &#123;&#35;
         <a href="https://packagist.org/packages/slender/slender">
             <img src="https://poser.pugx.org/slender/slender/downloads.png"/>
         </a>
-    #}
+    &#35;&#125;
 </aside>
 </div>
 
@@ -70,3 +166,4 @@
     </a>
 </p>
 
+#}

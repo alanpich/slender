@@ -1,0 +1,37 @@
+#header {
+
+  .navbar-items-container {
+    $border: 1px solid #ccc;
+    border-left: $border;
+    border-bottom: $border;
+    border-bottom-left-radius: 2em;
+    background-color: #fff;
+    margin-right:-1.1em;
+    padding-right:1.1em;
+    padding-left:.8em;
+  }
+
+
+  .navbar-brand {
+
+    a {
+      color: #777 !important;
+      font-weight: bold;
+      padding-bottom:0;
+
+      &:hover {
+        text-decoration:none;
+      }
+    }
+
+    i {
+      color: #999;
+      position:relative;
+      top:-1px;
+      margin-right:0.2em;
+    }
+  }
+
+
+
+}

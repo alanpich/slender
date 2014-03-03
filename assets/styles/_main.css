@@ -1,0 +1,34 @@
+
+
+pre[class*="language-"] {
+    margin: 2em auto;
+}
+code[class*="language-"] {
+    font-family: PT Mono;
+}
+
+
+pre.language-tree {
+    line-height: 1.3em;
+}
+
+pre.language-tree .branch {
+    color: #bbb;
+    text-shadow: 1px 1px 1px #fff;
+}
+
+pre.language-tree .folder {
+    color: #690;
+}
+
+pre.language-tree .string {
+    color:#710909;
+}
+
+code .token.comment {
+    font-family: PT Mono;
+    font-size:.8em;
+    color: #710909;
+    color:#888;
+}
+

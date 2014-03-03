@@ -2,7 +2,6 @@
 title: Module Path Resolver
 ---
 
-# Module Path Resolver
 The Module Path Resolver service is used internally to find the filesystem directory
 that contains a Slender module, and returns the path to a module directory.
 

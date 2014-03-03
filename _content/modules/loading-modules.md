@@ -2,8 +2,6 @@
 title: Loading Modules
 ---
 
-# Loading Modules
-
 Importing Slender modules is easy, just create an array of required modules in your `global.yml` file:
 ```yaml
 # ./config/global.yml

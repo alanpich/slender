@@ -1,0 +1,101 @@
+/*
+ * Sidebar
+ */
+
+#sidebar {
+  height: 100%;
+  padding-right: 0;
+  padding-top: 20px;
+}
+
+#sidebar .nav {
+  width: 95%;
+}
+
+#sidebar li {
+}
+
+// Base resets for all lists
+ul.tree,
+ul.tree ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+/**
+ * Collapsible tree list
+ */
+ul.tree {
+  padding:0 1em;
+  position: fixed;
+
+  list-style: none;
+
+  ul {
+    list-style: none;
+    margin-left: 1em;
+  }
+
+}
+
+ul.tree li {
+
+  line-height: 1.8em;
+
+  /**
+   * FOLDERS
+   */
+  &.folder {
+
+
+
+    ul {
+      margin-top:0;
+    }
+
+    label {
+
+      font-weight:normal;
+      margin-left: -.8em;
+      margin-bottom:0;
+      cursor: pointer;
+
+      &:before {
+        font-family: 'FontAwesome';
+        content: '\f0da';
+        color: #000;
+        margin-right: 0.4em;
+        opacity: 0.5;
+      }
+
+    }
+
+
+    &.open {
+
+      > label {
+        &:before {
+          content: '\f0d7';
+          margin-left:-0.18em;
+        }
+      }
+    }
+
+
+
+
+
+
+  }
+}
+
+/* collapsed sidebar styles */
+@media screen and (max-width: 767px) {
+
+}

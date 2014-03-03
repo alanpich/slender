@@ -1,0 +1,52 @@
+/*
+ * Main content
+ */
+
+#page {
+  max-width: 640px;
+
+
+
+  h1 {
+    margin-bottom:.6em;
+  }
+
+  h2 {
+    border-bottom: 1px solid #eee;
+    position:relative;
+
+    &:hover:after {
+      font-family: 'FontAwesome';
+      font-size: .8em;
+      content: '\f078';
+      color: inherit;
+      position:absolute;
+      right: 1em;
+    }
+
+    &.collapsed {
+      &:hover:after {
+        content: '\f053';
+      }
+    }
+  }
+
+  h3 {
+    margin-top:1.5em;
+  }
+
+
+}
+
+.main {
+  padding: 20px;
+}
+@media (min-width: 768px) {
+  .main {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
+}
+.main .page-header {
+  margin-top: 0;
+}

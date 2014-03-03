@@ -2,8 +2,6 @@
 title: Route Middleware
 ---
 
-# Route Middleware
-
 Route Middleware can't currently be controller via config files due to not being able to write
 closures in text files. Until a brainwave strikes, this page will hold ideas and concepts
 for discussion.

@@ -165,17 +165,25 @@
 
             <!-- main area -->
             <div class="col-xs-12 col-sm-9" id="page">
-                <h1>Module Config Files</h1>
-                <p><code>Describe module config file and available options</code></p>
-<h2 id="declaring-dependencies">Declaring Dependencies</h2>
-<p>Modules can sometimes rely on other modules as dependencies. Module dependencies are
-loaded before the dependant module automatically. To define module dependencies, add
-a requires array to your module config file.</p>
-<pre><code class="lang-yaml"># ./module/my-module/slender.module.yml
-module:
-  ...
-  requires:
-    - asset-exposer
+                <h1>Introduction to the Core Modules</h1>
+                <p>In an effort to eat its own dogfood, the majority of core Slender
+functionality is loaded via the public Module system.</p>
+<h2 id="the-services">The Services</h2>
+<h3 id="event-manager">Event Manager</h3>
+<p><code>Slender\Interfaces\EventManagerInterface</code></p>
+<p>Extends core Slim event/hook management to add a few new features.</p>
+<h3 id="file-parser">File Parser</h3>
+<p><code>Slender\Interfaces\FileParserInterface</code></p>
+<p>Responsible for all configuration file reading and parsing</p>
+<h2 id="extending-core-services">Extending Core Services</h2>
+<p>The <em>Core Services</em> provide basic functionality to Slender, like automated
+route &amp; service configuration and extended Event management. While you cannot
+run Slender without them, you can replace them with your own implementation
+as long as it implements the relevant service interface.</p>
+<pre><code class="lang-php">Service Name    | ...MUST use interface
+________________________________________________
+event-manager   | Slender\Interfaces\CoreService\EventManagerInterface
+module-loader   | Slender\Interfaces\CoreService\ModuleLoaderInterface
 </code></pre>
 
 

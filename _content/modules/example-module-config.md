@@ -1,8 +1,6 @@
 ---
-title: Module Config Files
+title: Example Module Config Files
 ---
-
-# Module Config Files
 
 Here are example module configuration files in all supported languages
 - [PHP](#php)

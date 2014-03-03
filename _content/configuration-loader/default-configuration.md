@@ -1,7 +1,7 @@
 ---
 title: Default Configuration
 ---
-# Default configuration
+
 This is the vanilla config used as defaults by Slender. This is how the configuration
 looks before any application or module config files are loaded.
 
