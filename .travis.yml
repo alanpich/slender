@@ -4,5 +4,11 @@ php:
   - 5.4
   - hhvm
 
-before_script: composer install
+before_install:
+  - sudo apt-get install -qq libxml2-dev libxml
+
+before_script:
+ - composer install
+
+
 script: phpunit --coverage-text
