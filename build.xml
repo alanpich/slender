@@ -45,6 +45,8 @@
                   checkreturn="true" />
 
 
+
+
         <!-- Unit tests -->
         <echo msg="Running unit tests" level="warning" />
             <exec command="${bin}/phpunit -c ${repo}/phpunit.xml.dist"
@@ -93,9 +95,30 @@
             <echo msg=" OK" />
 
 
+        <echo msg="Bumping package version" level="warning" />
+            <exec command="php .build/scripts/getVersion.php"
+                  outputProperty="current_version" />
+            <exec command="php .build/scripts/getVersion.php ++patch"
+                  outputProperty="next_version" />
+            <echo msg=" v${next_version}" />
+
+
+        <echo msg="Update copyright notices" level="warning" />
+            <!-- Ensure all PHP files have the copyright
+                 template at the top and the version is correct
+                 (using the next-version value from above -->
+            <echo msg=" OK" />
+
+
+        <!-- FabPot Code Sniffer fixer -->
+        <echo msg="Automatically resolving Code Sniffer issues" level="warning" />
+            <exec command="php ${bin}/php-cs-fixer fix ${dir.src} --level=all --dry-run"
+                  passthru="true"
+                    checkreturn="true"/>
+
         <!-- phpcs - Code Sniffer -->
         <echo msg="Code Sniffer" level="warning" />
-            <exec command="${bin}/phpcs --extensions=php --tab-width=4 ./src ./core-modules"
+            <exec command="${bin}/phpcs -n --extensions=php --tab-width=4 ./src ./core-modules"
                   returnProperty="phpcs_failed"
                   outputProperty="phpcs_output" />
             <if>
@@ -109,9 +132,6 @@
             <echo msg=" OK" />
 
 
-        <echo msg="Update copyright notices" level="warning" />
-
-        <echo msg="Bumping composer version" level="warning" />
 
         <echo msg="Committing merge" level="warning" />
 

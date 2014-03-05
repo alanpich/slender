@@ -4,6 +4,7 @@
     "description": "Micro Application Framework",
     "keywords": ["app","framework","slim","slender"],
     "license": "MIT",
+    "version": "0.0.0",
     "homepage": "http://alanpich.github.io/slender",
     "authors": [
         {
@@ -32,6 +33,7 @@
         "phpunit/phpunit": "3.7.32",
         "sebastian/phpcpd": "*",
         "phpmd/phpmd": "*",
-        "squizlabs/php_codesniffer": "dev-master"
+        "squizlabs/php_codesniffer": "dev-master",
+        "fabpot/php-cs-fixer": "*"
     }
 }

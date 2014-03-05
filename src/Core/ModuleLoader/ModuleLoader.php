@@ -1,4 +1,8 @@
 <?php
+/**!
+ *
+ */
+
 namespace Slender\Core\ModuleLoader;
 
 use Slender\Core\Autoloader\ClassLoader;
@@ -6,6 +10,11 @@ use Slender\Exception\ModuleLoaderException;
 use Slender\Interfaces\ModuleLoaderInterface;
 use Slender\Interfaces\ModuleResolverInterface;
 
+/**
+ * Class ModuleLoader
+ *
+ * @package Slender\Core\ModuleLoader
+ */
 class ModuleLoader implements ModuleLoaderInterface
 {
     /** @var  ModuleResolverInterface */
@@ -20,6 +29,10 @@ class ModuleLoader implements ModuleLoaderInterface
     /** @var array */
     protected $loadedModules = array();
 
+    /**
+     * @param $module
+     * @throws \Slender\Exception\ModuleLoaderException
+     */
     public function loadModule($module)
     {
         if (isset($this->loadedModules[$module])) {
@@ -153,11 +166,17 @@ class ModuleLoader implements ModuleLoaderInterface
         }
     }
 
+    /**
+     * @param ModuleResolverInterface $resolver
+     */
     public function setResolver(ModuleResolverInterface $resolver)
     {
         $this->resolver = $resolver;
     }
 
+    /**
+     * @param \Slim\Configuration $conf
+     */
     public function setConfig(\Slim\Configuration $conf)
     {
         $this->config = $conf;
