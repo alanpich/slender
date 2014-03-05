@@ -4,7 +4,7 @@ php:
   - 5.4
 
 before_install:
-  - sudo apt-get install -qq libxml2-dev libxml
+  - sudo apt-get install -qq libxml2-dev
 
 before_script:
  - composer install
