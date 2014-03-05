@@ -1,8 +1,6 @@
 <?php
 namespace Slender\Module\Twig;
 
-
-use Slender\Interfaces\ModuleInvokableInterface;
 use Slender\Interfaces\ModulePathProviderInterface;
 
 class SlenderModule implements ModulePathProviderInterface

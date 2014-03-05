@@ -8,10 +8,9 @@
 
 namespace Slender\Interfaces;
 
-
 interface ClassAutoloaderInterface
 {
 
     public function addNamespace();
 
-} 
+}

@@ -37,8 +37,8 @@ abstract class Controller implements ControllerInterface
      *
      * I'm sure it's spelt 'dEspatch', but oh well...
      *
-     * @param string $action Name of action to be executed
-     * @param array  $args   Arguments to pass to action
+     * @param  string     $action Name of action to be executed
+     * @param  array      $args   Arguments to pass to action
      * @return mixed|void
      */
     public function dispatchAction($action, array $args = array())
@@ -62,22 +62,23 @@ abstract class Controller implements ControllerInterface
          * Execute post processing on action response and
          * return the result
          */
+
         return $this->afterAction($response,$args);
     }
-
 
     /**
      * Executed before action is called. Returning anything
      * but NULL will cancel the action
      *
-     * @param array $args Arguments passed to action
-     * @return null|mixed   Returning anything but NULL will cancel the action
+     * @param  array      $args Arguments passed to action
+     * @return null|mixed Returning anything but NULL will cancel the action
      */
     public function beforeAction(array $args = array())
     {
+        if (is_null($args)) { $args = array(); }
+
         return null;
     }
-
 
     /**
      * Executed after an action is called. Is passed
@@ -86,15 +87,16 @@ abstract class Controller implements ControllerInterface
      * The value returned from this method should be
      * the final result of the dispatch
      *
-     * @param mixed $response Return value from Action
-     * @param array $args     Original arguments passed to action
+     * @param  mixed $response Return value from Action
+     * @param  array $args     Original arguments passed to action
      * @return mixed
      */
     public function afterAction($response, array $args = array())
     {
+        if (is_null($args)) { $args = array(); }
+
         return $response;
     }
-
 
     /**
      * Executes a method on $this passing it array of $args
@@ -109,12 +111,13 @@ abstract class Controller implements ControllerInterface
         call_user_func_array(array($this, $method), $args);
     }
 
-    public function setDiContainer($di){
-        $this->diContainer = $di;
+    public function setDiContainer($diContainer)
+    {
+        $this->diContainer = $diContainer;
     }
 
     public function get($key)
     {
         return $this->diContainer[$key];
     }
-} 
+}

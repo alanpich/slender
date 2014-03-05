@@ -17,14 +17,14 @@ class ClassLoader extends UniversalClassLoader
      * Also opens up doors for alternative formats to be used
      * later. Either way, it's a mess here right now
      *
-     * @param string       $namespace
-     * @param array|string $paths
-     * @param string       $type Either 'psr-0' or 'psr-4'. Defaults to 'psr-0'
+     * @param  string                               $namespace
+     * @param  array|string                         $paths
+     * @param  string                               $type      Either 'psr-0' or 'psr-4'. Defaults to 'psr-0'
      * @throws \Slender\Exception\AutoloadException
      */
     public function registerNamespace($namespace, $paths, $type = 'psr-0')
     {
-        switch($type){
+        switch ($type) {
             case 'psr-0':
                 parent::registerNamespace($namespace, $paths);
                 break;
@@ -52,6 +52,4 @@ class ClassLoader extends UniversalClassLoader
         return $this->psr4Loader;
     }
 
-
-
-} 
+}

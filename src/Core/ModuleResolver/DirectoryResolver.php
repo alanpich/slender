@@ -1,9 +1,7 @@
 <?php
 namespace Slender\Core\ModuleResolver;
 
-use Slender\Interfaces\ModuleResolverInterface;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Attempts to resolve a module path by looking in a directory
@@ -28,7 +26,7 @@ class DirectoryResolver extends AbstractResolver
      * Return the path to Module $module, or false
      * if not found
      *
-     * @param string $module Module name or Namespace
+     * @param  string       $module Module name or Namespace
      * @return string|false
      */
     public function getPath($module)

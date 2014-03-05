@@ -19,10 +19,10 @@ class ResolverStack implements ModuleResolverInterface
         'confs' => array()
     );
 
-    function __construct()
+    public function __construct()
     {
-        foreach(func_get_args() as $resolver){
-            if($resolver instanceof ModuleResolverInterface){
+        foreach (func_get_args() as $resolver) {
+            if ($resolver instanceof ModuleResolverInterface) {
                 $this->addResolver($resolver);
             }
         }
@@ -31,14 +31,13 @@ class ResolverStack implements ModuleResolverInterface
     /**
      * Sets the Parser to use on config files
      *
-     * @param ConfigFileParserInterface $parser
+     * @param  ConfigFileParserInterface $parser
      * @return mixed
      */
     public function setConfigParser(ConfigFileParserInterface $parser)
     {
         $this->parser = $parser;
     }
-
 
     /**
      * Add a Resolver to the end of the stack
@@ -64,20 +63,20 @@ class ResolverStack implements ModuleResolverInterface
      * Return the path to Module $module, or false
      * if not found
      *
-     * @param string $module Module name or Namespace
+     * @param  string       $module Module name or Namespace
      * @return string|false
      */
     public function getPath($module)
     {
-        foreach($this->resolvers as $resolver){
+        foreach ($this->resolvers as $resolver) {
             $path = $resolver->getPath($module);
-            if($path !==false){
+            if ($path !==false) {
                 return $path;
             }
         }
+
         return false;
     }
-
 
     /**
      * Return parsed config file for module
@@ -87,13 +86,14 @@ class ResolverStack implements ModuleResolverInterface
      */
     public function getConfig($module)
     {
-        if(!isset($this->cache['paths'][$module])){
+        if (!isset($this->cache['paths'][$module])) {
             $path = $this->getPath($module);
             $file = $path.DIRECTORY_SEPARATOR.'slender.yml';
             $parsed = $this->parser->parseFile($file);
             $parsed['path'] = $path;
             $this->cache['paths'][$module] = $parsed;
         }
+
         return $this->cache['paths'][$module];
     }
 }

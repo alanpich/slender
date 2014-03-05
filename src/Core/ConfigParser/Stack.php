@@ -9,10 +9,10 @@ class Stack implements ConfigFileParserInterface
 {
     protected $parsers = array();
 
-    function __construct($parsers)
+    public function __construct($parsers)
     {
-        foreach($parsers as $ext => $parser){
-            if($parser instanceof ConfigFileParserInterface){
+        foreach ($parsers as $ext => $parser) {
+            if ($parser instanceof ConfigFileParserInterface) {
                 $this->parsers[$ext] = $parser;
             }
         }
@@ -21,20 +21,20 @@ class Stack implements ConfigFileParserInterface
     /**
      * Parse $path and return array of config from within
      *
-     * @param string $path Path to file
-     * @throws \Slender\Exception\ConfigFileFormatException when unable to parse file
+     * @param  string                                         $path Path to file
+     * @throws \Slender\Exception\ConfigFileFormatException   when unable to parse file
      * @throws \Slender\Exception\ConfigFileNotFoundException when $path does not exist
      * @return array
      */
     public function parseFile($path)
     {
         // Check file exists
-        if(!is_readable((string)$path)){
+        if (!is_readable((string) $path)) {
             throw new ConfigFileNotFoundException("$path does not exist, or is not readable");
         }
         $extension = pathinfo($path,PATHINFO_EXTENSION);
 
-        if(isset($this->parsers[$extension])){
+        if (isset($this->parsers[$extension])) {
             return $this->parsers[$extension]->parseFile($path);
         }
 

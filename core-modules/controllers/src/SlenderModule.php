@@ -15,11 +15,12 @@ class SlenderModule implements ModuleInvokableInterface,
             function ($args) use ($app) {
                 $class = $args['controller'];
                 $action = $args['action'];
-                if($app['util']->implementsInterface($class,'Slender\Module\Controllers\ControllerInterface')){
-                    return function($args) use ($app,$class,$action) {
+                if ($app['util']->implementsInterface($class,'Slender\Module\Controllers\ControllerInterface')) {
+                    return function ($args) use ($app,$class,$action) {
                         /** @var ControllerInterface $controller */
                         $controller = new $class;
                         $controller->setDiContainer($app);
+
                         return $controller->dispatchAction($action,$args);
                     };
                 }

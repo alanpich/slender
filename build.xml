@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Slender" default="help">
+
+    <!-- Use composer to load resources -->
+    <php expression="include('${project.basedir}/vendor/autoload.php')"/>
+
+    <!-- Resolve path to git/project root -->
+    <property name="repo" value="${project.basedir}" />
+    <property name="bin" value="${repo}/vendor/bin" />
+
+    <property name="dir.src" value="${repo}/src" />
+    <property name="dir.core-modules" value="${repo}/core-modules" />
+
+
+    <!-- ======================================= -->
+    <!--  Target: List all available targets     -->
+    <!-- ======================================= -->
+    <target name="help" hidden="true">
+        <exec command="phing -l -q"
+              passthru="true"
+              dir="${project.basedir}"/>
+    </target>
+
+
+
+
+    <!-- ======================================= -->
+    <!--  Target: Release a new version!         -->
+    <!-- ======================================= -->
+    <target name="release"
+            description="Merge to master, tag new version and release to packagist">
+
+        <echo msg="Merging changes to master branch..." level="warning" />
+        <!-- Switch to master -->
+        <echo msg="Switching to master branch" />
+            <exec command="git checkout master"
+                  dir="${project.basedir}"
+                  checkreturn="true" />
+
+
+        <!-- Merge develop -->
+        <echo msg="Merging changes from develop" />
+            <exec command="git merge --no-commit develop"
+                  dir="${project.basedir}"
+                  checkreturn="true" />
+
+
+
+
+        <!-- Unit tests -->
+        <echo msg="Running unit tests" level="warning" />
+            <exec command="${bin}/phpunit -c ${repo}/phpunit.xml.dist"
+                  dir="${repo}"
+                  returnProperty="unittests_failed"
+                  outputProperty="unittests_output" />
+            <if>
+                <istrue value="${unittests_failed}" />
+                <then>
+                    <echo msg="${unittests_output}" />
+                    <exec command="git checkout develop" />
+                    <fail msg="Unit Tests failed" />
+                </then>
+            </if>
+            <echo msg=" OK" />
+
+
+        <!-- phpcpd - Copy Paste Detector -->
+        <echo msg="Copy Paste Detector" level="warning" />
+            <exec command="${bin}/phpcpd ${dir.src} ${dir.core-modules}"
+                  returnProperty="phpcpd_failed"
+                  outputProperty="phpcpd_output"/>
+            <if>
+                <istrue value="${phpcpd_failed}" />
+                <then>
+                    <echo msg="${phpcpd_output}" />
+                    <exec command="git checkout develop" />
+                    <fail msg="Copy-paste detector failed" />
+                </then>
+            </if>
+            <echo msg=" OK" />
+
+        <!-- phpmd - Mess Detector -->
+        <echo msg="Mess Detector" level="warning" />
+            <exec command="${bin}/phpmd ${dir.src},${dir.core-modules} text codesize,unusedcode,naming,design,controversial"
+                  returnProperty="phpmd_failed"
+                  outputProperty="phpmd_output" />
+            <if>
+                <istrue value="${phpmd_failed}" />
+                <then>
+                    <echo msg="${phpmd_output}" />
+                    <exec command="git checkout develop" />
+                    <fail msg="Mess Detector failed" />
+                </then>
+            </if>
+            <echo msg=" OK" />
+
+
+        <echo msg="Bumping package version" level="warning" />
+            <exec command="php .build/scripts/getVersion.php"
+                  outputProperty="current_version" />
+            <exec command="php .build/scripts/getVersion.php ++patch"
+                  outputProperty="next_version" />
+            <echo msg=" v${next_version}" />
+
+
+        <echo msg="Update copyright notices" level="warning" />
+            <!-- Ensure all PHP files have the copyright
+                 template at the top and the version is correct
+                 (using the next-version value from above -->
+            <echo msg=" OK" />
+
+
+        <!-- FabPot Code Sniffer fixer -->
+        <echo msg="Automatically resolving Code Sniffer issues" level="warning" />
+            <exec command="php ${bin}/php-cs-fixer fix ${dir.src} --level=all" />
+            <exec command="php ${bin}/php-cs-fixer fix ${dir.core-modules} --level=all" />
+
+        <!-- phpcs - Code Sniffer -->
+        <echo msg="Code Sniffer" level="warning" />
+            <exec command="${bin}/phpcs -n --extensions=php --tab-width=4 ./src ./core-modules"
+                  returnProperty="phpcs_failed"
+                  outputProperty="phpcs_output" />
+            <if>
+                <istrue value="${phpcs_failed}" />
+                <then>
+                    <echo msg="${phpcs_output}" />
+                    <exec command="git checkout develop" />
+                    <fail msg="Code Sniffer failed" />
+                </then>
+            </if>
+            <echo msg=" OK" />
+
+
+
+        <echo msg="Committing merge" level="warning" />
+
+        <echo msg="Tagging release" level="warning" />
+
+        <echo msg="Pushing release to github" level="warning" />
+
+    </target>
+
+
+</project>

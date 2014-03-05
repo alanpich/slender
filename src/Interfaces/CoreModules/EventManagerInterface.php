@@ -30,7 +30,7 @@ interface EventManagerInterface
      * @param callable $callback
      * @param int      $priority
      */
-    public function on($event, callable $callback, $priority = 10);
+    public function addEventListener($event, callable $callback, $priority = 10);
 
     /**
      * Trigger a hook
@@ -39,7 +39,6 @@ interface EventManagerInterface
      * @param mixed  $hookArg (Optional) Argument for hooked functions
      */
     public function applyHook($name, $hookArg = null);
-
 
     /**
      * Alias for self::applyHook()
@@ -54,8 +53,8 @@ interface EventManagerInterface
      *  - The first callback to return a non-null value
      *    will be returned
      *
-     * @param string $name    the hook name
-     * @param mixed  $hookArg (Optional) Argument for hooked functions
+     * @param  string     $name    the hook name
+     * @param  mixed      $hookArg (Optional) Argument for hooked functions
      * @return mixed|void
      */
     public function applyChain($name, $hookArg = null);
@@ -63,12 +62,10 @@ interface EventManagerInterface
     /**
      * Alis for self::applyChain()
      *
-     * @param string $event Event name
-     * @param array $args Array of arguments to pass to callbacks
+     * @param  string     $event Event name
+     * @param  array      $args  Array of arguments to pass to callbacks
      * @return mixed|void
      */
     public function triggerChain($event, array $args = array());
 
-
-
-} 
+}

@@ -7,4 +7,4 @@ interface FactoryInterface
 
     public function create(\Slender\App $app);
 
-} 
+}

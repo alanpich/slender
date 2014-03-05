@@ -8,8 +8,8 @@ class Factory implements FactoryInterface
 
     public function create(\Slender\App $app)
     {
-        $em = new EventManager($app);
+        $eventManager = new EventManager($app);
 
-        return $em;
+        return $eventManager;
     }
 }

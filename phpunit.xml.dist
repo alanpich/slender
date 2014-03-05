@@ -10,6 +10,7 @@
          stopOnFailure="false"
          syntaxCheck="false"
          bootstrap="tests/bootstrap.php"
+         coverage="text"
         >
     <testsuites>
         <testsuite name="Slender Test Suite">

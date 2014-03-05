@@ -40,7 +40,6 @@ namespace Slender;
 
 use \Slim\Collection;
 use \Slim\Interfaces\ViewInterface;
-use Symfony\Component\Finder\Finder;
 
 /**
  * View
@@ -85,8 +84,8 @@ class View extends Collection implements ViewInterface
     /**
      * Constructor
      *
-     * @param  array $items Initialize set with these items
-     * @api
+     * @param array $items Initialize set with these items
+     *                     @api
      */
     public function __construct(array $items = array())
     {
@@ -98,9 +97,9 @@ class View extends Collection implements ViewInterface
      *
      * This method echoes the rendered template to the current output buffer
      *
-     * @param  string $template Pathname of template file relative to templates directory
-     * @param array   $data
-     * @api
+     * @param string $template Pathname of template file relative to templates directory
+     * @param array  $data
+     *                         @api
      */
     public function display($template, array $data = array())
     {
@@ -114,9 +113,9 @@ class View extends Collection implements ViewInterface
      * a rendered template into a variable for further processing.
      *
      * @var    string $template Pathname of template file relative to templates directory
-     * @param array   $data
-     * @return string           The rendered template
-     * @api
+     * @param  array  $data
+     * @return string The rendered template
+     *                     @api
      */
     public function fetch($template, array $data = array())
     {
@@ -132,9 +131,9 @@ class View extends Collection implements ViewInterface
      * view class. This default implementation is largely intended as an example.
      *
      * @var    string $template Pathname of template file relative to templates directory
-     * @param array   $data
+     * @param  array             $data
      * @throws \RuntimeException If resolved template pathname is not a valid file
-     * @return string                      The rendered template
+     * @return string            The rendered template
      */
     protected function render($template, array $data = array())
     {
@@ -154,7 +153,6 @@ class View extends Collection implements ViewInterface
         return ob_get_clean();
     }
 
-
     /**
      * Resolves a template name to a file in $templateDirs
      *
@@ -162,17 +160,18 @@ class View extends Collection implements ViewInterface
      */
     protected function resolveTemplate($template)
     {
-        if(!$this->pathCache[$template]){
+        if (!$this->pathCache[$template]) {
 
-            foreach(array_reverse($this->templateDirs) as $dir){
+            foreach (array_reverse($this->templateDirs) as $dir) {
                 $path = $dir . DIRECTORY_SEPARATOR . $template .'.'. $this->getFileExtension();
-                if(is_readable($path)){
+                if (is_readable($path)) {
                     $this->pathCache[$template] = $path;
                     break;
                 }
             }
 
         }
+
         return $this->pathCache[$template];
     }
 
@@ -207,6 +206,5 @@ class View extends Collection implements ViewInterface
     {
         return $this->fileExtension;
     }
-
 
 }
