@@ -75,6 +75,7 @@ abstract class Controller implements ControllerInterface
      */
     public function beforeAction(array $args = array())
     {
+        if(is_null($args)){ $args = array(); }
         return null;
     }
 
@@ -92,6 +93,7 @@ abstract class Controller implements ControllerInterface
      */
     public function afterAction($response, array $args = array())
     {
+        if(is_null($args)){ $args = array(); }
         return $response;
     }
 
@@ -109,8 +111,8 @@ abstract class Controller implements ControllerInterface
         call_user_func_array(array($this, $method), $args);
     }
 
-    public function setDiContainer($di){
-        $this->diContainer = $di;
+    public function setDiContainer($diContainer){
+        $this->diContainer = $diContainer;
     }
 
     public function get($key)

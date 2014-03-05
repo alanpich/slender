@@ -75,7 +75,7 @@ class EventManager implements EventManagerInterface
      * @param callable $callback
      * @param int      $priority
      */
-    public function on($event, callable $callback, $priority = 10)
+    public function addEventListener($event, callable $callback, $priority = 10)
     {
         $this->hook($event, $callback, $priority);
     }

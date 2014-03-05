@@ -27,36 +27,10 @@ class App extends \Slim\App
         // Register our core services
         $this->registerCoreServices();
 
-        /**
-         * Load up config defaults
-         *
-         * This is a hardcoded config file within Slender core that sets
-         * up sane default values for config
-         *
-         * @var ConfigFileParserInterface $parser
-         */
-        $parser = $this['config-parser'];
-        $defaults = $parser->parseFile(__DIR__ . '/slender.yml');
-        $userSettings = array_merge_recursive($defaults, $userSettings);
-        $this['settings']->setArray($userSettings);
 
-        /**
-         * Load any application config files
-         *
-         * @var ConfigFileFinderInterface $loader
-         */
-        $loader = $this['config-finder'];
-        $userSettings = array();
-        foreach ($loader->findFiles() as $path) {
-            if (is_readable($path)) {
-                $parsedFile = $parser->parseFile($path);
-                if ($parsedFile !== false) {
-                    $this->addConfig($parsedFile);
-                }
-            } else {
-                echo "Invalid path $path\n";
-            }
-        }
+        $this->loadConfigDefaults($userSettings);
+
+        $this->loadApplicationConfigFiles($userSettings);
 
         /**
          * Load modules
@@ -93,6 +67,45 @@ class App extends \Slim\App
             }
         }
 
+    }
+
+
+    /**
+     * Load up config defaults
+     *
+     * This is a hardcoded config file within Slender core that sets
+     * up sane default values for config
+     *
+     * @var ConfigFileParserInterface $parser
+     */
+    protected function loadDefaultConfig($userSettings)
+    {
+        $parser = $this['config-parser'];
+        $defaults = $parser->parseFile(__DIR__ . '/slender.yml');
+        $userSettings = array_merge_recursive($defaults, $userSettings);
+        $this['settings']->setArray($userSettings);
+    }
+
+    /**
+     * Load any application config files
+     *
+     * @var ConfigFileFinderInterface $loader
+     */
+    protected function loadApplicationConfigFiles($userSettings)
+    {
+        $parser = $this['config-parser'];
+        $loader = $this['config-finder'];
+        $userSettings = array();
+        foreach ($loader->findFiles() as $path) {
+            if (is_readable($path)) {
+                $parsedFile = $parser->parseFile($path);
+                if ($parsedFile !== false) {
+                    $this->addConfig($parsedFile);
+                }
+            } else {
+                echo "Invalid path $path\n";
+            }
+        }
     }
 
 

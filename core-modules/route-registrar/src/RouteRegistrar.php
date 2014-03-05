@@ -72,7 +72,6 @@ class RouteRegistrar
 
 
             // Fallback to nstantiate controller class ourselves
-            $class = new $controller;
             return function () use ($app, $controller, $action) {
                 $args = func_get_args();
                 call_user_func_array(array($controller, $action), $args);

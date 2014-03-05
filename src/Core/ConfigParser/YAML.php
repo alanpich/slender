@@ -15,7 +15,6 @@ class YAML implements ConfigFileParserInterface
      */
     public function parseFile($path)
     {
-        $content = file_get_contents($path);
-        return YamlParser::parse($path);
+        return YamlParser::parse(file_get_contents($path));
     }
 }

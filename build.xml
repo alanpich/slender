@@ -30,15 +30,16 @@
     <target name="release"
             description="Merge to master, tag new version and release to packagist">
 
+        <echo msg="Merging changes to master branch..." level="warning" />
         <!-- Switch to master -->
-        <echo msg="Switching to master branch" level="warning" />
+        <echo msg="Switching to master branch" />
             <exec command="git checkout master"
                   dir="${project.basedir}"
                   checkreturn="true" />
 
 
         <!-- Merge develop -->
-        <echo msg="Merging changes from develop" level="warning" />
+        <echo msg="Merging changes from develop" />
             <exec command="git merge --no-commit develop"
                   dir="${project.basedir}"
                   checkreturn="true" />

@@ -27,7 +27,7 @@ class ModuleLoader implements ModuleLoaderInterface
         }
 
         // Resolve module path
-        $path = $modulePath = $this->resolver->getPath($module);
+        $path = $this->resolver->getPath($module);
 
         if ($path === false) {
             throw new ModuleLoaderException("Unable to resolve path to $module");
@@ -69,7 +69,7 @@ class ModuleLoader implements ModuleLoaderInterface
             $reflector = new \ReflectionClass($class);
             $interfaces = $reflector->getInterfaceNames();
             if (!is_array($interfaces)) {
-                $interface = array($interfaces);
+                $interfaces = array($interfaces);
             }
             if (in_array('Slender\Interfaces\ModuleInvokableInterface', $interfaces)) {
                 $mConf['invoke'][] = $mConf['namespace'] . '\\SlenderModule';
@@ -88,28 +88,8 @@ class ModuleLoader implements ModuleLoaderInterface
             )
         );
 
-        /**
-         * Copy autoloader settings to global collection ready for registering
-         *
-         */
 
-        $composerAutoload = $path.'/vendor/autoload.php';
-        if(($mConf === 'composer' || in_array('composer',$mConf['autoload'])) && file_exists($composerAutoload)){
-            require $composerAutoload;
-        }
-
-        if (isset($mConf['autoload']['psr-4'])) {
-            foreach ($mConf['autoload']['psr-4'] as $ns => $path) {
-                $path = $modulePath . DIRECTORY_SEPARATOR . preg_replace("/^\.\//", "", $path);
-                $this->classLoader->registerNamespace($ns, $path, 'psr-4');
-            }
-        }
-        if (isset($mConf['autoload']['psr-0'])) {
-            foreach ($mConf['autoload']['psr-0'] as $ns => $path) {
-                $path = $modulePath . DIRECTORY_SEPARATOR . preg_replace("/^\.\//", "", $path);
-                $this->classLoader->registerNamespace($ns, $path, 'psr-4');
-            }
-        }
+        $this->setupAutoloaders($path,$mConf);
 
     }
 
@@ -147,6 +127,31 @@ class ModuleLoader implements ModuleLoaderInterface
         }
     }
 
+
+    /**
+     * Copy autoloader settings to global collection ready for registering
+     *
+     */
+    protected function setupAutoloaders($modulePath, array $mConf)
+    {
+        $composerAutoload = $modulePath.'/vendor/autoload.php';
+        if(($mConf === 'composer' || in_array('composer',$mConf['autoload'])) && file_exists($composerAutoload)){
+            require $composerAutoload;
+        }
+
+        if (isset($mConf['autoload']['psr-4'])) {
+            foreach ($mConf['autoload']['psr-4'] as $ns => $path) {
+                $path = $modulePath . DIRECTORY_SEPARATOR . preg_replace("/^\.\//", "", $path);
+                $this->classLoader->registerNamespace($ns, $path, 'psr-4');
+            }
+        }
+        if (isset($mConf['autoload']['psr-0'])) {
+            foreach ($mConf['autoload']['psr-0'] as $ns => $path) {
+                $path = $modulePath . DIRECTORY_SEPARATOR . preg_replace("/^\.\//", "", $path);
+                $this->classLoader->registerNamespace($ns, $path, 'psr-4');
+            }
+        }
+    }
 
     public function setResolver(ModuleResolverInterface $resolver)
     {

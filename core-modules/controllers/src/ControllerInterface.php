@@ -22,6 +22,6 @@ interface ControllerInterface
     public function dispatchAction($action, array $args = array());
 
 
-    public function setDiContainer($di);
+    public function setDiContainer($diContainer);
 
 } 
