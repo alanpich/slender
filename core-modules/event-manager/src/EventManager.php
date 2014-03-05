@@ -15,7 +15,7 @@ use Slender\Interfaces\CoreModules\EventManagerInterface;
  * @example
  *
  *      // Hook an event
- *      $app['event-manager']->hook('slim.before.dispatch',function(){
+ *      $app['event-manager']->hook('slim.before.dispatch',function () {
  *          // Handle event
  *      })
  *
@@ -28,7 +28,7 @@ use Slender\Interfaces\CoreModules\EventManagerInterface;
  * @example
  *
  *      // Listen for events
- *      $app['event-manager']->on('slim.before.dispatch',function(){
+ *      $app['event-manager']->on('slim.before.dispatch',function () {
  *          // Handle event
  *      });
  *
@@ -49,7 +49,7 @@ class EventManager implements EventManagerInterface
     /**
      * @param App $app
      */
-    function __construct(App $app)
+    public function __construct(App $app)
     {
         $this->app = $app;
     }
@@ -97,8 +97,8 @@ class EventManager implements EventManagerInterface
      *  - The first callback to return a non-null value
      *    will be returned
      *
-     * @param string $name    the hook name
-     * @param mixed  $hookArg (Optional) Argument for hooked functions
+     * @param  string     $name    the hook name
+     * @param  mixed      $hookArg (Optional) Argument for hooked functions
      * @return mixed|void
      */
     public function applyChain($name, $hookArg = null)
@@ -126,7 +126,6 @@ class EventManager implements EventManagerInterface
         }
     }
 
-
     /**
      * Alias for self::applyHook()
      *
@@ -138,12 +137,11 @@ class EventManager implements EventManagerInterface
         $this->applyHook($event, $args);
     }
 
-
     /**
      * Alis for self::applyChain()
      *
-     * @param string $event Event name
-     * @param array $args Array of arguments to pass to callbacks
+     * @param  string     $event Event name
+     * @param  array      $args  Array of arguments to pass to callbacks
      * @return mixed|void
      */
     public function triggerChain($event, array $args = array())
@@ -151,4 +149,4 @@ class EventManager implements EventManagerInterface
         return $this->applyChain($event,$args);
     }
 
-} 
+}

@@ -1,8 +1,6 @@
 <?php
 namespace Slender\Interfaces;
 
-use Symfony\Component\Finder\SplFileInfo;
-
 interface ConfigFileFinderInterface
 {
 
@@ -12,4 +10,4 @@ interface ConfigFileFinderInterface
      * @return array of string paths
      */
     public function findFiles();
-} 
+}

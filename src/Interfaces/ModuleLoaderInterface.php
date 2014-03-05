@@ -10,4 +10,4 @@ interface ModuleLoaderInterface
 
     public function loadModule($module);
 
-} 
+}

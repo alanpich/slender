@@ -64,9 +64,7 @@ class ModuleLoader implements ModuleLoaderInterface
         $mConf = $conf['module'];
         unset($conf['module']);
 
-
         $this->loadedModules[$module] = true;
-
 
         // Check for any dependencies
         if (isset($mConf['requires'])) {
@@ -100,7 +98,6 @@ class ModuleLoader implements ModuleLoaderInterface
                 )
             )
         );
-
 
         $this->setupAutoloaders($path,$mConf);
 
@@ -148,7 +145,7 @@ class ModuleLoader implements ModuleLoaderInterface
     protected function setupAutoloaders($modulePath, array $mConf)
     {
         $composerAutoload = $modulePath.'/vendor/autoload.php';
-        if(($mConf === 'composer' || in_array('composer',$mConf['autoload'])) && file_exists($composerAutoload)){
+        if (($mConf === 'composer' || in_array('composer',$mConf['autoload'])) && file_exists($composerAutoload)) {
             require $composerAutoload;
         }
 
@@ -197,6 +194,5 @@ class ModuleLoader implements ModuleLoaderInterface
     {
         return $this->classLoader;
     }
-
 
 }

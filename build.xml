@@ -112,9 +112,8 @@
 
         <!-- FabPot Code Sniffer fixer -->
         <echo msg="Automatically resolving Code Sniffer issues" level="warning" />
-            <exec command="php ${bin}/php-cs-fixer fix ${dir.src} --level=all --dry-run"
-                  passthru="true"
-                    checkreturn="true"/>
+            <exec command="php ${bin}/php-cs-fixer fix ${dir.src} --level=all" />
+            <exec command="php ${bin}/php-cs-fixer fix ${dir.core-modules} --level=all" />
 
         <!-- phpcs - Code Sniffer -->
         <echo msg="Code Sniffer" level="warning" />

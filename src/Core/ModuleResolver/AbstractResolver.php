@@ -16,11 +16,10 @@ abstract class AbstractResolver implements ModuleResolverInterface
             'configs' => array()
         );
 
-
     /**
      * Sets the Parser to use on config files
      *
-     * @param ConfigFileParserInterface $parser
+     * @param  ConfigFileParserInterface $parser
      * @return mixed
      */
     public function setConfigParser(ConfigFileParserInterface $parser)
@@ -36,14 +35,14 @@ abstract class AbstractResolver implements ModuleResolverInterface
      */
     public function getConfig($module)
     {
-        if(!$this->cache['paths'][$module]){
+        if (!$this->cache['paths'][$module]) {
             $path = $this->getPath($module);
             $file = $path.DIRECTORY_SEPARATOR.'slender.yml';
             $parsed = $this->parser->parseFile($file);
             $this->cache['paths'][$module] = $parsed;
         }
+
         return $this->cache['paths'][$module];
     }
 
-
-} 
+}

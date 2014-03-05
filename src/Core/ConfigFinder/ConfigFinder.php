@@ -9,7 +9,7 @@ class ConfigFinder implements ConfigFileFinderInterface
     protected $paths = array();
     protected $files = array();
 
-    function __construct(array $paths = array(),array $files = array())
+    public function __construct(array $paths = array(),array $files = array())
     {
         $this->paths = $paths;
         $this->files = $files;
@@ -24,18 +24,18 @@ class ConfigFinder implements ConfigFileFinderInterface
     {
         $search = (new Finder())->files();
         // Add in paths
-        foreach($this->paths as $path){
-            if(is_readable($path)){
+        foreach ($this->paths as $path) {
+            if (is_readable($path)) {
                 $search->in($path);
             }
         }
         // Add in names
-        foreach($this->files as $pattern){
+        foreach ($this->files as $pattern) {
             $search->name($pattern);
         }
 
         $array = array();
-        foreach($search as $f){
+        foreach ($search as $f) {
             $array[] = $f->getRealPath();
         }
 

@@ -68,6 +68,7 @@ class TwigExtension extends \Twig_Extension
         if ($withUri) {
             $uri .= $req->getRootUri();
         }
+
         return $uri;
     }
 }

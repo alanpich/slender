@@ -8,13 +8,12 @@
 
 namespace Slender\Interfaces;
 
-
-interface ModuleResolverInterface {
-
+interface ModuleResolverInterface
+{
     /**
      * Sets the Parser to use on config files
      *
-     * @param ConfigFileParserInterface $parser
+     * @param  ConfigFileParserInterface $parser
      * @return mixed
      */
     public function setConfigParser(ConfigFileParserInterface $parser);
@@ -22,7 +21,7 @@ interface ModuleResolverInterface {
     /**
      * Return path to module directory
      *
-     * @param string $module Module name
+     * @param  string       $module Module name
      * @return string|false
      */
     public function getPath($module);
@@ -34,4 +33,4 @@ interface ModuleResolverInterface {
      * @return mixed
      */
     public function getConfig($module);
-} 
+}

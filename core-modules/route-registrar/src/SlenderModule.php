@@ -26,8 +26,7 @@ class SlenderModule implements ModulePathProviderInterface,
                 $group = null;
                 $r['name'] = $name;
 
-                array_walk($routes, function ($value) use (&$group, $name)
-                {
+                array_walk($routes, function ($value) use (&$group, $name) {
                     $length = strlen($value['name']);
                     if (substr($name, 0, $length) === $value['name']) {
                         $group = $value;

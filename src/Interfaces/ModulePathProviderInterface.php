@@ -10,4 +10,4 @@ interface ModulePathProviderInterface
      */
     public static function getModulePath();
 
-} 
+}

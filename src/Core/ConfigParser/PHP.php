@@ -9,7 +9,7 @@ class PHP implements ConfigFileParserInterface
     /**
      * Parse $path and return array of config from within
      *
-     * @param string $path Path to file
+     * @param  string $path Path to file
      * @return array
      */
     public function parseFile($path)
