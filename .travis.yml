@@ -7,8 +7,7 @@ before_install:
   - sudo apt-get install -qq libxml2-dev
 
 before_script:
- - wget http://getcomposer.org/composer.phar
- - php composer.phar install --dev --no-interaction
+ - composer install --dev --no-interaction
 
 
 
@@ -16,4 +15,4 @@ script: phpunit --coverage-text
 
 
 after_script:
- - php vendor/bin/coveralls -v
+ - php ./vendor/bin/coveralls -v
