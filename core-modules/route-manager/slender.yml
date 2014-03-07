@@ -5,7 +5,6 @@ module:
   author: Alan Pich <alan.pich@gmail.com>
   require:
     - Slender\Module\EventManager
-    - Slender\Module\DependencyInjector
 
 services:
   route-manager: Slender\Module\RouteManager\Factory

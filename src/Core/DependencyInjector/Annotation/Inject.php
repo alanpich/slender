@@ -1,5 +1,5 @@
 <?php
-namespace Slender\Module\DependencyInjector\Annotation;
+namespace Slender\Core\DependencyInjector\Annotation;
 
 /**
  * Class Inject

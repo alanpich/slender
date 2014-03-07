@@ -2,7 +2,7 @@
 namespace Slender\Module\RouteManager\Controller;
 
 use Slender\Interfaces\DependencyInjectableInterface;
-use Slender\Module\DependencyInjector\Annotation as Slender;
+use Slender\Core\DependencyInjector\Annotation as Slender;
 use Slender\View;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -42,18 +42,14 @@ abstract class AbstractController
     /**
      * Shortcut for $this->getResponse()->setBody($this->view->fetch($tpl,$data))
      *
-     * @param string $tpl Name of template
-     * @param array $data Key=>Value pairs of data for the template
+     * @param string $tpl  Name of template
+     * @param array  $data Key=>Value pairs of data for the template
      */
-    protected function render($tpl,$data=array())
+    protected function render($tpl, $data = array())
     {
-        $content = $this->view->fetch($tpl,$data);
-
+        $content = $this->view->fetch($tpl, $data);
         $this->getResponse()->setBody($content);
-
-
     }
-
 
 
     /**
@@ -105,6 +101,4 @@ abstract class AbstractController
     }
 
 
-
-
-} 
+}

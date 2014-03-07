@@ -7,5 +7,6 @@ module:
   name: Slender\Base
   namespace: Slender\Base
   require:
+    - Slender\Module\ServiceManager
     - Slender\Module\Twig
     - Slender\Module\RouteManager

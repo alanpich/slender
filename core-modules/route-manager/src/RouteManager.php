@@ -3,8 +3,7 @@ namespace Slender\Module\RouteManager;
 
 use Slender\App;
 use Slender\Interfaces\CoreModules\EventManagerInterface;
-use Slender\Module\DependencyInjector\DependencyInjector;
-use Slim\Route;
+use Slender\Core\DependencyInjector\DependencyInjector;
 
 class RouteManager
 {
@@ -37,7 +36,7 @@ class RouteManager
         // Prepare callback
         $controller = $rConf['controller'];
         $action = $rConf['action'];
-        $handler = $this->handleRouteCallback($controller,$action,func_get_args());
+        $handler = $this->handleRouteCallback($controller, $action, func_get_args());
 
         // Create Route
         $route = $this->app->map($rConf['route'], $handler);
@@ -48,7 +47,7 @@ class RouteManager
 
     }
 
-    protected function handleRouteCallback($controller,$action, $args = array())
+    protected function handleRouteCallback($controller, $action, $args = array())
     {
         $app = $this->app;
 
@@ -62,7 +61,6 @@ class RouteManager
 
         } else {
 
-
             // Fallback to instantiate controller class ourselves
             return function () use ($app, $controller, $action) {
                 $args = func_get_args();
@@ -72,7 +70,6 @@ class RouteManager
 
                 // Inject any dependencies
                 $this->dependencyInjector->prepare($controller);
-
 
                 call_user_func_array(array($controller, $action), $args);
             };
@@ -112,7 +109,7 @@ class RouteManager
     }
 
     /**
-     * @param \Slender\Interfaces\CoreModules\EventManagerInterface $eventManager
+     * @param EventManagerInterface $eventManager
      */
     public function setEventManager($eventManager)
     {
@@ -120,7 +117,7 @@ class RouteManager
     }
 
     /**
-     * @return \Slender\Interfaces\CoreModules\EventManagerInterface
+     * @return EventManagerInterface
      */
     public function getEventManager()
     {
@@ -128,7 +125,7 @@ class RouteManager
     }
 
     /**
-     * @param \Slender\Module\DependencyInjector\DependencyInjector $dependencyInjector
+     * @param DependencyInjector
      */
     public function setDependencyInjector($dependencyInjector)
     {
@@ -136,13 +133,12 @@ class RouteManager
     }
 
     /**
-     * @return \Slender\Module\DependencyInjector\DependencyInjector
+     * @return DependencyInjector
      */
     public function getDependencyInjector()
     {
         return $this->dependencyInjector;
     }
-
 
 
 }

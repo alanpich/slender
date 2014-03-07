@@ -28,7 +28,8 @@
             "Slender\\Module\\Twig\\": "core-modules/twig/src",
             "Slender\\Module\\Controllers\\": "core-modules/controllers/src",
             "Slender\\Module\\EventManager\\": "core-modules/event-manager/src",
-            "Slender\\Module\\DependencyInjector\\": "core-modules/dependency-injector/src"
+            "Slender\\Module\\DependencyInjector\\": "core-modules/dependency-injector/src",
+            "Slender\\Module\\ServiceManager\\": "core-modules/service-manager/src"
         }
     },
     "require-dev": {

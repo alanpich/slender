@@ -1,9 +1,0 @@
-module:
-  name: dependency-injector
-  namespace: Slender\Module\DependencyInjector
-  autoload:
-    psr-4:
-      Slender\Module\DependencyInjector: ./src
-
-services:
-  dependency-injector: Slender\Module\DependencyInjector\DependencyInjectorFactory

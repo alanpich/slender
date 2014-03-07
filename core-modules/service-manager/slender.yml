@@ -1,0 +1,3 @@
+module:
+  name: Slender\Module\ServiceManager
+  namespace: Slender\Module\ServiceManager

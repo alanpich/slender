@@ -1,7 +1,7 @@
 <?php
 namespace Skeleton;
 
-use Slender\Module\DependencyInjector\Annotation as Slender;
+use Slender\Core\DependencyInjector\Annotation as Slender;
 use Slender\Module\RouteManager\Controller\AbstractController;
 
 

@@ -22,49 +22,30 @@ class App extends \Slim\App
         // Do the normal Slim construction
         parent::__construct($userSettings);
 
-        try {
-            // Register our core services
-            $this->registerCoreServices();
-            $this->loadConfigDefaults($userSettings);
-            $this->loadApplicationConfigFiles($userSettings);
+        $this->registerCoreServices();
+        $this->loadConfigDefaults($userSettings);
+        $this->loadApplicationConfigFiles($userSettings);
 
 
-            /**
-             * Load modules
-             */
-            foreach ($this['settings']['modules'] as $module) {
-                $this['module-loader']->loadModule($module);
-            }
+        /**
+         * Load modules
+         */
+        foreach ($this['settings']['modules'] as $module) {
+            $this['module-loader']->loadModule($module);
+        }
 
-            /**
-             * Register Services & Factories
-             */
-            foreach ($this['settings']['services'] as $service => $class) {
-                $this->registerService($service, $class);
-            }
-
-            /**
-             * Register Factory
-             */
-            foreach ($this['settings']['factories'] as $factory => $class) {
-                $this->registerFactory($factory, $class);
-            }
-
-            /**
-             * Call module Invokables
-             */
-            $moduleConfigs = $this['settings']['module-config'];
-            foreach ($moduleConfigs as $module => $mConf) {
-                if (isset($mConf['invoke'])) {
-                    foreach ($mConf['invoke'] as $class) {
-                        /** @var ModuleInvokableInterface $obj */
-                        $obj = new $class;
-                        $obj->invoke($this);
-                    }
+        /**
+         * Call module Invokables
+         */
+        $moduleConfigs = $this['settings']['module-config'];
+        foreach ($moduleConfigs as $module => $mConf) {
+            if (isset($mConf['invoke'])) {
+                foreach ($mConf['invoke'] as $class) {
+                    /** @var ModuleInvokableInterface $obj */
+                    $obj = new $class;
+                    $obj->invoke($this);
                 }
             }
-        } catch (\Exception $E){
-            dump("EXCEPTION",$E);
         }
 
     }
@@ -191,6 +172,12 @@ class App extends \Slim\App
             return new \Slender\Core\Util\Util();
         };
 
+        $this->registerService('dependency-injector','Slender\Core\DependencyInjector\Factory');
+        $this->registerService('autoloader', 'Slender\Core\Autoloader\AutoloaderFactory');
+        $this->registerService('autoloader.psr4', 'Slender\Core\Autoloader\PSR4Factory');
+
+
+
 
         /**
          * The configParser is used to translate various file
@@ -225,10 +212,6 @@ class App extends \Slim\App
             };
 
 
-        $this->registerService('autoloader', 'Slender\Core\Autoloader\AutoloaderFactory');
-        $this->registerService('autoloader.psr4', 'Slender\Core\Autoloader\PSR4Factory');
-
-
         /**
          * ModuleResolver is used for tracking down a module's path
          * from it's name
@@ -257,14 +240,6 @@ class App extends \Slim\App
          * @return ModuleLoaderInterface
          */
         $this->registerService('module-loader', 'Slender\Core\ModuleLoader\Factory');
-
-
-//        $this['autoloader'] = $this->share(function ($app) {
-//                $autoload = new MultiFormatAutoloader(array(
-//                    'psr-4' => new PSR4()
-//                ));
-//                return $autoload;
-//            });
 
     }
 
