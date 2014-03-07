@@ -57,7 +57,6 @@ class App extends \Slim\App
         $this->loadConfigDefaults($userSettings);
         $this->loadApplicationConfigFiles($userSettings);
 
-
         /**
          * Load modules
          */

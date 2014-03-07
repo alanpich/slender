@@ -51,6 +51,8 @@ class RouteManager
     {
         $app = $this->app;
 
+
+
         // Check if controller is registered to the IoC container
         if (isset($app[$controller])) {
             // Get the controller instance from DI Container
@@ -61,8 +63,10 @@ class RouteManager
 
         } else {
 
+
             // Fallback to instantiate controller class ourselves
             return function () use ($app, $controller, $action) {
+
                 $args = func_get_args();
 
                 // Create controller instance
@@ -70,6 +74,8 @@ class RouteManager
 
                 // Inject any dependencies
                 $this->dependencyInjector->prepare($controller);
+
+                dump($controller);
 
                 call_user_func_array(array($controller, $action), $args);
             };

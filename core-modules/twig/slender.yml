@@ -7,9 +7,8 @@
 module:
   name: twig
   author: Alan Pich <alan.pich@gmail.com>
-  namespace: Slender\Modules\Twig
-  autoload: composer
+  namespace: Slender\Module\Twig
 
 services:
   ## Overwrite the default View class to use Twig
-  view: Slender\Modules\Twig\Factories\ViewFactory
+  view: Slender\Module\Twig\Factories\ViewFactory

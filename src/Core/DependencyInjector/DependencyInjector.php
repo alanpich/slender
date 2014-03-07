@@ -37,7 +37,7 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
 use Slender\Core\Util\Util;
 
 //@TODO DIRTY HACK EWWWW!!!!!
-if(!class_exists('Slender\Core\DependencyInjector\Annotation\Inject as Slender',false)){
+if (!class_exists('Slender\Core\DependencyInjector\Annotation\Inject as Slender', false)) {
     require dirname(__FILE__) . '/Annotation/Inject.php';
 }
 
@@ -55,7 +55,8 @@ class DependencyInjector
         $this->annotationReader = new AnnotationReader();
     }
 
-    public function setDiContainer($di){
+    public function setDiContainer($di)
+    {
         $this->container = $di;
     }
 
@@ -88,7 +89,7 @@ class DependencyInjector
                     $name = $prop->getName();
                     $injects[$name] = array(
                         'identifier' => $identifier,
-                        'useSetter' => ! $prop->isPublic()
+                        'useSetter' => !$prop->isPublic()
                     );
                 }
             }
@@ -109,22 +110,33 @@ class DependencyInjector
     {
         $requirements = $this->getDiRequirements(get_class($instance));
 
+
+        dump($this->container['view']);
         foreach ($requirements as $property => $service) {
 
-            if($service['useSetter']){
+            $dependency = $service['identifier'];
+            if ($service['useSetter']) {
                 // Private or Protected property - use the setter method
                 $method = Util::setterMethodName($property);
+
                 if (!method_exists($instance, $method)) {
                     throw new \RuntimeException("Dependency Injection requires method " . get_class(
                             $instance
                         ) . "::$method to exist");
                 }
-                call_user_func([$instance, $method], $this->container[$service['identifier']]);
+                if (!isset($this->container[$dependency])) {
+                    throw new \InvalidArgumentException("Unable to resolve dependency $dependency for injection");
+                }
+
+                $dep = $this->container[$dependency];
+                call_user_func([$instance, $method], $dep);
+
             } else {
-                $instance->$property = $this->container[$service['identifier']];
+                $instance->$property = $this->container[$dependency];
             }
 
         }
+
     }
 
 } 

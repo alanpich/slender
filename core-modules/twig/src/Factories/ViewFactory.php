@@ -1,5 +1,5 @@
 <?php
-namespace Slender\Modules\Twig\Factories;
+namespace Slender\Module\Twig\Factories;
 
 use Slender\App;
 use Slender\Interfaces\FactoryInterface;
@@ -10,7 +10,11 @@ class ViewFactory implements FactoryInterface
 
     public function create(App $app)
     {
-        $view = new View;
+        try {
+            $view = new View
+        }catch(\Exception $E){
+            echo "> I CAUGHT AN ERROR\n";
+        }
 
         // Set template paths
         $paths = $app['settings']['view-paths'];

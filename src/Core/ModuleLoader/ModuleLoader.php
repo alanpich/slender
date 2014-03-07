@@ -171,7 +171,6 @@ class ModuleLoader implements ModuleLoaderInterface
      */
     protected function setupAutoloaders($modulePath, array $mConf)
     {
-        $composerAutoload = $modulePath.'/vendor/autoload.php';
         if (isset($mConf['autoload']['psr-4'])) {
             foreach ($mConf['autoload']['psr-4'] as $ns => $path) {
                 $path = $modulePath . DIRECTORY_SEPARATOR . preg_replace("/^\\.\\//", "", $path);
