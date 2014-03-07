@@ -18,4 +18,4 @@ script:
 
 
 after_script:
- - php ./vendor/bin/coveralls -v -c .coverally.yml
+ - php ./vendor/bin/coveralls -v -c .coveralls.yml
