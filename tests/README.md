@@ -1,6 +1,6 @@
 Slender Framework Unit Tests
 
-Follow the directions below to run the Slim Framework unit tests. You'll need the latest version of PHPUnit. To save development time, these unit tests require PHP >= 5.3. However, the Slim Framework itself requires only PHP >= 5.2.
+Follow the directions below to run the Slender Framework unit tests. You'll need the latest version of PHPUnit. To save development time, these unit tests require PHP >= 5.3. However, the Slim Framework itself requires only PHP >= 5.2.
 
 1. Install the latest version of PHPUnit
 Visit http://www.phpunit.de/ for installation instructions.
