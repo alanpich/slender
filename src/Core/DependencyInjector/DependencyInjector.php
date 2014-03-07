@@ -110,8 +110,6 @@ class DependencyInjector
     {
         $requirements = $this->getDiRequirements(get_class($instance));
 
-
-        dump($this->container['view']);
         foreach ($requirements as $property => $service) {
 
             $dependency = $service['identifier'];

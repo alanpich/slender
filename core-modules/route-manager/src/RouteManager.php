@@ -75,8 +75,6 @@ class RouteManager
                 // Inject any dependencies
                 $this->dependencyInjector->prepare($controller);
 
-                dump($controller);
-
                 call_user_func_array(array($controller, $action), $args);
             };
         }

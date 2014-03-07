@@ -11,7 +11,7 @@ class ViewFactory implements FactoryInterface
     public function create(App $app)
     {
         try {
-            $view = new View
+            $view = new \Slender\Module\Twig\View();
         }catch(\Exception $E){
             echo "> I CAUGHT AN ERROR\n";
         }
