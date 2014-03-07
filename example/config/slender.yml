@@ -5,10 +5,7 @@ modules:
   - app
 
 modulePaths:
-  - ./module
   - ./core/module
-
-
 
 routes:
   home:
