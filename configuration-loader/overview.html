@@ -106,8 +106,8 @@
     <li class="folder">
         <label>Configuration Loader</label>
         <ul>
-            <li><a href="../configuration-loader/default-configuration.html">Default Configuration</a></li>
-            <li><a href="../configuration-loader/service-configuration.html">Services & Factories</a></li>
+            <li><a href="../configuration-loader/overview.html">Overview</a></li>
+            <li><code>@TODO</code></li>
         </ul>
     </li>
     <li class="folder">
@@ -122,6 +122,16 @@
         </ul>
     </li>
     <li class="folder">
+        <label>DependencyInjector</label>
+        <ul>
+            <li>
+                <a href="../dependency-injector/automatic-dependency-injection.html">
+                    Automatic Dependency Injection
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="folder">
         <label>RouteManager</label>
         <ul>
             <li><a href="../route-manager/configuration.html">Configuring Routes</a></li>
@@ -133,9 +143,7 @@
     <li class="folder">
         <label>ServiceManager</label>
         <ul>
-            <li><a href="">Overview</a></li>
-            <li><a href="">Dependency Injection</a></li>
-            <li><a href="">Factory Classes</a></li>
+            <li><a href="../service-manager/overview.html">Overview</a></li>
         </ul>
     </li>
 
@@ -164,37 +172,12 @@
             <!-- main area -->
             <div class="col-xs-12 col-sm-9" id="page">
                 
-                    <h1>Default Configuration</h1>
-                    <p>This is the vanilla config used as defaults by Slender. This is how the configuration
-looks before any application or module config files are loaded.</p>
-<pre><code>
-# Defaults to development mode
-mode: development
-debug: true
+                    <h1>Configuration Loader</h1>
+                    <ul>
+<li><code>Supported file formats</code></li>
+<li><code>Configuring loading paths</code></li>
+</ul>
 
-
-# Customize the ConfigurationLoader
-config:
-
-  # An array of directory paths which should be scanned for config files on startup
-  autoload:
-    - ./config
-
-  # File names to match in autoload directories
-  # Note: Uses Symfony\Finder::name()
-  files:
-    - global.*
-    - local.*
-
-  # Path to cache directory.
-  # Note: Cache is automatically disabled in development mode
-  cache: ./data/cache/config
-
-
-# Array of paths to use as view template directories
-viewPaths:
-    - ./views
-</code></pre>
                 
             </div>
             <!-- /.col-xs-12 main -->

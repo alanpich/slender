@@ -106,8 +106,8 @@
     <li class="folder">
         <label>Configuration Loader</label>
         <ul>
-            <li><a href="../configuration-loader/default-configuration.html">Default Configuration</a></li>
-            <li><a href="../configuration-loader/service-configuration.html">Services & Factories</a></li>
+            <li><a href="../configuration-loader/overview.html">Overview</a></li>
+            <li><code>@TODO</code></li>
         </ul>
     </li>
     <li class="folder">
@@ -122,6 +122,16 @@
         </ul>
     </li>
     <li class="folder">
+        <label>DependencyInjector</label>
+        <ul>
+            <li>
+                <a href="../dependency-injector/automatic-dependency-injection.html">
+                    Automatic Dependency Injection
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="folder">
         <label>RouteManager</label>
         <ul>
             <li><a href="../route-manager/configuration.html">Configuring Routes</a></li>
@@ -133,9 +143,7 @@
     <li class="folder">
         <label>ServiceManager</label>
         <ul>
-            <li><a href="">Overview</a></li>
-            <li><a href="">Dependency Injection</a></li>
-            <li><a href="">Factory Classes</a></li>
+            <li><a href="../service-manager/overview.html">Overview</a></li>
         </ul>
     </li>
 
@@ -164,35 +172,97 @@
             <!-- main area -->
             <div class="col-xs-12 col-sm-9" id="page">
                 
-                    <h1>Route Middleware</h1>
-                    <p>Route Middleware can&#39;t currently be controller via config files due to not being able to write
-closures in text files. Until a brainwave strikes, this page will hold ideas and concepts
-for discussion.</p>
-<h3 id="idea-1-simplified-api-access">Idea #1 - Simplified API access</h3>
-<p>This could potentially be submitted to Slim directly as a PR</p>
-<pre><code class="lang-php">$app-&gt;getRoute(&#39;users&#39;)-&gt;addMiddleware(function(){
-    // Middleware function
-})
-</code></pre>
-<h3 id="idea-2-class-based-registration">Idea #2 - Class based registration</h3>
-<pre><code class="lang-yaml"># config
+                    <h1>Service Manager</h1>
+                    <p>Slim, and Slender by inheritance, use Pimple as an IoC container. It is very powerful, but can be
+cumbersome to configure. Slender ConfigLoader helps to automate this process by allowing service
+and factory classes to be registered inside config files.</p>
+<h2 id="services">Services</h2>
+<p>Services are singleton class instances that are shared across an
+application. The are lazy-loaded; not created until the first time
+they are asked for.</p>
+<p>Registering services from config files is easy, simply add them to the
+<code>services</code> block in the form $identifier=&gt;$class</p>
+<pre><code class="lang-yaml"># Services are registered as Shared resources in the Slim DI container
+# If the class registered implements Slender\FactoryInterface then
+# the factory will be run to create the instance, otherwise the
+# class listed will be initialized
+services:
+    MyService: MyModule\ServiceFactory
 
-routes:
-    example:
-        route: /foo
-        ...
-        middleware:
-            - MyVendor\Middleware\MyMiddleware
+# Factories are registered as resources in the Slim DI container.
+# A new instance is created each time this object is requested.
+# If the class registered implements FactoryInterface, then the
+# object returned will be the result of the factory method, not
+# the factory class
+factories:
+    NewObject:  MyModule\Object
 </code></pre>
-<pre><code class="lang-php">interface Slender\MiddlewareInterface {
-    public static function run();
-}
+<p>Once a service is registered, you can retrieve it using the $app IoC container:</p>
+<pre><code class="lang-php">/** @var $app Slender\App */
+$myService = $app[&#39;MyService&#39;];
+$secondTime = $app[&#39;MyService&#39;];
+$myService === $secondTime; // TRUE
+</code></pre>
+<h2 id="factories">Factories</h2>
+<p>Factories work in pretty much the same way as Services, with the exception that
+each time a factory class is requested from the IoC container, a completely new
+instance is returned.</p>
+<p>Registering services from config files is easy, simply add them to the
+<code>factories</code> block in the form <code>$identifier =&gt; $class</code></p>
+<pre><code class="lang-yaml">...
+factories:
+    NewObject: MyVendor/MyNamespace/MyObject
+</code></pre>
+<p>Once a service is registered, you can retrieve it using the $app IoC container:</p>
+<pre><code class="lang-php">/** @var $app Slender\App */
+$myService = $app[&#39;NewObject&#39;];
+$secondTime = $app[&#39;NewObject&#39;];
+$myService === $secondTime; // FALSE
+</code></pre>
+<h2 id="service-factories">Service Factories</h2>
+<p>If a registered Service or Factory class implements <code>Slender\FactoryInterface</code>, the
+return value of the class&#39; <code>create()</code> method will be used instead of the class itself.</p>
+<p>This allows runtime configuration of service classes</p>
+<pre><code class="lang-php">namespace MyVendor\MyNamespace;
 
-class MyMiddleware implements MiddlewareInterface {
-    public function __run(){
-        // Do stuff
+use Slender\Interfaces\FactoryInterface;
+
+/**
+ * Factory Class
+ *
+ * Creates a MyService instance and initializes
+ * it using the application config.
+ */
+class MyServiceFactory
+    implements FactoryInterface
+{
+    /**
+     * Factory method
+     *
+     * @param Slender\App $app Slender App instance
+     * @return mixed The initialized service
+     */
+    public function create( Slender\App $app )
+    {
+        $myService = new MyService();
+        $myService-&gt;setRouter( $app[&#39;router&#39;] );
+
+        // This is what the DI container returns
+        return $myService;
     }
 }
+</code></pre>
+<pre><code class="lang-yaml"># ./config/slender.yml
+...
+services:
+  ## Registering a service factory
+  my-service: MyVendor\MyNamespace\MyServiceFactory
+  # will return an instance of
+  #
+  #  MyVendor\MyModule\MyService
+  #
+  # as this is what is returned by the factory class
+  #
 </code></pre>
 
                 

@@ -77,7 +77,7 @@ your controller before dispatching the action.
 Dependencies can be referenced in your class definition using
 annotations on the injectable properties. Take the example below:
 ```php
-use Slender\Module\DependencyInjector\Annotation as Slender;
+use Slender\Core\DependencyInjector\Annotation as Slender;
 
 class MyController extends AbstractController
 {

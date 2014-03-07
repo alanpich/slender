@@ -1,5 +1,5 @@
 ---
-title: Services & Factories
+title: Service Manager
 ---
 
 

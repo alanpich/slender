@@ -106,8 +106,8 @@
     <li class="folder">
         <label>Configuration Loader</label>
         <ul>
-            <li><a href="../configuration-loader/default-configuration.html">Default Configuration</a></li>
-            <li><a href="../configuration-loader/service-configuration.html">Services & Factories</a></li>
+            <li><a href="../configuration-loader/overview.html">Overview</a></li>
+            <li><code>@TODO</code></li>
         </ul>
     </li>
     <li class="folder">
@@ -122,6 +122,16 @@
         </ul>
     </li>
     <li class="folder">
+        <label>DependencyInjector</label>
+        <ul>
+            <li>
+                <a href="../dependency-injector/automatic-dependency-injection.html">
+                    Automatic Dependency Injection
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="folder">
         <label>RouteManager</label>
         <ul>
             <li><a href="../route-manager/configuration.html">Configuring Routes</a></li>
@@ -133,9 +143,7 @@
     <li class="folder">
         <label>ServiceManager</label>
         <ul>
-            <li><a href="">Overview</a></li>
-            <li><a href="">Dependency Injection</a></li>
-            <li><a href="">Factory Classes</a></li>
+            <li><a href="../service-manager/overview.html">Overview</a></li>
         </ul>
     </li>
 
@@ -228,7 +236,7 @@ module to automatically inject required dependencies into
 your controller before dispatching the action.</p>
 <p>Dependencies can be referenced in your class definition using
 annotations on the injectable properties. Take the example below:</p>
-<pre><code class="lang-php">use Slender\Module\DependencyInjector\Annotation as Slender;
+<pre><code class="lang-php">use Slender\Core\DependencyInjector\Annotation as Slender;
 
 class MyController extends AbstractController
 {

@@ -106,8 +106,8 @@
     <li class="folder">
         <label>Configuration Loader</label>
         <ul>
-            <li><a href="../configuration-loader/default-configuration.html">Default Configuration</a></li>
-            <li><a href="../configuration-loader/service-configuration.html">Services & Factories</a></li>
+            <li><a href="../configuration-loader/overview.html">Overview</a></li>
+            <li><code>@TODO</code></li>
         </ul>
     </li>
     <li class="folder">
@@ -122,6 +122,16 @@
         </ul>
     </li>
     <li class="folder">
+        <label>DependencyInjector</label>
+        <ul>
+            <li>
+                <a href="../dependency-injector/automatic-dependency-injection.html">
+                    Automatic Dependency Injection
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="folder">
         <label>RouteManager</label>
         <ul>
             <li><a href="../route-manager/configuration.html">Configuring Routes</a></li>
@@ -133,9 +143,7 @@
     <li class="folder">
         <label>ServiceManager</label>
         <ul>
-            <li><a href="">Overview</a></li>
-            <li><a href="">Dependency Injection</a></li>
-            <li><a href="">Factory Classes</a></li>
+            <li><a href="../service-manager/overview.html">Overview</a></li>
         </ul>
     </li>
 
@@ -164,97 +172,106 @@
             <!-- main area -->
             <div class="col-xs-12 col-sm-9" id="page">
                 
-                    <h1>Services &amp; Factories</h1>
-                    <p>Slim, and Slender by inheritance, use Pimple as an IoC container. It is very powerful, but can be
-cumbersome to configure. Slender ConfigLoader helps to automate this process by allowing service
-and factory classes to be registered inside config files.</p>
-<h2 id="services">Services</h2>
-<p>Services are singleton class instances that are shared across an
-application. The are lazy-loaded; not created until the first time
-they are asked for.</p>
-<p>Registering services from config files is easy, simply add them to the
-<code>services</code> block in the form $identifier=&gt;$class</p>
-<pre><code class="lang-yaml"># Services are registered as Shared resources in the Slim DI container
-# If the class registered implements Slender\FactoryInterface then
-# the factory will be run to create the instance, otherwise the
-# class listed will be initialized
-services:
-    MyService: MyModule\ServiceFactory
+                    <h1>Automatic Dependency Injection</h1>
+                    <p>Slender&#39;s DependencyInjector service is a tool for
+automagically injecting dependencies into your classes.</p>
+<p>It works using docblock annotations (powered by the <code>Doctrie\Annotations</code>
+package).</p>
+<h2 id="annotating-classes-for-automatic-injection">Annotating classes for automatic injection</h2>
+<p>Marking class properties for auto-injection is easy. Simply add a docblock
+comment to the property definition to mark it for injection. The required
+docblock annotation is <code>@Slender\Core\DependencyInjector\Annotation\Inject</code>
+although you can shorten this by importing the class with a <code>use</code> statement
+(see example below)</p>
+<pre><code class="lang-php">use Slender\Core\DependencyInjector\Annotation as Slender;
 
-# Factories are registered as resources in the Slim DI container.
-# A new instance is created each time this object is requested.
-# If the class registered implements FactoryInterface, then the
-# object returned will be the result of the factory method, not
-# the factory class
-factories:
-    NewObject:  MyModule\Object
-</code></pre>
-<p>Once a service is registered, you can retrieve it using the $app IoC container:</p>
-<pre><code class="lang-php">/** @var $app Slender\App */
-$myService = $app[&#39;MyService&#39;];
-$secondTime = $app[&#39;MyService&#39;];
-$myService === $secondTime; // TRUE
-</code></pre>
-<h2 id="factories">Factories</h2>
-<p>Factories work in pretty much the same way as Services, with the exception that
-each time a factory class is requested from the IoC container, a completely new
-instance is returned.</p>
-<p>Registering services from config files is easy, simply add them to the
-<code>factories</code> block in the form <code>$identifier =&gt; $class</code></p>
-<pre><code class="lang-yaml">...
-factories:
-    NewObject: MyVendor/MyNamespace/MyObject
-</code></pre>
-<p>Once a service is registered, you can retrieve it using the $app IoC container:</p>
-<pre><code class="lang-php">/** @var $app Slender\App */
-$myService = $app[&#39;NewObject&#39;];
-$secondTime = $app[&#39;NewObject&#39;];
-$myService === $secondTime; // FALSE
-</code></pre>
-<h2 id="service-factories">Service Factories</h2>
-<p>If a registered Service or Factory class implements <code>Slender\FactoryInterface</code>, the
-return value of the class&#39; <code>create()</code> method will be used instead of the class itself.</p>
-<p>This allows runtime configuration of service classes</p>
-<pre><code class="lang-php">namespace MyVendor\MyNamespace;
-
-use Slender\Interfaces\FactoryInterface;
-
-/**
- * Factory Class
- *
- * Creates a MyService instance and initializes
- * it using the application config.
- */
-class MyServiceFactory
-    implements FactoryInterface
+class MyClass
 {
-    /**
-     * Factory method
-     *
-     * @param Slender\App $app Slender App instance
-     * @return mixed The initialized service
-     */
-    public function create( Slender\App $app )
-    {
-        $myService = new MyService();
-        $myService-&gt;setRouter( $app[&#39;router&#39;] );
+   /**
+    * @var RouteManager
+    * @Slender\Inject
+    */
+    protected $routeManager;
 
-        // This is what the DI container returns
-        return $myService;
-    }
+   /**
+    * @var EventManager
+    * @Slender\Inject(&quot;event-manager&quot;)
+    */
+    protected $myCustomNamedProperty;
 }
 </code></pre>
-<pre><code class="lang-yaml"># ./config/slender.yml
-...
-services:
-  ## Registering a service factory
-  my-service: MyVendor\MyNamespace\MyServiceFactory
-  # will return an instance of
-  #
-  #  MyVendor\MyModule\MyService
-  #
-  # as this is what is returned by the factory class
-  #
+<h2 id="dependency-name-resolution">Dependency name resolution</h2>
+<p>When trying to inject class dependencies, the dependencyInjector tries to
+automate things for you as much as possible by converting property names
+to DI container identifiers on the fly.</p>
+<h3 id="canonical-usage">Canonical Usage</h3>
+<p>When used without a value, the Inject annotation will try to convert the
+name of the property to a DI container identifier. Property names
+are converted to service identifiers using <code>Slender\Util\Util::hyphenCase()</code></p>
+<p>Therefore, the annotation below is asking for the service <code>route-manager</code>.</p>
+<pre><code class="lang-php">use Slender\Core\DependencyInjector\Annotation as Slender;
+class MyClass
+{
+   /**
+    * @var RouteManager
+    * @Slender\Inject
+    */
+    protected $routeManager;
+    ...
+}
+</code></pre>
+<h3 id="explicit-usage">Explicit Usage</h3>
+<p>If your property name does not match the name of the service you require (it
+happens), you can explicitly define the service identifier to load by providing
+a value to the annotation.</p>
+<p>Therefore, the annotation below is asking for the service <code>event-manager</code>.</p>
+<pre><code class="lang-php">use Slender\Core\DependencyInjector\Annotation as Slender;
+class MyClass
+{
+   /**
+    * @var EventManager
+    * @Slender\Inject(&quot;event-manager&quot;)
+    */
+    protected $eventManager;
+    ...
+</code></pre>
+<h2 id="private-protected-properties">Private &amp; Protected properties</h2>
+<p>By default, the DependencyInjector will try to set property values directly
+(<code>$myInstance-&gt;routeManager = $routeManager</code>)</p>
+<p>If you want to protect your property access, you can also provide setter
+methods for the properties you want to inject. If the DependencyInjector
+cannot write to the property directly (if it is protected or private) then
+it will look for a setter method instead.</p>
+<p>To make the above example $routeManager property private,
+you would make to following changes:</p>
+<pre><code class="lang-php">use Slender\Core\DependencyInjector\Annotation as Slender;
+class MyClass {
+
+   /**
+    * @var RouteManager
+    * @Slender\Inject
+    */
+    private $routeManager;
+
+    /**
+     * Publicly accessible setter method to allow
+     * injecting private/protected properties
+     */
+    public function setRouteManager($rm)
+    {
+        $this-&gt;routeManager = $rm;
+    }
+
+}
+</code></pre>
+<h2 id="using-the-dependencyinjector">Using the DependencyInjector</h2>
+<p>The dependency injector is used in various core services and modules, but you
+can also use it yourself when creating classes. The easiest way to do this is
+ as follows:</p>
+<pre><code class="lang-php">$myInstance = new MyClass();
+$app[&#39;dependency-injector&#39;]-&gt;prepare($myInstance);
+// $myInstance now has its routeManager and
+// myCustomNamedProperty properties set
 </code></pre>
 
                 
