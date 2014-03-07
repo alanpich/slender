@@ -73,6 +73,9 @@ class ResolverStackTest extends \PHPUnit_Framework_TestCase
 
         // TEst!
         $this->assertAttributeNotEmpty('dummyProtectedProperty',$obj);
+        $this->assertAttributeEquals('FOO','dummyProtectedProperty',$obj);
+
         $this->assertAttributeNotEmpty('customProperty',$obj);
+        $this->assertAttributeEquals('BAR','customProperty',$obj);
     }
 }
