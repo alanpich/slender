@@ -2,8 +2,6 @@ debug: true
 
 modules:
   - Slender\Base
-  - Slender\Module\Twig
-  - skeleton-layout
   - app
 
 modulePaths:
