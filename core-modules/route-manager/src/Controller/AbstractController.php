@@ -39,8 +39,13 @@ abstract class AbstractController
     protected $response;
 
 
-
-    protected function render($tpl,$data)
+    /**
+     * Shortcut for $this->getResponse()->setBody($this->view->fetch($tpl,$data))
+     *
+     * @param string $tpl Name of template
+     * @param array $data Key=>Value pairs of data for the template
+     */
+    protected function render($tpl,$data=array())
     {
         $content = $this->view->fetch($tpl,$data);
 
