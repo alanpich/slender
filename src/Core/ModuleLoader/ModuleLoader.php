@@ -67,8 +67,8 @@ class ModuleLoader implements ModuleLoaderInterface
         $this->loadedModules[$module] = true;
 
         // Check for any dependencies
-        if (isset($mConf['requires'])) {
-            foreach ($mConf['requires'] as $dependency) {
+        if (isset($mConf['require'])) {
+            foreach ($mConf['require'] as $dependency) {
                 $this->loadModule($dependency);
             }
         }

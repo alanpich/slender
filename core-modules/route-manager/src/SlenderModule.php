@@ -1,5 +1,5 @@
 <?php
-namespace Slender\Module\RouteRegistrar;
+namespace Slender\Module\RouteManager;
 
 use Slender\Interfaces\ModuleInvokableInterface;
 use Slender\Interfaces\ModulePathProviderInterface;
@@ -43,7 +43,7 @@ class SlenderModule implements ModulePathProviderInterface,
         }
 
         foreach ($routes as $route) {
-            $app['route-registrar']->addRoute($route);
+            $app['route-manager']->addRoute($route);
         }
 
     }

@@ -1,8 +1,6 @@
 <?php
 namespace Slender;
 
-use Slender\Core\Autoload\MultiFormatAutoloader;
-use Slender\Core\Autoload\PSR4;
 use Slender\Core\ModuleLoader\ModuleLoader;
 use Slender\Core\ModuleResolver\DirectoryResolver;
 use Slender\Core\ModuleResolver\NamespaceResolver;
@@ -24,46 +22,49 @@ class App extends \Slim\App
         // Do the normal Slim construction
         parent::__construct($userSettings);
 
-        // Register our core services
-        $this->registerCoreServices();
+        try {
+            // Register our core services
+            $this->registerCoreServices();
+            $this->loadConfigDefaults($userSettings);
+            $this->loadApplicationConfigFiles($userSettings);
 
-        $this->loadConfigDefaults($userSettings);
 
-        $this->loadApplicationConfigFiles($userSettings);
+            /**
+             * Load modules
+             */
+            foreach ($this['settings']['modules'] as $module) {
+                $this['module-loader']->loadModule($module);
+            }
 
-        /**
-         * Load modules
-         */
-        foreach ($this['settings']['modules'] as $module) {
-            $this['module-loader']->loadModule($module);
-        }
+            /**
+             * Register Services & Factories
+             */
+            foreach ($this['settings']['services'] as $service => $class) {
+                $this->registerService($service, $class);
+            }
 
-        /**
-         * Register Services & Factories
-         */
-        foreach ($this['settings']['services'] as $service => $class) {
-            $this->registerService($service, $class);
-        }
+            /**
+             * Register Factory
+             */
+            foreach ($this['settings']['factories'] as $factory => $class) {
+                $this->registerFactory($factory, $class);
+            }
 
-        /**
-         * Register Factory
-         */
-        foreach ($this['settings']['factories'] as $factory => $class) {
-            $this->registerFactory($factory, $class);
-        }
-
-        /**
-         * Call module Invokables
-         */
-        $moduleConfigs = $this['settings']['module-config'];
-        foreach ($moduleConfigs as $mConf) {
-            if (isset($mConf['invoke'])) {
-                foreach ($mConf['invoke'] as $class) {
-                    /** @var ModuleInvokableInterface $obj */
-                    $obj = new $class;
-                    $obj->invoke($this);
+            /**
+             * Call module Invokables
+             */
+            $moduleConfigs = $this['settings']['module-config'];
+            foreach ($moduleConfigs as $module => $mConf) {
+                if (isset($mConf['invoke'])) {
+                    foreach ($mConf['invoke'] as $class) {
+                        /** @var ModuleInvokableInterface $obj */
+                        $obj = new $class;
+                        $obj->invoke($this);
+                    }
                 }
             }
+        } catch (\Exception $E){
+            dump("EXCEPTION",$E);
         }
 
     }
@@ -76,7 +77,7 @@ class App extends \Slim\App
      *
      * @var ConfigFileParserInterface $parser
      */
-    protected function loadDefaultConfig($userSettings)
+    protected function loadConfigDefaults($userSettings)
     {
         $parser = $this['config-parser'];
         $defaults = $parser->parseFile(__DIR__ . '/slender.yml');
@@ -116,16 +117,14 @@ class App extends \Slim\App
      */
     public function registerService($service, $class)
     {
-        $this[$service] = $this->share(
-            function ($app) use ($class) {
+        $this[$service] = function ($app) use ($class) {
                 $inst = new $class;
                 if ($inst instanceof FactoryInterface) {
                     return $inst->create($app);
                 } else {
                     return $inst;
                 }
-            }
-        );
+            };
     }
 
     /**
@@ -138,14 +137,14 @@ class App extends \Slim\App
      */
     public function registerFactory($factory, $class)
     {
-        $this[$factory] = function ($app) use ($class) {
+        $this[$factory] = $this->factory(function ($app) use ($class) {
             $obj = new $class;
             if ($obj instanceof FactoryInterface) {
                 return $obj->create($app);
             } else {
                 return $obj;
             }
-        };
+        });
     }
 
     /**
@@ -192,6 +191,7 @@ class App extends \Slim\App
             return new \Slender\Core\Util\Util();
         };
 
+
         /**
          * The configParser is used to translate various file
          * formats into PHP arrays
@@ -199,15 +199,13 @@ class App extends \Slim\App
          * @var ConfigFileParserInterface
          * @return \Slender\Core\ConfigParser\Stack
          */
-        $this['config-parser'] = $this->share(
-            function () {
+        $this['config-parser'] = function () {
                 return new ConfigParser\Stack(array(
                     'yml' => new ConfigParser\YAML,
                     'php' => new ConfigParser\PHP,
                     'json' => new ConfigParser\JSON,
                 ));
-            }
-        );
+            };
 
 
         /**
@@ -217,16 +215,14 @@ class App extends \Slim\App
          * @var ConfigFileFinderInterface
          * @return ConfigFileFinderInterface
          */
-        $this['config-finder'] = $this->share(
-            function ($app) {
+        $this['config-finder'] = function ($app) {
                 $configLoader = new \Slender\Core\ConfigFinder\ConfigFinder(
                     $this['settings']['config']['autoload'],
                     $this['settings']['config']['files']
                 );
 
                 return $configLoader;
-            }
-        );
+            };
 
 
         $this->registerService('autoloader', 'Slender\Core\Autoloader\AutoloaderFactory');
@@ -240,8 +236,7 @@ class App extends \Slim\App
          * @var ModuleResolverInterface
          * @return \Slender\Core\ModuleResolver\ResolverStack
          */
-        $this['module-resolver'] = $this->share(
-            function ($app) {
+        $this['module-resolver'] = function ($app) {
                 $stack = new ResolverStack(new NamespaceResolver);
                 $stack->setConfigParser($app['config-parser']);
                 foreach ($this['settings']['modulePaths'] as $path) {
@@ -251,8 +246,7 @@ class App extends \Slim\App
                 }
 
                 return $stack;
-            }
-        );
+            };
 
         /**
          * ModuleLoader is used to load modules & their dependencies,

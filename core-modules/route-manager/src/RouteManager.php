@@ -1,11 +1,12 @@
 <?php
-namespace Slender\Module\RouteRegistrar;
+namespace Slender\Module\RouteManager;
 
 use Slender\App;
 use Slender\Interfaces\CoreModules\EventManagerInterface;
+use Slender\Module\DependencyInjector\DependencyInjector;
 use Slim\Route;
 
-class RouteRegistrar
+class RouteManager
 {
     /** @var  \Slim\Router Router instance to register routes to */
     protected $router;
@@ -15,6 +16,9 @@ class RouteRegistrar
 
     /** @var  EventManagerInterface */
     protected $eventManager;
+
+    /** @var  DependencyInjector */
+    protected $dependencyInjector;
 
     public function addRoute($rConf)
     {
@@ -33,9 +37,7 @@ class RouteRegistrar
         // Prepare callback
         $controller = $rConf['controller'];
         $action = $rConf['action'];
-        $handler = function () use ($controller,$action) {
-            $this->handleRouteCallback($controller,$action,func_get_args());
-        };
+        $handler = $this->handleRouteCallback($controller,$action,func_get_args());
 
         // Create Route
         $route = $this->app->map($rConf['route'], $handler);
@@ -49,6 +51,7 @@ class RouteRegistrar
     protected function handleRouteCallback($controller,$action, $args = array())
     {
         $app = $this->app;
+
         // Check if controller is registered to the IoC container
         if (isset($app[$controller])) {
             // Get the controller instance from DI Container
@@ -58,21 +61,19 @@ class RouteRegistrar
             call_user_func_array(array($controller, $action), $args);
 
         } else {
-            // Pluggable controller invokers
-            $stackResponse = $this->eventManager->triggerChain(
-                'route-registrar.resolve-controller-callable',
-                array(
-                    'controller' => $controller,
-                    'action' => $action
-                )
-            );
-            if ($stackResponse !== null && is_callable($stackResponse)) {
-                return $stackResponse($args);
-            }
 
-            // Fallback to nstantiate controller class ourselves
+
+            // Fallback to instantiate controller class ourselves
             return function () use ($app, $controller, $action) {
                 $args = func_get_args();
+
+                // Create controller instance
+                $controller = new $controller;
+
+                // Inject any dependencies
+                $this->dependencyInjector->prepare($controller);
+
+
                 call_user_func_array(array($controller, $action), $args);
             };
         }
@@ -125,5 +126,23 @@ class RouteRegistrar
     {
         return $this->eventManager;
     }
+
+    /**
+     * @param \Slender\Module\DependencyInjector\DependencyInjector $dependencyInjector
+     */
+    public function setDependencyInjector($dependencyInjector)
+    {
+        $this->dependencyInjector = $dependencyInjector;
+    }
+
+    /**
+     * @return \Slender\Module\DependencyInjector\DependencyInjector
+     */
+    public function getDependencyInjector()
+    {
+        return $this->dependencyInjector;
+    }
+
+
 
 }

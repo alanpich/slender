@@ -105,10 +105,11 @@ abstract class Controller implements ControllerInterface
      *
      * @param string $method Method to call
      * @param array  $args   Arguments to pass to method
+     * @return mixed
      */
     protected function executeMethod($method, $args)
     {
-        call_user_func_array(array($this, $method), $args);
+        return call_user_func_array(array($this, $method), $args);
     }
 
     public function setDiContainer($diContainer)

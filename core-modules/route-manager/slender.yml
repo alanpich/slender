@@ -1,0 +1,11 @@
+module:
+  name: route-manager
+  namespace: Slender\Module\RouteManager
+  version: 1.0.0
+  author: Alan Pich <alan.pich@gmail.com>
+  require:
+    - Slender\Module\EventManager
+    - Slender\Module\DependencyInjector
+
+services:
+  route-manager: Slender\Module\RouteManager\Factory
