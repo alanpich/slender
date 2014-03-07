@@ -38,6 +38,7 @@
         "sebastian/phpcpd": "*",
         "phpmd/phpmd": "*",
         "squizlabs/php_codesniffer": "dev-master",
-        "fabpot/php-cs-fixer": "*"
+        "fabpot/php-cs-fixer": "*",
+        "satooshi/php-coveralls": "dev-master"
     }
 }
