@@ -39,6 +39,7 @@
         "phpmd/phpmd": "*",
         "squizlabs/php_codesniffer": "dev-master",
         "fabpot/php-cs-fixer": "*",
-        "satooshi/php-coveralls": "dev-master"
+        "satooshi/php-coveralls": "dev-master",
+        "mockery/mockery": "0.9.0"
     }
 }

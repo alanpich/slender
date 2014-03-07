@@ -172,19 +172,9 @@ class ModuleLoader implements ModuleLoaderInterface
     protected function setupAutoloaders($modulePath, array $mConf)
     {
         $composerAutoload = $modulePath.'/vendor/autoload.php';
-        if (($mConf === 'composer' || in_array('composer',$mConf['autoload'])) && file_exists($composerAutoload)) {
-            require $composerAutoload;
-        }
-
         if (isset($mConf['autoload']['psr-4'])) {
             foreach ($mConf['autoload']['psr-4'] as $ns => $path) {
-                $path = $modulePath . DIRECTORY_SEPARATOR . preg_replace("/^\.\//", "", $path);
-                $this->classLoader->registerNamespace($ns, $path, 'psr-4');
-            }
-        }
-        if (isset($mConf['autoload']['psr-0'])) {
-            foreach ($mConf['autoload']['psr-0'] as $ns => $path) {
-                $path = $modulePath . DIRECTORY_SEPARATOR . preg_replace("/^\.\//", "", $path);
+                $path = $modulePath . DIRECTORY_SEPARATOR . preg_replace("/^\\.\\//", "", $path);
                 $this->classLoader->registerNamespace($ns, $path, 'psr-4');
             }
         }
