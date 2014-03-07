@@ -1,0 +1,11 @@
+##
+# Module package providing a base set of modules and
+# features that should provide a good starting point
+# for most applications
+#
+module:
+  name: Slender\Base
+  namespace: Slender\Base
+  require:
+    - Slender\Module\Twig
+    - Slender\Module\RouteManager

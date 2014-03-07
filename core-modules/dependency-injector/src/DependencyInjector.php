@@ -63,6 +63,9 @@ class DependencyInjector
 
         foreach($requirements as $method => $argument)
         {
+            if(!method_exists($instance,$method)){
+                throw new \InvalidArgumentException("Dependency Injection requires method ".get_class($instance)."::$method to exist");
+            }
             call_user_func([$instance,$method],$this->container[$argument]);
         }
     }

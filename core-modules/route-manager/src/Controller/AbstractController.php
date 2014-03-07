@@ -2,16 +2,104 @@
 namespace Slender\Module\RouteManager\Controller;
 
 use Slender\Interfaces\DependencyInjectableInterface;
+use Slender\Module\DependencyInjector\Annotation as Slender;
+use Slender\View;
+use Slim\Http\Request;
+use Slim\Http\Response;
+
 
 /**
  * Class AbstractController
  *
  * @package Slender\Module\RouteManager\Controller
- *
- * @di route-manager
- * @di event-manager
  */
-abstract class AbstractController implements DependencyInjectableInterface
+abstract class AbstractController
 {
+    /**
+     * Inject the view class into the controller automatically
+     * Override this property in your child class to change
+     * the view used
+     *
+     * @var View
+     * @Slender\Inject
+     */
+    protected $view;
+
+
+    /**
+     * @var Request
+     * @Slender\Inject
+     */
+    protected $request;
+
+    /**
+     * @var Response
+     * @Slender\Inject
+     */
+    protected $response;
+
+
+
+    protected function render($tpl,$data)
+    {
+        $content = $this->view->fetch($tpl,$data);
+
+        $this->getResponse()->setBody($content);
+
+
+    }
+
+
+
+    /**
+     * @param \Slender\View $view
+     */
+    public function setView($view)
+    {
+        $this->view = $view;
+    }
+
+    /**
+     * @return \Slender\View
+     */
+    public function getView()
+    {
+        return $this->view;
+    }
+
+    /**
+     * @param \Slim\Http\Request $request
+     */
+    public function setRequest($request)
+    {
+        $this->request = $request;
+    }
+
+    /**
+     * @return \Slim\Http\Request
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
+     * @param mixed $response
+     */
+    public function setResponse($response)
+    {
+        $this->response = $response;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResponse()
+    {
+        return $this->response;
+    }
+
+
+
 
 } 
