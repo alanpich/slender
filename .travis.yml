@@ -8,13 +8,14 @@ before_install:
 
 before_script:
  - composer install --dev --no-interaction
+ - composer update satooshi/php-coveralls --dev
 
 
 
 script:
-  - mkdir -p build/logs
-  - phpunit --coverage-clover build/logs/clover.xml
+  - mkdir -p build/coverage
+  - phpunit --coverage-clover build/coverage/clover.xml
 
 
 after_script:
- - php ./vendor/bin/coveralls -v
+ - php ./vendor/bin/coveralls -v -c .coverally.yml
