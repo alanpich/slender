@@ -20,6 +20,13 @@ class DummyClassForTesting
     public $customProperty;
 
 
+    /**
+     * @var
+     * @Slender\Inject("no-defined-service")
+     */
+    private $hasNoSetterDefined;
+
+
     public function setDummyProtectedProperty($dpp){
         $this->dummyProtectedProperty = $dpp;
     }
@@ -29,6 +36,32 @@ class ResolverStackTest extends \PHPUnit_Framework_TestCase
 {
 
 
+    public function testConstructorCreatesAnnotationReader()
+    {
+        $di = new DependencyInjector();
+
+        $refl = new \ReflectionClass($di);
+        $p = $refl->getProperty('annotationReader');
+        $p->setAccessible(true);
+
+        $this->assertNotEmpty($p->getValue($di));
+    }
+
+
+    public function testSetDiContainerWorks()
+    {
+        $di = new DependencyInjector();
+
+        $refl = new \ReflectionClass($di);
+        $p = $refl->getProperty('container');
+        $p->setAccessible(true);
+
+        $di->setDiContainer('FOO');
+
+        $this->assertNotEmpty($p->getValue($di));
+        $this->assertEquals('FOO',$p->getValue($di));
+
+    }
 
 
     public function testGetDiRequirements()
@@ -69,6 +102,10 @@ class ResolverStackTest extends \PHPUnit_Framework_TestCase
                 'my-custom-service' => 'BAR',
             ));
 
+        // Expect exception thrown because has no setter method
+        // for private property
+        $this->setExpectedException('RuntimeException');
+
         $di->prepare($obj);
 
         // TEst!
@@ -77,5 +114,7 @@ class ResolverStackTest extends \PHPUnit_Framework_TestCase
 
         $this->assertAttributeNotEmpty('customProperty',$obj);
         $this->assertAttributeEquals('BAR','customProperty',$obj);
+
+
     }
 }

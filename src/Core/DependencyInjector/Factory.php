@@ -40,5 +40,6 @@ class Factory implements FactoryInterface
     {
         $di = new DependencyInjector();
         $di->setDiContainer($app);
+        return $di;
     }
 }
