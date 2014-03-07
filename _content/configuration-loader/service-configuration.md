@@ -50,7 +50,7 @@ each time a factory class is requested from the IoC container, a completely new
 instance is returned.
 
 Registering services from config files is easy, simply add them to the
-`factories` block in the form $identifier=>$class
+`factories` block in the form `$identifier => $class`
 
 ```yaml
 ...
@@ -72,3 +72,47 @@ If a registered Service or Factory class implements `Slender\FactoryInterface`, 
 return value of the class' `create()` method will be used instead of the class itself.
 
 This allows runtime configuration of service classes
+```php
+namespace MyVendor\MyNamespace;
+
+use Slender\Interfaces\FactoryInterface;
+
+/**
+ * Factory Class
+ *
+ * Creates a MyService instance and initializes
+ * it using the application config.
+ */
+class MyServiceFactory
+    implements FactoryInterface
+{
+    /**
+     * Factory method
+     *
+     * @param Slender\App $app Slender App instance
+     * @return mixed The initialized service
+     */
+    public function create( Slender\App $app )
+    {
+        $myService = new MyService();
+        $myService->setRouter( $app['router'] );
+
+        // This is what the DI container returns
+        return $myService;
+    }
+}
+```
+```yaml
+# ./config/slender.yml
+...
+services:
+  ## Registering a service factory
+  my-service: MyVendor\MyNamespace\MyServiceFactory
+  # will return an instance of
+  #
+  #  MyVendor\MyModule\MyService
+  #
+  # as this is what is returned by the factory class
+  #
+
+```

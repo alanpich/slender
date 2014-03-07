@@ -57,6 +57,83 @@ routes:
 ```
 
 
+## HTTP Methods
+You can configure which HTTP methods a route will respond to by
+adding a `methods` array into your route config
+```yaml
+# ./config/slender.yml
+...
+routes:
+    ##
+    # This route will only respond to GET and POST requests
+    #
+    my-route-name:
+        route: /my-route
+        ...
+        methods:
+            - GET
+            - POST
+```
+
+### All methods
+To make a route accept any request method, set `methods` to `ALL`
+```yaml
+# ./config/slender.yml
+...
+routes:
+    my-route-name:
+        ...
+        methods: ALL
+```
+
+### Method-specific actions
+It is also possible to dispatch a different action on the controller
+depending on the http method used for the request. This makes it really
+easy to set up RESTful endpoints for an API
+```yaml
+# ./config/slender.yml
+...
+routes:
+  my-route-name:
+    controller: MyVendor\MyNamespace\MyController
+    ...
+    methods:
+        GET: getUser
+        POST: createUser
+        PUT: updateUser
+        DELETE: deleteUser
+```
+```php
+namespace MyVendor\MyNamespace;
+
+class MyController
+{
+    public function getUser()
+    {
+        return $user;
+    }
+
+    public function createUser()
+    {
+        $user = new User;
+    }
+
+    public function updateUser($data)
+    {
+        $user->setData($data);
+    }
+
+    public function deleteUser()
+    {
+        $user->delete();
+    }
+
+
+}
+```
+
+
+
 ## Nesting routes
 Routes can be nested (emulating Slim's group() feature) to form groups of urls inheriting
 from each other.

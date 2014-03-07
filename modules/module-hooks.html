@@ -123,6 +123,15 @@
             <li><a href="../modules/module-hooks.html">Module Invokables</a></li>
         </ul>
     </li>
+    <li class="folder">
+        <label>RouteManager</label>
+        <ul>
+            <li><a href="../route-manager/configuration.html">Configuring Routes</a></li>
+            <li><a href="../route-manager/controllers.html">Controllers</a></li>
+            <li><a href="../route-manager/handling-404s.html">404
+                    Handling</a></li>
+        </ul>
+    </li>
 
 
     <li class="folder">
@@ -208,7 +217,7 @@ class SlenderModule implements InvokableInterface {
         $version = $composerData[&#39;version&#39;];
         $app-&gt;config(&#39;version&#39;,$version);
 
-        // $app[&#39;settings&#39;][&#39;version&#39;] === $version
+        $app[&#39;settings&#39;][&#39;version&#39;] === $version
     }
 }
 </code></pre>

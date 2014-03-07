@@ -123,6 +123,15 @@
             <li><a href="../modules/module-hooks.html">Module Invokables</a></li>
         </ul>
     </li>
+    <li class="folder">
+        <label>RouteManager</label>
+        <ul>
+            <li><a href="../route-manager/configuration.html">Configuring Routes</a></li>
+            <li><a href="../route-manager/controllers.html">Controllers</a></li>
+            <li><a href="../route-manager/handling-404s.html">404
+                    Handling</a></li>
+        </ul>
+    </li>
 
 
     <li class="folder">
@@ -203,7 +212,7 @@ $myService === $secondTime; // TRUE
 each time a factory class is requested from the IoC container, a completely new
 instance is returned.</p>
 <p>Registering services from config files is easy, simply add them to the
-<code>factories</code> block in the form $identifier=&gt;$class</p>
+<code>factories</code> block in the form <code>$identifier =&gt; $class</code></p>
 <pre><code class="lang-yaml">...
 factories:
     NewObject: MyVendor/MyNamespace/MyObject
@@ -218,6 +227,47 @@ $myService === $secondTime; // FALSE
 <p>If a registered Service or Factory class implements <code>Slender\FactoryInterface</code>, the
 return value of the class&#39; <code>create()</code> method will be used instead of the class itself.</p>
 <p>This allows runtime configuration of service classes</p>
+<pre><code class="lang-php">namespace MyVendor\MyNamespace;
+
+use Slender\Interfaces\FactoryInterface;
+
+/**
+ * Factory Class
+ *
+ * Creates a MyService instance and initializes
+ * it using the application config.
+ */
+class MyServiceFactory
+    implements FactoryInterface
+{
+    /**
+     * Factory method
+     *
+     * @param Slender\App $app Slender App instance
+     * @return mixed The initialized service
+     */
+    public function create( Slender\App $app )
+    {
+        $myService = new MyService();
+        $myService-&gt;setRouter( $app[&#39;router&#39;] );
+
+        // This is what the DI container returns
+        return $myService;
+    }
+}
+</code></pre>
+<pre><code class="lang-yaml"># ./config/slender.yml
+...
+services:
+  ## Registering a service factory
+  my-service: MyVendor\MyNamespace\MyServiceFactory
+  # will return an instance of
+  #
+  #  MyVendor\MyModule\MyService
+  #
+  # as this is what is returned by the factory class
+  #
+</code></pre>
 
                 
             </div>

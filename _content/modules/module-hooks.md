@@ -54,7 +54,7 @@ class SlenderModule implements InvokableInterface {
         $version = $composerData['version'];
         $app->config('version',$version);
 
-        // $app['settings']['version'] === $version
+        $app['settings']['version'] === $version
     }
 }
 ```

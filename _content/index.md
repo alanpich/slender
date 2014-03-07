@@ -2,7 +2,7 @@
 template: home
 ---
 
-Slender is lightweight but rapid application development framework for PHP (>=5.4)
+Slender is lightweight PHP (>=5.4) framework for rapid application development
 
 Built on top of the excellent [Slim](http://slimframework.com) micro-framework, Slender
 provides a toolkit for quickly putting together a modular PHP application.

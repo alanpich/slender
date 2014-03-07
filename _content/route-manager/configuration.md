@@ -22,10 +22,101 @@ The **action** method will then be called on the controller instance
           See [Route Middleware](route-middleware.html) for more info
 
 
+## Available properties
+
+### `route :String`
+The route property defines the url pattern to match
+```yaml
+routes:
+  foo:
+    ...
+    route: /users/:id
+```
+### `controller :String`
+Either the FQCN of a class, or the identifier of
+a service in the DI container.
+```yaml
+routes:
+  foo:
+    ...
+    controller: MyController
+```
+
+### `action :String`
+Action to dispatch on controller. Usually the name
+of a method on the controller class.
+```yaml
+routes:
+  foo:
+    ...
+    action: getUser
+```
+
+### `methods :Array`
+Array of HTTP methods this route should respond to. Also
+accepts custom methods as per `Slim\Route::via()`.
+If `ANY` is passed as a method, all methods will be listened for.
+```yaml
+routes:
+  foo:
+    ...
+    methods:
+      - GET
+      - POST
+```
+
+### `conditions :Array`
+Conditions are used to restrict route parameters to make
+sure they match Regular Expression filters. For example, you
+may wish to ensure the the `/users/:id` pattern only matches
+if `:id` is an integer
+```yaml
+routes:
+  foo:
+    route: /users/:id
+    ...
+    conditions:
+      id: [0-9]+
+```
+
+
+## Route Inheritance
+Routes registered via the RouteManager service are inheritable. This means
+that you can define child routes and have them inherit the properties of their
+parents.
+
+Route inheritence is described using the route name, or key, in dot notation.
+Take the following example:
+```yaml
+routes:
+
+  users:
+    route: /users
+    controller: UserController
+    action: index
+
+  users.user:
+    route: /:id
+    action: getUser
+```
+The `users.user` route seems a little light on the configuration, but this is
+OK because it inherits other properties from the `users` route (see the
+dot-notation in the route name?)
+
+When the `users.user` route is registered, it's actual properties are like
+this:
+```yaml
+routes:
+  users.user:
+    route: /users/:id
+    controller: UserController
+    action: getUser
+```
+
+
+
 
 ## Example route configurations
-
-
 
 ### YAML
 ```yaml

@@ -176,24 +176,90 @@
             <!-- main area -->
             <div class="col-xs-12 col-sm-9" id="page">
                 
-                    <h1>Application Initialization</h1>
-                    <p>Slender apps are created in exactly the same way as Slim applications.
-The only difference is the existance of the extra configuration options.</p>
-<pre><code class="lang-php">
-// This specific config is redundant, as all
-// the values are Slender defaults, so you could just
-// skip the config alltogether
-$config = array(
-    &#39;config&#39; =&gt; array(
-        &#39;autoload&#39; =&gt; array(&#39;./config&#39;),
-        &#39;cache&#39; =&gt; &#39;./data/cache/config&#39;
-    ),
-    &#39;viewPaths&#39; =&gt; array(&#39;./view&#39;),
-    &#39;moduleDirs&#39; =&gt; array(&#39;./module&#39;),
-);
+                    <h1>Controllers</h1>
+                    <p>Controllers are responsible for handling http routes and rendering a
+response. A controller, in its simplest form, is just a class with a
+method matching the required action name.</p>
+<pre><code class="lang-yaml"># ./config/slender.yml
+...
+routes:
+  foo:
+    route: /foo
+    controller: FooController
+    action: foobar
+</code></pre>
+<pre><code class="lang-php">// ./modules/foo/src/FooController.php
+class FooController
+{
+    public function foobar()
+    {
+        die(&quot;/foo was requested!&quot;);
+    }
+}
+</code></pre>
+<h2 id="controller-classes">Controller classes</h2>
+<p>While Slender allows any instantiable class as a Controller, it also provides
+an abstract class as a base for creating custom controllers.</p>
+<p>The <code>Slender\Module\RouteManager\Controller\AbstractController</code> class sets up a
+few helpful dependencies automatically and also allows you to use the
+automatic dependency injection feature.</p>
+<p>An example controller class:</p>
+<pre><code class="lang-php">class MyController extends AbstractController
+{
 
-$app = new Slender\App($config);
-$app-&gt;run();
+   /**
+    * This is the action to be called
+    * @return void
+    */
+    public function index()
+    {
+       /**
+        * @var Slim\Http\Request $req The request object
+        */
+        $req = $this-&gt;request;
+
+       /**
+        * @var Slim\Http\Response $res The response object
+        */
+        $res = $this-&gt;response;
+
+        /**
+         * This is a sugar method for rendering a template
+         * to the body of the response
+         */
+        $this-&gt;render(&#39;my-template&#39;,array(
+            &#39;foo&#39; =&gt; &#39;bar&#39;
+        ));
+    }
+
+}
+</code></pre>
+<h2 id="automatic-dependency-injection">Automatic Dependency Injection</h2>
+<p>Slender&#39;s AbstractController uses the DependencyInjector
+module to automatically inject required dependencies into
+your controller before dispatching the action.</p>
+<p>Dependencies can be referenced in your class definition using
+annotations on the injectable properties. Take the example below:</p>
+<pre><code class="lang-php">use Slender\Module\DependencyInjector\Annotation as Slender;
+
+class MyController extends AbstractController
+{
+   /**
+    * @Slender\Inject
+    *
+    * Will call $obj-&gt;setRouteManager() and
+    * pass it $app[&#39;route-manager&#39;]
+    */
+    protected $routeManager;
+
+   /**
+    * @Slender\Inject(&quot;event-manager&quot;)
+    *
+    * Will call $obj-&gt;setMyCustomNamedProperty() and
+    * pass it $app[&#39;event-manager&#39;]
+    */
+    protected $myCustomNamedProperty;
+}
 </code></pre>
 
                 

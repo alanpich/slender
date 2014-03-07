@@ -123,6 +123,15 @@
             <li><a href="../modules/module-hooks.html">Module Invokables</a></li>
         </ul>
     </li>
+    <li class="folder">
+        <label>RouteManager</label>
+        <ul>
+            <li><a href="../route-manager/configuration.html">Configuring Routes</a></li>
+            <li><a href="../route-manager/controllers.html">Controllers</a></li>
+            <li><a href="../route-manager/handling-404s.html">404
+                    Handling</a></li>
+        </ul>
+    </li>
 
 
     <li class="folder">
@@ -205,6 +214,74 @@ routes:
     methods:
       - GET
       - POST
+</code></pre>
+<h2 id="http-methods">HTTP Methods</h2>
+<p>You can configure which HTTP methods a route will respond to by
+adding a <code>methods</code> array into your route config</p>
+<pre><code class="lang-yaml"># ./config/slender.yml
+...
+routes:
+    ##
+    # This route will only respond to GET and POST requests
+    #
+    my-route-name:
+        route: /my-route
+        ...
+        methods:
+            - GET
+            - POST
+</code></pre>
+<h3 id="all-methods">All methods</h3>
+<p>To make a route accept any request method, set <code>methods</code> to <code>ALL</code></p>
+<pre><code class="lang-yaml"># ./config/slender.yml
+...
+routes:
+    my-route-name:
+        ...
+        methods: ALL
+</code></pre>
+<h3 id="method-specific-actions">Method-specific actions</h3>
+<p>It is also possible to dispatch a different action on the controller
+depending on the http method used for the request. This makes it really
+easy to set up RESTful endpoints for an API</p>
+<pre><code class="lang-yaml"># ./config/slender.yml
+...
+routes:
+  my-route-name:
+    controller: MyVendor\MyNamespace\MyController
+    ...
+    methods:
+        GET: getUser
+        POST: createUser
+        PUT: updateUser
+        DELETE: deleteUser
+</code></pre>
+<pre><code class="lang-php">namespace MyVendor\MyNamespace;
+
+class MyController
+{
+    public function getUser()
+    {
+        return $user;
+    }
+
+    public function createUser()
+    {
+        $user = new User;
+    }
+
+    public function updateUser($data)
+    {
+        $user-&gt;setData($data);
+    }
+
+    public function deleteUser()
+    {
+        $user-&gt;delete();
+    }
+
+
+}
 </code></pre>
 <h2 id="nesting-routes">Nesting routes</h2>
 <p>Routes can be nested (emulating Slim&#39;s group() feature) to form groups of urls inheriting

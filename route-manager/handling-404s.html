@@ -123,6 +123,15 @@
             <li><a href="../modules/module-hooks.html">Module Invokables</a></li>
         </ul>
     </li>
+    <li class="folder">
+        <label>RouteManager</label>
+        <ul>
+            <li><a href="../route-manager/configuration.html">Configuring Routes</a></li>
+            <li><a href="../route-manager/controllers.html">Controllers</a></li>
+            <li><a href="../route-manager/handling-404s.html">404
+                    Handling</a></li>
+        </ul>
+    </li>
 
 
     <li class="folder">
@@ -167,85 +176,10 @@
             <!-- main area -->
             <div class="col-xs-12 col-sm-9" id="page">
                 
-                    <h1>Route Configuration</h1>
-                    <p>Slender core comes with the <strong>route-registrar</strong> module which makes it easy to
-set up http routes from within config files.</p>
-<p>RouteRegistrar routing if centered around the idea of <strong>Controllers</strong> and <strong>Actions</strong> that
-you will probably recognise from other frameworks.</p>
-<p><strong>Controllers</strong> are classes that are invoked to handle requests, and <strong>actions</strong> are the methods
-of the controller that should be executed to respond to the request.</p>
-<p>When defining the <strong>controller</strong> to use for a route, it can be either the (FQCN) name of a class
-that should be instantiated, or the identifier of a Factory or Service registered to the IoC
-container.</p>
-<p>The <strong>action</strong> method will then be called on the controller instance</p>
-<p><strong>Note:</strong> Route Middleware can&#39;t currently be used with RouteRegistrar due
-          to not being able to write closures in text files.
-          See <a href="route-middleware.html">Route Middleware</a> for more info</p>
-<h2 id="example-route-configurations">Example route configurations</h2>
-<h3 id="yaml">YAML</h3>
-<pre><code class="lang-yaml">routes:
-  users:
-    route: /users(/:id)
-    controller: UserController
-    action: getUser
-    methods:
-      - GET
-      - POST
-      - PUT
-
-  logout:
-    route: /logout
-    controller: UserController
-    action: index
-    methods:
-      - ANY
-
-  archive.year:
-    route: /archive/:year
-    controller: ArchiveController
-    action: getYear
-    conditions:
-        year: (19|20)\d\d
-</code></pre>
-<h3 id="php">PHP</h3>
-<pre><code class="lang-php">return array(
-    &#39;routes&#39; =&gt; array(
-        &#39;users&#39; =&gt; array(
-            &#39;route&#39; =&gt; &#39;/users/:id&#39;,
-            &#39;controller&#39; =&gt; &#39;UserController&#39;,
-            &#39;action&#39; =&gt; &#39;getUser&#39;,
-            &#39;methods&#39; =&gt; array(
-                &#39;GET&#39;,&#39;POST&#39;,&#39;PUT&#39;
-            );
-        ),
-
-        &#39;logout&#39; =&gt; array(
-            &#39;route&#39; =&gt; &#39;/users&#39;,
-            &#39;controller&#39; =&gt; &#39;UserController&#39;,
-            &#39;action&#39; =&gt; &#39;index&#39;,
-            &#39;methods&#39; =&gt; array(&#39;ANY&#39;),
-        ),
-    );
-);
-</code></pre>
-<h3 id="json">JSON</h3>
-<pre><code class="lang-javascript">{
-    &quot;routes&quot;: {
-        &quot;users&quot;: {
-            &quot;route&quot;: &quot;/users/:id&quot;,
-            &quot;controller&quot;: &quot;UserController&quot;,
-            &quot;action&quot;: &quot;getUser&quot;,
-            &quot;methods&quot;: [&quot;GET&quot;,&quot;POST&quot;,&quot;PUT&quot;]
-        },
-       &quot;logout&quot;: {
-            &quot;route&quot;: &quot;/users&quot;,
-            &quot;controller&quot;: &quot;UserController&quot;,
-            &quot;action&quot;: &quot;index&quot;,
-            &quot;methods&quot;: [&quot;ANY&quot;]
-       }
-    }
-}
-</code></pre>
+                    <h1>Handling 404 errors</h1>
+                    <p>The RouteManager provides extends the standard Slim ::notFound() error handler
+by exposing 404 routing errors as a hook.</p>
+<p><code>@TODO - Implement this feature</code></p>
 
                 
             </div>

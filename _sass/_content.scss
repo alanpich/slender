@@ -19,6 +19,8 @@
     margin-top: 2em;
     margin-bottom: .5em;
 
+    font-size:1.7em;
+
     &:before {
       content: '\f078';
 //      content: '\f054';
@@ -49,6 +51,11 @@
 
   h3 {
     margin-top:1.5em;
+    font-size: 1.3em;
+    font-weight: 600;
+    display: inline-block;
+    border-bottom: 1px solid #d6e9c6;
+    padding-bottom: 0;
   }
 
 
