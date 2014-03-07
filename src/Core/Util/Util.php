@@ -35,7 +35,7 @@ namespace Slender\Core\Util;
 class Util
 {
 
-    public function implementsInterface($subjectClass,$interfaceName)
+    public function implementsInterface($subjectClass, $interfaceName)
     {
         if (!is_string($subjectClass)) {
             $subjectClass = get_class($subjectClass);
@@ -57,13 +57,39 @@ class Util
      */
     public static function hyphenCase($str)
     {
-        return strtolower(preg_replace( '/([a-z0-9])([A-Z])/', "$1-$2", $str ));
+        return strtolower(preg_replace('/([a-z0-9])([A-Z])/', "$1-$2", $str));
     }
 
 
     public static function setterMethodName($propertyName)
     {
         return 'set' . ucfirst($propertyName);
+    }
+
+
+    /**
+     * Does a string start with another string?
+     *
+     * @param string $str    The string to check
+     * @param string $prefix The prefix to check for
+     * @return bool
+     */
+    public static function stringStartsWith($str, $prefix)
+    {
+        return $prefix === "" || strpos($str, $prefix) === 0;
+    }
+
+
+    /**
+     * Does a string end with another string?
+     *
+     * @param string $str The string to check
+     * @param string $postfix The postfix to check for
+     * @return bool
+     */
+    public static function stringEndsWith($str, $postfix)
+    {
+        return $postfix === "" || substr($str, -strlen($postfix)) === $postfix;
     }
 
 }

@@ -36,4 +36,29 @@ class UtilTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals('setMyThing',Util::setterMethodName('myThing'));
     }
-} 
+
+
+
+    public function testStringStartsWith()
+    {
+        $theString = 'helloWorld';
+        $goodPrefix = 'hello';
+        $badPrefix =  'world';
+
+
+        $this->assertTrue( Util::stringStartsWith($theString,$goodPrefix));
+        $this->assertFalse( Util::stringStartsWith($theString,$badPrefix));
+    }
+
+
+    public function testStringEndsWith()
+    {
+        $theString = 'helloWorld';
+        $goodPostfix = 'World';
+        $badPostfix =  'hello';
+
+
+        $this->assertTrue( Util::stringEndsWith($theString,$goodPostfix));
+        $this->assertFalse( Util::stringEndsWith($theString,$badPostfix));
+    }
+}

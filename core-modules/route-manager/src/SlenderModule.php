@@ -1,6 +1,7 @@
 <?php
 namespace Slender\Module\RouteManager;
 
+use Slender\Core\Util\Util;
 use Slender\Interfaces\ModuleInvokableInterface;
 use Slender\Interfaces\ModulePathProviderInterface;
 
@@ -28,7 +29,8 @@ class SlenderModule implements ModulePathProviderInterface,
 
                 array_walk($routes, function ($value) use (&$group, $name) {
                     $length = strlen($value['name']);
-                    if (substr($name, 0, $length) === $value['name']) {
+                    if (Util::stringStartsWith($name,$value['name'])) {
+//                    if (substr($name, 0, $length) === $value['name']) {
                         $group = $value;
                     }
                 });
