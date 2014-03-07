@@ -17,7 +17,7 @@ class HomepageController extends AbstractController
     public function index()
     {
         $this->render('home',array(
-                'foo' => 'bar'
+                'title' => 'This is a dynamic title'
             ));
     }
 

@@ -3,7 +3,7 @@ namespace Slender\Module\RouteManager\Controller;
 
 use Slender\Interfaces\DependencyInjectableInterface;
 use Slender\Core\DependencyInjector\Annotation as Slender;
-use Slender\View;
+use Slender\Core\View;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -53,7 +53,7 @@ abstract class AbstractController
 
 
     /**
-     * @param \Slender\View $view
+     * @param \Slender\Core\View $view
      */
     public function setView($view)
     {
@@ -61,7 +61,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Slender\View
+     * @return \Slender\Core\View
      */
     public function getView()
     {

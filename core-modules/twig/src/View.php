@@ -42,7 +42,7 @@ namespace Slender\Modules\Twig;
  * - parserDirectory
  * - parserOptions
  */
-class View extends \Slender\View
+class View extends \Slender\Core\View
 {
     /**
      * @var string The path to the Twig code directory WITHOUT the trailing slash
@@ -89,6 +89,7 @@ class View extends \Slender\View
         }
         $env = $this->getInstance();
         $parser = $env->loadTemplate($template);
+        $this->replace($data);
 
         return $parser->render($this->all(), $data);
     }
