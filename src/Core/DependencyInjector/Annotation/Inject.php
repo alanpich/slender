@@ -32,6 +32,7 @@
  */
 namespace Slender\Core\DependencyInjector\Annotation;
 
+if(!class_exists("Slender\\Core\\DependencyInjector\\Annotation\\Inject")){
 /**
  * Class Inject
  *
@@ -44,7 +45,9 @@ class Inject
 
     public function __construct(array $values)
     {
-        $this->identifier = $values['value'];
+        if(isset($values['value'])){
+            $this->identifier = $values['value'];
+        }
     }
 
     /**
@@ -65,3 +68,6 @@ class Inject
 
 
 } 
+
+
+}

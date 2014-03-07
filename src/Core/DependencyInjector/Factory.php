@@ -38,6 +38,7 @@ class Factory implements FactoryInterface
 {
     public function create(\Slender\App $app)
     {
-        return new DependencyInjector($app);
+        $di = new DependencyInjector();
+        $di->setDiContainer($app);
     }
 }

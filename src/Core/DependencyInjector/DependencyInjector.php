@@ -37,7 +37,9 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
 use Slender\Core\Util\Util;
 
 //@TODO DIRTY HACK EWWWW!!!!!
-require dirname(__FILE__) . '/Annotation/Inject.php';
+if(!class_exists('Slender\Core\DependencyInjector\Annotation\Inject as Slender',false)){
+    require dirname(__FILE__) . '/Annotation/Inject.php';
+}
 
 class DependencyInjector
 {
@@ -48,10 +50,13 @@ class DependencyInjector
     /** @var  AnnotationReader */
     protected $annotationReader;
 
-    public function __construct(\Pimple $diContainer)
+    public function __construct()
     {
         $this->annotationReader = new AnnotationReader();
-        $this->container = $diContainer;
+    }
+
+    public function setDiContainer($di){
+        $this->container = $di;
     }
 
     /**
@@ -81,8 +86,10 @@ class DependencyInjector
                     }
                     // Get the setter method to call
                     $name = $prop->getName();
-                    $method = Util::setterMethodName($name);
-                    $injects[$method] = $identifier;
+                    $injects[$name] = array(
+                        'identifier' => $identifier,
+                        'useSetter' => ! $prop->isPublic()
+                    );
                 }
             }
             $this->classCache[$className] = $injects;
@@ -102,13 +109,21 @@ class DependencyInjector
     {
         $requirements = $this->getDiRequirements(get_class($instance));
 
-        foreach ($requirements as $method => $argument) {
-            if (!method_exists($instance, $method)) {
-                throw new \RuntimeException("Dependency Injection requires method " . get_class(
-                        $instance
-                    ) . "::$method to exist");
+        foreach ($requirements as $property => $service) {
+
+            if($service['useSetter']){
+                // Private or Protected property - use the setter method
+                $method = Util::setterMethodName($property);
+                if (!method_exists($instance, $method)) {
+                    throw new \RuntimeException("Dependency Injection requires method " . get_class(
+                            $instance
+                        ) . "::$method to exist");
+                }
+                call_user_func([$instance, $method], $this->container[$service['identifier']]);
+            } else {
+                $instance->$property = $this->container[$service['identifier']];
             }
-            call_user_func([$instance, $method], $this->container[$argument]);
+
         }
     }
 
