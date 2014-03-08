@@ -44,8 +44,6 @@ class TwigFactory implements FactoryInterface
             $twig->addExtension($extension);
         }
 
-
-        
         // Here you go!
         return $twig;
     }
