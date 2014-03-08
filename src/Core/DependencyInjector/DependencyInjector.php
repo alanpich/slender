@@ -35,6 +35,7 @@ namespace Slender\Core\DependencyInjector;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Slender\Core\Util\Util;
+use Slender\Interfaces\FactoryInterface;
 
 //@TODO DIRTY HACK EWWWW!!!!!
 if (!class_exists('Slender\Core\DependencyInjector\Annotation\Inject as Slender', false)) {
@@ -58,6 +59,19 @@ class DependencyInjector
     public function setDiContainer($di)
     {
         $this->container = $di;
+    }
+
+    public function create($class)
+    {
+        $instance = new $class;
+
+        if($class instanceof FactoryInterface){
+            $instance = $instance->create($this->container);
+        }
+
+        $this->prepare($instance);
+
+        return $instance;
     }
 
     /**
