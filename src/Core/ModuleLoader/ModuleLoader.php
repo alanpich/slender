@@ -103,15 +103,15 @@ class ModuleLoader implements ModuleLoaderInterface
 
         // Check for an auto-invoke class
         // __NAMESPACE__\SlenderModule
-        if (isset($mConf['namespace']) && class_exists($mConf['namespace'] . '\\SlenderModule')) {
-            $class = $mConf['namespace'] . '\\SlenderModule';
+        if (isset($mConf['namespace']) && class_exists($mConf['namespace'] . '\SlenderModule')) {
+            $class = $mConf['namespace'] . '\SlenderModule';
             $reflector = new \ReflectionClass($class);
             $interfaces = $reflector->getInterfaceNames();
             if (!is_array($interfaces)) {
                 $interfaces = array($interfaces);
             }
             if (in_array('Slender\Interfaces\ModuleInvokableInterface', $interfaces)) {
-                $mConf['invoke'][] = $mConf['namespace'] . '\\SlenderModule';
+                $mConf['invoke'][] = $mConf['namespace'] . '\SlenderModule';
             }
         }
 
