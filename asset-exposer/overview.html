@@ -15,14 +15,14 @@
     <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css"
           href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"/>
-    <link rel="stylesheet" type="text/css" href="assets/lib/prism/prism.css"/>
-    <link rel="stylesheet" href="assets/styles/main.css">
+    <link rel="stylesheet" type="text/css" href="../assets/lib/prism/prism.css"/>
+    <link rel="stylesheet" href="../assets/styles/main.css">
 
-    <script src="assets/vendor/jquery/jquery.min.js"></script>
+    <script src="../assets/vendor/jquery/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 
-    <script src="assets/lib/prism/prism.js"></script>
+    <script src="../assets/lib/prism/prism.js"></script>
     <script>
         Prism.languages.yaml = {
             comment: /#.*/ig,
@@ -91,27 +91,27 @@
             <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
                 <ul class="tree">
     <li>
-        <a href="">Overview</a>
+        <a href="../">Overview</a>
     </li>
     <li class="folder">
         <label>Introduction</label>
         <ul>
-            <li><a href="setup/overview.html">Overview</a></li>
-            <li><a href="setup/application-process-flow.html">Process
+            <li><a href="../setup/overview.html">Overview</a></li>
+            <li><a href="../setup/application-process-flow.html">Process
                     Flow</a></li>
-            <li><a href="setup/folder-structure.html">Folder
+            <li><a href="../setup/folder-structure.html">Folder
                     Structure</a></li>
             <li>
-                <a href="setup/configuration.html">Configuration</a>
+                <a href="../setup/configuration.html">Configuration</a>
             </li>
-            <li><a href="setup/app.html">Application
+            <li><a href="../setup/app.html">Application
                     Initialization</a></li>
         </ul>
     </li>
     <li class="folder">
         <label>Configuration Loader</label>
         <ul>
-            <li><a href="configuration-loader/overview.html">Overview</a>
+            <li><a href="../configuration-loader/overview.html">Overview</a>
             </li>
             <li><code>@TODO</code></li>
         </ul>
@@ -119,17 +119,17 @@
     <li class="folder">
         <label>Module System</label>
         <ul>
-            <li><a href="modules/defining-a-module.html">Defining a
+            <li><a href="../modules/defining-a-module.html">Defining a
                     Module</a></li>
-            <li><a href="modules/loading-modules.html">Loading
+            <li><a href="../modules/loading-modules.html">Loading
                     Modules</a></li>
-            <li><a href="modules/module-path-resolver.html">Module
+            <li><a href="../modules/module-path-resolver.html">Module
                     Path Resolver</a></li>
-            <li><a href="modules/module-config-file.html">Module
+            <li><a href="../modules/module-config-file.html">Module
                     configuration</a></li>
-            <li><a href="modules/example-module-config.html">Example
+            <li><a href="../modules/example-module-config.html">Example
                     Config file</a></li>
-            <li><a href="modules/module-hooks.html">Module
+            <li><a href="../modules/module-hooks.html">Module
                     Invokables</a></li>
         </ul>
     </li>
@@ -137,7 +137,7 @@
         <label>DependencyInjector</label>
         <ul>
             <li>
-                <a href="dependency-injector/automatic-dependency-injection.html">
+                <a href="../dependency-injector/automatic-dependency-injection.html">
                     Automatic Dependency Injection
                 </a>
             </li>
@@ -147,11 +147,11 @@
     <li class="folder">
         <label>RouteManager</label>
         <ul>
-            <li><a href="route-manager/configuration.html">Configuring
+            <li><a href="../route-manager/configuration.html">Configuring
                     Routes</a></li>
-            <li><a href="route-manager/controllers.html">Controllers</a>
+            <li><a href="../route-manager/controllers.html">Controllers</a>
             </li>
-            <li><a href="route-manager/handling-404s.html">404
+            <li><a href="../route-manager/handling-404s.html">404
                     Handling</a></li>
         </ul>
     </li>
@@ -159,7 +159,7 @@
         <label>ServiceManager</label>
         <ul>
             <li>
-                <a href="service-manager/overview.html">Overview</a>
+                <a href="../service-manager/overview.html">Overview</a>
             </li>
         </ul>
     </li>
@@ -167,14 +167,14 @@
     <li class="folder">
         <label>Twig Templates</label>
         <ul>
-            <li><a href="twig/twig.html">Overview</a></li>
+            <li><a href="../twig/twig.html">Overview</a></li>
         </ul>
     </li>
 
     <li class="folder">
         <label>Asset Exposer</label>
         <ul>
-            <li><a href="asset-exposer/overview.html">Overview</a></li>
+            <li><a href="../asset-exposer/overview.html">Overview</a></li>
         </ul>
     </li>
 
@@ -204,55 +204,34 @@
             <!-- main area -->
             <div class="col-xs-12 col-sm-9" id="page">
                 
-    <div id="homepage">
+                    <h1>Module Asset Exposer</h1>
+                    <h4 id="-slender-module-assetexposer-"><code>Slender\Module\AssetExposer</code></h4>
+<hr>
 
-        <h1 class="brand">
-            Slender
-            <span>Slim, but with a bit more meat.</span>
-        </h1>
+<p>The AssetExposer module allows modules to expose assets
+over http without the need to copy or otherwise link the files
+to the main <code>./public/</code> directory.</p>
+<p>Exposing assets is managed via a module config file, using the
+<code>module&gt;public&gt;expose</code> block. This block accepts an array of
+strings to use as Regular Expression patterns. An asset must
+match one of these patterns before it will be served. This
+means you can keep source files (sass,uncompressed js etc) in
+the public folder without fear of it being available over http</p>
+<pre><code class="lang-yaml"># ./module/my-module/slendery.yml
+module:
+  name: my-module
+  ...
+  public:
+    expose:
+      - \.js
+      - \.css
+</code></pre>
+<h2 id="future">Future</h2>
+<p>I also have plans to roll some sort of optimization tool which would copy,
+symlink, apache alias, apache rewrite or similar to somehow avoid needing
+php to process the assets when in production</p>
 
-        <div class="badges">
-            <iframe src="http://ghbtns.com/github-btn.html?user=alanpich&repo=slender&type=fork&count=false"
-                    allowtransparency="true" frameborder="0" scrolling="0" width="62" height="20"></iframe>
-            <a href="https://travis-ci.org/alanpich/slender" target="_blank">
-                <img src="https://travis-ci.org/alanpich/slender.png?branch=master"/>
-            </a>
-            <a href="https://packagist.org/packages/slender/slender" target="_blank">
-                <img src="https://poser.pugx.org/slender/slender/v/stable.png"/>
-            </a>
-            <a href="https://github.com/alanpich/slender/blob/master/LICENSE" target="_blank">
-                <img src="https://poser.pugx.org/slender/slender/license.png"/>
-            </a>
-
-
-        </div>
-
-        <p>Slender is lightweight PHP (&gt;=5.4) framework for rapid application development</p>
-<p>Built on top of the excellent <a href="http://slimframework.com">Slim</a> micro-framework, Slender
-provides a toolkit for quickly putting together a modular PHP application.</p>
-<h2 id="features">Features</h2>
-<div class="col-md-6">
-    <h4>Configuration Manager</h4>
-    <p>
-        Configure your application using config
-        files in the format you prefer. Currently
-        supporting YAML,JSON and PHP Arrays, config
-        files are merged as they are loaded so
-        overloading or extending settings is a doddle.
-    </p>
-</div>
-<div class="col-md-6">
-    <h4>Module System</h4>
-    <p>
-        Organise your code into modules to group
-        features, functionality or just to keep
-        things tidy. Slender Modules are as easy
-        as writing 3 lines in a text file.
-    </p>
-</div>
-
-    </div>
-
+                
             </div>
             <!-- /.col-xs-12 main -->
         </div>

@@ -171,6 +171,13 @@
         </ul>
     </li>
 
+    <li class="folder">
+        <label>Asset Exposer</label>
+        <ul>
+            <li><a href="../asset-exposer/overview.html">Overview</a></li>
+        </ul>
+    </li>
+
 
 </ul>
 
@@ -198,12 +205,16 @@
             <div class="col-xs-12 col-sm-9" id="page">
                 
                     <h1>Modules</h1>
-                    <p>Modules help to break up an app into managable blocks of functionality or scope. Most frameworks support some sort of modularization of code, but many require a large amount of boilerplate code.</p>
+                    <p>Modules help to break up an app into managable blocks of functionality or
+scope. Most frameworks support some sort of modularization of code,
+but many require a large amount of boilerplate code.</p>
 <p>Slender aims to made modularization of code as easy as possible. All
 that is required for a module is a directory to call it&#39;s own, and a
 <code>slender.yml</code> config file.</p>
 <h2 id="configuration">Configuration</h2>
-<p>All modules MUST have a module.yml config file in their root directory. This is used to resolve the module paths, autoload classes and add configuration to the application. An example module config file</p>
+<p>All modules MUST have a module.yml config file in their root directory.
+This is used to resolve the module paths, autoload classes and add
+configuration to the application. An example module config file.</p>
 <pre><code class="lang-yaml"># /modules/my-module/slender.yml
 module:
   name: my-module

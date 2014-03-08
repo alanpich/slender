@@ -2,14 +2,18 @@
 title: Modules
 ---
 
-Modules help to break up an app into managable blocks of functionality or scope. Most frameworks support some sort of modularization of code, but many require a large amount of boilerplate code.
+Modules help to break up an app into managable blocks of functionality or
+scope. Most frameworks support some sort of modularization of code,
+but many require a large amount of boilerplate code.
 
 Slender aims to made modularization of code as easy as possible. All
 that is required for a module is a directory to call it's own, and a
 `slender.yml` config file.
 
 ## Configuration
-All modules MUST have a module.yml config file in their root directory. This is used to resolve the module paths, autoload classes and add configuration to the application. An example module config file
+All modules MUST have a module.yml config file in their root directory.
+This is used to resolve the module paths, autoload classes and add
+configuration to the application. An example module config file.
 
 ```yaml
 # /modules/my-module/slender.yml
