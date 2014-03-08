@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "f4f110f98afe83792805e6eae257c6e1",
+    "hash": "0e92dbc19641e3b0e8f8f3103982b81e",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -179,16 +179,16 @@
         },
         {
             "name": "slender/route-manager",
-            "version": "dev-develop",
+            "version": "0.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/alanpich/slender-route-manager.git",
-                "reference": "28d9144f0ac68236fd171fa3c79f063c0087a991"
+                "reference": "fc847a644c4e2c0a6e24215a12f0b3ecd0c3f176"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/alanpich/slender-route-manager/zipball/28d9144f0ac68236fd171fa3c79f063c0087a991",
-                "reference": "28d9144f0ac68236fd171fa3c79f063c0087a991",
+                "url": "https://api.github.com/repos/alanpich/slender-route-manager/zipball/fc847a644c4e2c0a6e24215a12f0b3ecd0c3f176",
+                "reference": "fc847a644c4e2c0a6e24215a12f0b3ecd0c3f176",
                 "shasum": ""
             },
             "require-dev": {
@@ -218,7 +218,50 @@
                 "routing",
                 "slender-module"
             ],
-            "time": "2014-03-08 17:09:01"
+            "time": "2014-03-08 17:39:26"
+        },
+        {
+            "name": "slender/service-manager",
+            "version": "0.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alanpich/slender-service-manager.git",
+                "reference": "8b04c82bdf681930633c32995b505511f1549511"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alanpich/slender-service-manager/zipball/8b04c82bdf681930633c32995b505511f1549511",
+                "reference": "8b04c82bdf681930633c32995b505511f1549511",
+                "shasum": ""
+            },
+            "require-dev": {
+                "slender/slender": "dev-develop"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Slender\\Module\\ServiceManager\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alan Pich",
+                    "email": "alan.pich@gmail.com"
+                }
+            ],
+            "description": "Register DI services in config files",
+            "homepage": "http://alanpich.github.io/slender",
+            "keywords": [
+                "config",
+                "dependency injection",
+                "service",
+                "slender-module"
+            ],
+            "time": "2014-03-08 17:48:08"
         },
         {
             "name": "slim/slim",
@@ -226,12 +269,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/codeguy/Slim.git",
-                "reference": "0fb9ccb4b9ad7a45151b0fac0530777d7203f9ad"
+                "reference": "9d941addaa24d3dca8fc20ca85e72966b865ee76"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeguy/Slim/zipball/0fb9ccb4b9ad7a45151b0fac0530777d7203f9ad",
-                "reference": "0fb9ccb4b9ad7a45151b0fac0530777d7203f9ad",
+                "url": "https://api.github.com/repos/codeguy/Slim/zipball/9d941addaa24d3dca8fc20ca85e72966b865ee76",
+                "reference": "9d941addaa24d3dca8fc20ca85e72966b865ee76",
                 "shasum": ""
             },
             "require": {
@@ -269,7 +312,7 @@
                 "rest",
                 "router"
             ],
-            "time": "2014-03-06 02:52:16"
+            "time": "2014-03-08 02:47:16"
         },
         {
             "name": "symfony/class-loader",
@@ -1931,10 +1974,9 @@
     "aliases": [
 
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "stability-flags": {
         "slim/slim": 20,
-        "slender/route-manager": 20,
         "alebear/versioncontrol_git": 20,
         "squizlabs/php_codesniffer": 20,
         "satooshi/php-coveralls": 20
