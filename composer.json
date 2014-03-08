@@ -5,6 +5,7 @@
     "keywords": ["app","framework","slim","slender"],
     "license": "MIT",
     "version": "0.0.0",
+    "minimum-stability": "dev",
     "homepage": "http://alanpich.github.io/slender",
     "authors": [
         {
@@ -19,13 +20,13 @@
         "symfony/yaml": "*",
         "symfony/class-loader": "2.4.2",
         "doctrine/annotations": "*",
-        "twig/twig": "*"
+        "twig/twig": "*",
+        "slender/route-manager": "dev-develop"
     },
     "autoload": {
         "psr-4": {
             "Slender\\": "src/",
             "Slender\\Base\\": "core-modules/base",
-            "Slender\\Module\\RouteManager\\": "core-modules/route-manager/src",
             "Slender\\Module\\Twig\\": "core-modules/twig/src",
             "Slender\\Module\\Controllers\\": "core-modules/controllers/src",
             "Slender\\Module\\EventManager\\": "core-modules/event-manager/src",
