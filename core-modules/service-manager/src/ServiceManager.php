@@ -2,7 +2,7 @@
 namespace Slender\Module\ServiceManager;
 
 use Slender\Interfaces\FactoryInterface;
-use Slender\Module\DependencyInjector\DependencyInjector;
+use Slender\Core\DependencyInjector\DependencyInjector;
 
 class ServiceManager
 {
@@ -34,14 +34,18 @@ class ServiceManager
     {
         return function() use($class) {
             $inst = new $class;
+
+            // If its a factory class, get the manufactured instance back
             if ($inst instanceof FactoryInterface) {
                 // FactoryInterface style
-                return $inst->create($this->diContainer);
-            } else {
-                // Regular class - check for depInjection
-                $this->diInjector->prepare($inst);
-                return $inst;
+                $inst = $inst->create($this->diContainer);
             }
+
+            // Inject any annotated dependencies
+            $this->diInjector->prepare($inst);
+
+            return $inst;
+
         };
     }
 
@@ -62,7 +66,7 @@ class ServiceManager
     }
 
     /**
-     * @param \Slender\Module\DependencyInjector\DependencyInjector $diInjector
+     * @param \Slender\Core\DependencyInjector\DependencyInjector $diInjector
      */
     public function setDiInjector($diInjector)
     {
@@ -70,7 +74,7 @@ class ServiceManager
     }
 
     /**
-     * @return \Slender\Module\DependencyInjector\DependencyInjector
+     * @return \Slender\Core\DependencyInjector\DependencyInjector
      */
     public function getDiInjector()
     {

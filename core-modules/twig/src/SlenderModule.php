@@ -1,9 +1,11 @@
 <?php
 namespace Slender\Module\Twig;
 
+use Slender\Interfaces\ModuleInvokableInterface;
 use Slender\Interfaces\ModulePathProviderInterface;
 
-class SlenderModule implements ModulePathProviderInterface
+class SlenderModule implements ModulePathProviderInterface,
+    ModuleInvokableInterface
 {
 
     /**
@@ -16,8 +18,14 @@ class SlenderModule implements ModulePathProviderInterface
         return dirname(__DIR__);
     }
 
-//    public function invoke(\Slender\App $app)
-//    {
-//        // TODO: Implement invoke() method.
-//    }
+
+    /**
+     * Sets up the Twig environent and registers any extensions
+     *
+     * @param \Slender\App $app
+     */
+    public function invoke(\Slender\App &$app)
+    {
+        $twig = $app['twig'];
+    }
 }

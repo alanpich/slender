@@ -10,17 +10,8 @@ class ViewFactory implements FactoryInterface
 
     public function create(App $app)
     {
-        try {
-            $view = new \Slender\Module\Twig\View();
-        }catch(\Exception $E){
-            echo "> I CAUGHT AN ERROR\n";
-        }
-
-        // Set template paths
-        $paths = $app['settings']['view-paths'];
-
-        $view->setTemplateDirs($paths);
-
+        $view = new \Slender\Module\Twig\View();
+        $view->setTemplateDirs($app['settings']['view-paths']);
         return $view;
     }
 }

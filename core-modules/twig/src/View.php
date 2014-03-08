@@ -32,6 +32,9 @@
  */
 namespace Slender\Module\Twig;
 
+use Slender\Core\DependencyInjector\Annotation as Slender;
+use Slender\Module\Twig\Exception\MissingDependencyException;
+
 /**
  * Twig view
  *
@@ -44,31 +47,10 @@ namespace Slender\Module\Twig;
  */
 class View extends \Slender\Core\View
 {
-    /**
-     * @var string The path to the Twig code directory WITHOUT the trailing slash
-     */
-    public $parserDirectory = null;
-
-    /**
-     * DEPRECATION WARNING! This method will be removed in the next major point release
-     *
-     * @var array Paths to directories to attempt to load Twig template from
-     */
-    public $twigTemplateDirs = array();
-
-    /**
-     * @var array The options for the Twig environment, see
-     * http://www.twig-project.org/book/03-Twig-for-Developers
-     */
-    public $parserOptions = array();
-
-    /**
-     * @var TwigExtension The Twig extensions you want to load
-     */
-    public $parserExtensions = array();
 
     /**
      * @var \Twig_Environment The Twig environment for rendering templates.
+     * @Slender\Inject("twig")
      */
     private $parserInstance = null;
 
@@ -84,8 +66,8 @@ class View extends \Slender\Core\View
     public function render($template, array $data = array())
     {
         // Append .twig to end of path
-        if (substr($template,-5)!='.twig') {
-            $template.= '.twig';
+        if (substr($template, -5) != '.twig') {
+            $template .= '.twig';
         }
         $env = $this->getInstance();
         $parser = $env->loadTemplate($template);
@@ -98,6 +80,8 @@ class View extends \Slender\Core\View
      * DEPRECATION WARNING! This method will be removed in the next major point release
      *
      * Use getInstance method instead
+     *
+     * @deprecated
      */
     public function getEnvironment()
     {
@@ -105,35 +89,31 @@ class View extends \Slender\Core\View
     }
 
     /**
-     * Creates new TwigEnvironment if it doesn't already exist, and returns it.
+     * Returns the Twig environment View is sitting on,
+     * or throws a RuntimeException if parser hasnt been
+     * set
      *
+     * @throws \RuntimeException
      * @return \Twig_Environment
      */
     public function getInstance()
     {
+        // Parser is injected please!
         if (!$this->parserInstance) {
-            /**
-             * Check if Twig_Autoloader class exists
-             * otherwise include it.
-             */
-            if (!class_exists('\Twig_Autoloader')) {
-                require_once $this->parserDirectory . '/Autoloader.php';
-            }
-
-            \Twig_Autoloader::register();
-            $loader = new \Twig_Loader_Filesystem($this->getTemplateDirs());
-            $this->parserInstance = new \Twig_Environment(
-                $loader,
-                $this->parserOptions
-            );
-
-            foreach ($this->parserExtensions as $ext) {
-                $extension = is_object($ext) ? $ext : new $ext;
-                $this->parserInstance->addExtension($extension);
-            }
+            throw new MissingDependencyException("No parser instance available in " . __CLASS__);
         }
-
         return $this->parserInstance;
     }
+
+    /**
+     * Allow injecting the Twig_Environment instance
+     *
+     * @param \Twig_Environment $parserInstance
+     */
+    public function setParserInstance($parserInstance)
+    {
+        $this->parserInstance = $parserInstance;
+    }
+
 
 }

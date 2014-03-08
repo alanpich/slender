@@ -3,7 +3,7 @@
 
 {% block jumbotron %}
     <h1>{{ title }}</h1>
-    <h2>{{ foo }}</h2>
+    <h2>{{ subtitle|default('no subtitle') }}</h2>
     <p>This is a minimal skeleton for an Slender application that works well as a starting point for building larger applications.</p>
     <p>
         <a class="btn btn-lg btn-primary" href="#" role="button">This is a button &raquo;</a>
