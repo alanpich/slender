@@ -14,13 +14,11 @@ All modules MUST have a module.yml config file in their root directory. This is 
 ```yaml
 # /modules/my-module/slender.yml
 module:
-    name: my-module
-    namespace: MyVendor\\MyModule
-    autoload:
-        psr-4:
-            MyModule: ./src
-
-
+  name: my-module
+  namespace: MyVendor\\MyModule
+  autoload:
+    psr-4:
+      MyModule: ./src
 ```
 
 ## Extending application settings

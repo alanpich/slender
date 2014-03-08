@@ -197,17 +197,36 @@
             <!-- main area -->
             <div class="col-xs-12 col-sm-9" id="page">
                 
-                    <h1>Module Config Files</h1>
-                    <p><code>Describe module config file and available options</code></p>
-<h2 id="declaring-dependencies">Declaring Dependencies</h2>
-<p>Modules can sometimes rely on other modules as dependencies. Module dependencies are
-loaded before the dependant module automatically. To define module dependencies, add
-a requires array to your module config file.</p>
-<pre><code class="lang-yaml"># ./module/my-module/slender.module.yml
-module:
+                    <h1>Twig Templating Engine</h1>
+                    <h4 id="-slender-module-twig-"><code>Slender\Module\Twig</code></h4>
+<hr>
+
+<p>Ok, this ones nice and easy.
+<code>@TODO Improve this doc for people with less Twig knowledge</code></p>
+<h2 id="twig-environment">Twig Environment</h2>
+<p>Twig environment auto-registers to the IoC container
+so you can get at it anywhere. It is also pre-filled
+with all view paths registered in the Slender config.</p>
+<pre><code class="lang-php">$twig = $app[&#39;twig&#39;];
+</code></pre>
+<h2 id="setting-environment-options">Setting Environment Options</h2>
+<p>You can configure the runtime options passed to the
+<code>Twig_Environment</code> in your module or application
+config files.</p>
+<pre><code class="lang-yaml">twig:
+  environment:
+    debug: true
+    charset: utf-8
+    ...
+</code></pre>
+<h2 id="twig-extensions">Twig Extensions</h2>
+<p>You can use the standard Twig API as normal to register
+extensions, or you can also do it via config files</p>
+<pre><code class="lang-yaml">twig:
   ...
-  requires:
-    - asset-exposer
+  extensions:
+    MyVendor\MyModule\MyTwigExtension
+    ...
 </code></pre>
 
                 

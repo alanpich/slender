@@ -97,28 +97,40 @@
         <label>Introduction</label>
         <ul>
             <li><a href="../setup/overview.html">Overview</a></li>
-            <li><a href="../setup/application-process-flow.html">Process Flow</a></li>
-            <li><a href="../setup/folder-structure.html">Folder Structure</a></li>
-            <li><a href="../setup/configuration.html">Configuration</a></li>
-            <li><a href="../setup/app.html">Application Initialization</a></li>
+            <li><a href="../setup/application-process-flow.html">Process
+                    Flow</a></li>
+            <li><a href="../setup/folder-structure.html">Folder
+                    Structure</a></li>
+            <li>
+                <a href="../setup/configuration.html">Configuration</a>
+            </li>
+            <li><a href="../setup/app.html">Application
+                    Initialization</a></li>
         </ul>
     </li>
     <li class="folder">
         <label>Configuration Loader</label>
         <ul>
-            <li><a href="../configuration-loader/overview.html">Overview</a></li>
+            <li><a href="../configuration-loader/overview.html">Overview</a>
+            </li>
             <li><code>@TODO</code></li>
         </ul>
     </li>
     <li class="folder">
         <label>Module System</label>
         <ul>
-            <li><a href="../modules/defining-a-module.html">Defining a Module</a></li>
-            <li><a href="../modules/loading-modules.html">Loading Modules</a></li>
-            <li><a href="../modules/module-path-resolver.html">Module Path Resolver</a></li>
-            <li><a href="../modules/module-config-file.html">Module configuration</a></li>
-            <li><a href="../modules/example-module-config.html">Example Config file</a></li>
-            <li><a href="../modules/module-hooks.html">Module Invokables</a></li>
+            <li><a href="../modules/defining-a-module.html">Defining a
+                    Module</a></li>
+            <li><a href="../modules/loading-modules.html">Loading
+                    Modules</a></li>
+            <li><a href="../modules/module-path-resolver.html">Module
+                    Path Resolver</a></li>
+            <li><a href="../modules/module-config-file.html">Module
+                    configuration</a></li>
+            <li><a href="../modules/example-module-config.html">Example
+                    Config file</a></li>
+            <li><a href="../modules/module-hooks.html">Module
+                    Invokables</a></li>
         </ul>
     </li>
     <li class="folder">
@@ -131,11 +143,14 @@
             </li>
         </ul>
     </li>
+    <li class="separator"><hr /></li>
     <li class="folder">
         <label>RouteManager</label>
         <ul>
-            <li><a href="../route-manager/configuration.html">Configuring Routes</a></li>
-            <li><a href="../route-manager/controllers.html">Controllers</a></li>
+            <li><a href="../route-manager/configuration.html">Configuring
+                    Routes</a></li>
+            <li><a href="../route-manager/controllers.html">Controllers</a>
+            </li>
             <li><a href="../route-manager/handling-404s.html">404
                     Handling</a></li>
         </ul>
@@ -143,12 +158,23 @@
     <li class="folder">
         <label>ServiceManager</label>
         <ul>
-            <li><a href="../service-manager/overview.html">Overview</a></li>
+            <li>
+                <a href="../service-manager/overview.html">Overview</a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="folder">
+        <label>Twig Templates</label>
+        <ul>
+            <li><a href="../twig/twig.html">Overview</a></li>
         </ul>
     </li>
 
 
-    <script>
+</ul>
+
+<script>
     $(document).ready(function () {
         $labels = $('.tree .folder label');
         $labels.click(function () {
@@ -157,12 +183,11 @@
                     .children('ul').toggle(100);
         });
 
-        $labels.each(function(){
+        $labels.each(function () {
             $(this).parent().children('ul').toggle(0)
         });
     });
 </script>
-
 
 
 
@@ -232,7 +257,7 @@ class MyClass
     * @var EventManager
     * @Slender\Inject(&quot;event-manager&quot;)
     */
-    protected $eventManager;
+    protected $someOtherName;
     ...
 </code></pre>
 <h2 id="private-protected-properties">Private &amp; Protected properties</h2>

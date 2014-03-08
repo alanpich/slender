@@ -73,7 +73,7 @@ class MyClass
     * @var EventManager
     * @Slender\Inject("event-manager")
     */
-    protected $eventManager;
+    protected $someOtherName;
     ...
 ```
 

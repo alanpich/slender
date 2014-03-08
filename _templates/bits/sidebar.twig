@@ -6,58 +6,84 @@
         <label>Introduction</label>
         <ul>
             <li><a href="{{ url('setup/overview.html') }}">Overview</a></li>
-            <li><a href="{{ url('setup/application-process-flow.html') }}">Process Flow</a></li>
-            <li><a href="{{ url('setup/folder-structure.html') }}">Folder Structure</a></li>
-            <li><a href="{{ url('setup/configuration.html') }}">Configuration</a></li>
-            <li><a href="{{ url('setup/app.html') }}">Application Initialization</a></li>
+            <li><a href="{{ url('setup/application-process-flow.html') }}">Process
+                    Flow</a></li>
+            <li><a href="{{ url('setup/folder-structure.html') }}">Folder
+                    Structure</a></li>
+            <li>
+                <a href="{{ url('setup/configuration.html') }}">Configuration</a>
+            </li>
+            <li><a href="{{ url('setup/app.html') }}">Application
+                    Initialization</a></li>
         </ul>
     </li>
     <li class="folder">
         <label>Configuration Loader</label>
         <ul>
-            <li><a href="{{ url('configuration-loader/overview.html')}}">Overview</a></li>
+            <li><a href="{{ url('configuration-loader/overview.html') }}">Overview</a>
+            </li>
             <li><code>@TODO</code></li>
         </ul>
     </li>
     <li class="folder">
         <label>Module System</label>
         <ul>
-            <li><a href="{{ url('modules/defining-a-module.html') }}">Defining a Module</a></li>
-            <li><a href="{{ url('modules/loading-modules.html') }}">Loading Modules</a></li>
-            <li><a href="{{ url('modules/module-path-resolver.html') }}">Module Path Resolver</a></li>
-            <li><a href="{{ url('modules/module-config-file.html') }}">Module configuration</a></li>
-            <li><a href="{{ url('modules/example-module-config.html') }}">Example Config file</a></li>
-            <li><a href="{{ url('modules/module-hooks.html') }}">Module Invokables</a></li>
+            <li><a href="{{ url('modules/defining-a-module.html') }}">Defining a
+                    Module</a></li>
+            <li><a href="{{ url('modules/loading-modules.html') }}">Loading
+                    Modules</a></li>
+            <li><a href="{{ url('modules/module-path-resolver.html') }}">Module
+                    Path Resolver</a></li>
+            <li><a href="{{ url('modules/module-config-file.html') }}">Module
+                    configuration</a></li>
+            <li><a href="{{ url('modules/example-module-config.html') }}">Example
+                    Config file</a></li>
+            <li><a href="{{ url('modules/module-hooks.html') }}">Module
+                    Invokables</a></li>
         </ul>
     </li>
     <li class="folder">
         <label>DependencyInjector</label>
         <ul>
             <li>
-                <a href="{{ url('dependency-injector/automatic-dependency-injection.html')}}">
+                <a href="{{ url('dependency-injector/automatic-dependency-injection.html') }}">
                     Automatic Dependency Injection
                 </a>
             </li>
         </ul>
     </li>
+    <li class="separator"><hr /></li>
     <li class="folder">
         <label>RouteManager</label>
         <ul>
-            <li><a href="{{ url('route-manager/configuration.html')}}">Configuring Routes</a></li>
-            <li><a href="{{ url('route-manager/controllers.html')}}">Controllers</a></li>
-            <li><a href="{{ url('route-manager/handling-404s.html')}}">404
+            <li><a href="{{ url('route-manager/configuration.html') }}">Configuring
+                    Routes</a></li>
+            <li><a href="{{ url('route-manager/controllers.html') }}">Controllers</a>
+            </li>
+            <li><a href="{{ url('route-manager/handling-404s.html') }}">404
                     Handling</a></li>
         </ul>
     </li>
     <li class="folder">
         <label>ServiceManager</label>
         <ul>
-            <li><a href="{{ url('service-manager/overview.html')}}">Overview</a></li>
+            <li>
+                <a href="{{ url('service-manager/overview.html') }}">Overview</a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="folder">
+        <label>Twig Templates</label>
+        <ul>
+            <li><a href="{{ url('twig/twig.html') }}">Overview</a></li>
         </ul>
     </li>
 
 
-    <script>
+</ul>
+
+<script>
     $(document).ready(function () {
         $labels = $('.tree .folder label');
         $labels.click(function () {
@@ -66,12 +92,11 @@
                     .children('ul').toggle(100);
         });
 
-        $labels.each(function(){
+        $labels.each(function () {
             $(this).parent().children('ul').toggle(0)
         });
     });
 </script>
-
 
 
 {#
