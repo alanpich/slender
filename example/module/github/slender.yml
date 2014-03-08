@@ -1,0 +1,11 @@
+module:
+  name: github
+  namespace: AlanPich\Slender\Github
+  autoload:
+    psr-4:
+      AlanPich\Slender\Github: ./src
+
+services:
+  github: AlanPich\Slender\Github\GithubServiceFactory
+  docs.filetree: Slender\Website\Docs\FileTree
+

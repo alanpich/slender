@@ -1,0 +1,10 @@
+module:
+  name: layout
+  public:
+    expose:
+      - \.js
+      - \.css
+
+
+view-paths:
+  - ./module/layout/view

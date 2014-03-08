@@ -101,8 +101,11 @@ class ModuleLoader implements ModuleLoaderInterface
             }
         }
 
+        $this->setupAutoloaders($path,$mConf);
+
         // Check for an auto-invoke class
         // __NAMESPACE__\SlenderModule
+
         if (isset($mConf['namespace']) && class_exists($mConf['namespace'] . '\SlenderModule')) {
             $class = $mConf['namespace'] . '\SlenderModule';
             $reflector = new \ReflectionClass($class);
@@ -127,7 +130,6 @@ class ModuleLoader implements ModuleLoaderInterface
             )
         );
 
-        $this->setupAutoloaders($path,$mConf);
 
     }
 

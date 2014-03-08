@@ -1,17 +1,6 @@
 <?php
-
-define('ROOT',dirname(__DIR__));
-chdir(ROOT);
+chdir(dirname(__DIR__));
 require dirname(dirname(__DIR__)).'/vendor/autoload.php';
-
-
-// This is because i can't be bothered to fix my environment
-$whoops = new Whoops\Run();
-$whoops->pushHandler(new Whoops\Handler\PrettyPageHandler());
-
-// Set Whoops as the default error and exception handler used by PHP:
-$whoops->register();
-
 
 
 
@@ -32,7 +21,6 @@ function dump($mxd)
 
 
 $app = new Slender\App();
-$whoops->register();
 
 $app->run();
 

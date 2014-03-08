@@ -1,0 +1,34 @@
+{% extends 'layout/default.twig' %}
+{% import _self as util %}
+
+
+{% macro tree(name,node) %}
+    {% if node.path %}
+        <li>
+            <a href="">
+                {{ name }}
+            </a>
+        </li>
+    {% else %}
+        <li class="folder">
+            <label>{{ name }}</label>
+            <ul>
+                {% for label,child in node %}
+                    {{ _self.tree(label,child) }}
+                {% endfor %}
+            </ul>
+        </li>
+    {% endif %}
+{% endmacro %}
+
+
+{% block content %}
+
+    <div style="margin-top:40px;"></div>
+    <ul>
+        {% for folder,node in tree %}
+            {{ _self.tree(folder,node) }}
+        {% endfor %}
+    </ul>
+
+{% endblock %}

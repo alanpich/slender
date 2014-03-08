@@ -3,7 +3,10 @@ debug: true
 modules:
   - Slender\Base
   - Slender\Module\AssetExposer
+  - layout
+  - github
   - app
+  - docs
 
 modulePaths:
   - ./core/module

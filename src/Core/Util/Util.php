@@ -109,6 +109,16 @@ class Util
     }
 
 
+    public static function ensureStringEndsWith($str,$ending='')
+    {
+        $length = strlen($ending);
+        if(substr($str,-$length) !== $ending){
+            $str.=$ending;
+        }
+        return $str;
+    }
+
+
     public static function stringMatchesPattern($str, $pattern)
     {
         if(is_array($pattern)){
@@ -127,5 +137,37 @@ class Util
         }
         return preg_match($pattern,$str) === 1;
     }
+
+
+
+    public static function getMimeType($path)
+    {
+        if (extension_loaded('fileinfo')) {
+            $finfo = new \finfo(FILEINFO_MIME);
+            $type = $finfo->buffer(file_get_contents($path));
+
+        } else {
+            $type = 'text/plain';
+        }
+
+
+
+        // Check for file types
+        if(substr($type,0,10) == 'text/plain'){
+            // get file extension
+            $ext = pathinfo($path,PATHINFO_EXTENSION);
+            switch($ext){
+                case 'css':
+                    $type = str_replace('text/plain','text/css',$type);
+                    break;
+                case 'js':
+                    $type = str_replace('text/plain','text/javascript',$type);
+                    break;
+            }
+        }
+
+        return $type;
+    }
+
 
 }

@@ -192,6 +192,43 @@ class App extends \Slim\App
         }
     }
 
+    public function sendFile($file, $contentType = false)
+    {
+        $fp = fopen($file, "r");
+        $this['response']->stream($fp);
+        if ($contentType) {
+            $this['response']->getHeaders()->set("Content-Type", $contentType);
+        } else {
+            if (file_exists($file)) {
+                //Set Content-Type
+                $mimeType = Util::getMimeType($file);
+                $this['response']->getHeaders()->set("Content-Type", $mimeType);
+
+                //Set Content-Length
+                $stat = fstat($fp);
+                $this['response']->getHeaders()->set("Content-Length", $stat['size']);
+            } else {
+                //Set Content-Type and Content-Length
+                $data = stream_get_meta_data($fp);
+
+                foreach ($data['wrapper_data'] as $header) {
+                    list($k, $v) = explode(": ", $header, 2);
+
+                    if ($k === "Content-Type") {
+                        if ($contentType) {
+                            $this['response']->getHeaders()->set("Content-Type", $contentType);
+                        } else {
+                            $this['response']->getHeaders()->set("Content-Type", $v);
+                        }
+                    } else if ($k === "Content-Length") {
+                        $this['response']->getHeaders()->set("Content-Length", $v);
+                    }
+                }
+            }
+        }
+        $this->finalize();
+    }
+
 
     /**
      * Registers core services to the IoC Container

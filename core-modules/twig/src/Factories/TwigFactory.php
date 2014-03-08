@@ -25,7 +25,7 @@ class TwigFactory implements FactoryInterface
         $options = array_merge(array(
             'charset'          => $appConf['charset'],
             'debug'            => $appConf['debug'],
-            'strict_variables' => $appConf['debug'],
+            'strict_variables' => false,//$appConf['debug'],
         ),$appConf['twig']['environment']);
 
         // Create twig instance and loader

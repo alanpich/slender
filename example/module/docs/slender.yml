@@ -1,0 +1,26 @@
+##
+# Slender Docs interface
+#
+# Server markdown docs from Slender docs repo
+# as HTML
+#
+module:
+  name: docs
+  namespace: Slender\Website\Docs
+  autoload:
+    psr-4:
+      Slender\Website\Docs: ./src
+
+view-paths:
+  - ./module/docs/view
+
+
+routes:
+  docs:
+    route: /docs
+    controller: Slender\Website\Docs\Controller\DocsController
+    action: index
+
+  docs.page:
+    route: /:path+
+    action: getPage
