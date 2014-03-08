@@ -31,4 +31,4 @@ module:
 ## Future
 I also have plans to roll some sort of optimization tool which would copy,
 symlink, apache alias, apache rewrite or similar to somehow avoid needing
-php to process the assets when in production
+php to process the assets when in production.
