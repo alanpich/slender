@@ -33,19 +33,8 @@ class ServiceManager
     protected function getServiceCallable( $class )
     {
         return function() use($class) {
-            $inst = new $class;
-
-            // If its a factory class, get the manufactured instance back
-            if ($inst instanceof FactoryInterface) {
-                // FactoryInterface style
-                $inst = $inst->create($this->diContainer);
-            }
-
-            // Inject any annotated dependencies
-            $this->diInjector->prepare($inst);
-
-            return $inst;
-
+            $instance = $this->diInjector->create($class);
+            return $instance;
         };
     }
 

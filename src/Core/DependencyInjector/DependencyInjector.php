@@ -65,7 +65,7 @@ class DependencyInjector
     {
         $instance = new $class;
 
-        if($class instanceof FactoryInterface){
+        if($instance instanceof FactoryInterface){
             $instance = $instance->create($this->container);
         }
 

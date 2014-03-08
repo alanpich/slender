@@ -39,9 +39,7 @@ class TwigFactory implements FactoryInterface
         // Register additional extensions
         $extensions = $appConf['twig']['extensions'];
         foreach($extensions as $class){
-//            dump($class);
-            $extension = new $class;
-            $twig->addExtension($extension);
+            $twig->addExtension( $app['dependency-injector']->create($class) );
         }
 
         // Here you go!
