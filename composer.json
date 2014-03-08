@@ -30,7 +30,8 @@
             "Slender\\Module\\Controllers\\": "core-modules/controllers/src",
             "Slender\\Module\\EventManager\\": "core-modules/event-manager/src",
             "Slender\\Module\\DependencyInjector\\": "core-modules/dependency-injector/src",
-            "Slender\\Module\\ServiceManager\\": "core-modules/service-manager/src"
+            "Slender\\Module\\ServiceManager\\": "core-modules/service-manager/src",
+            "Slender\\Module\\AssetExposer\\": "core-modules/asset-exposer/src"
         }
     },
     "require-dev": {

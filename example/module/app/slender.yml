@@ -4,7 +4,8 @@ module:
   autoload:
     psr-4:
       Skeleton: ./src
-
-
-#services:
-#  controller.app: Skeleton\Controller\AppController
+  public:
+    dir: ./public
+    expose:
+      - .*\.js
+      - .*\.css

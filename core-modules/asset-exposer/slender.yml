@@ -1,0 +1,19 @@
+module:
+  name: Slender\Module\AssetExposer
+  namespace: Slender\Module\AssetExposer
+
+services:
+  asset-exposer: Slender\Module\AssetExposer\Factory
+
+
+
+##
+# AssetExposer default configuration
+#
+asset-exposer:
+  # Url to use as exposer route
+  route: /module/:module/:path+
+
+  # Path relative to a module route in
+  # which to look for assets
+  serveFrom: public/

@@ -2,6 +2,7 @@ debug: true
 
 modules:
   - Slender\Base
+  - Slender\Module\AssetExposer
   - app
 
 modulePaths:

@@ -71,11 +71,19 @@ class Util
      * Does a string start with another string?
      *
      * @param string $str    The string to check
-     * @param string $prefix The prefix to check for
+     * @param string|array $prefix The prefix to check for
      * @return bool
      */
     public static function stringStartsWith($str, $prefix)
     {
+        if(is_array($prefix)){
+            foreach($prefix as $p){
+                if($p === "" || strpos($str, $p) === 0){
+                    return true;
+                };
+            }
+            return false;
+        }
         return $prefix === "" || strpos($str, $prefix) === 0;
     }
 
@@ -84,12 +92,40 @@ class Util
      * Does a string end with another string?
      *
      * @param string $str The string to check
-     * @param string $postfix The postfix to check for
+     * @param string|array $postfix The postfix to check for
      * @return bool
      */
     public static function stringEndsWith($str, $postfix)
     {
+        if(is_array($postfix)){
+            foreach($postfix as $p){
+                if($p === "" || substr($str, -strlen($p)) === $p){
+                    return true;
+                }
+            }
+            return false;
+        }
         return $postfix === "" || substr($str, -strlen($postfix)) === $postfix;
+    }
+
+
+    public static function stringMatchesPattern($str, $pattern)
+    {
+        if(is_array($pattern)){
+            foreach($pattern as $p){
+                if(self::stringMatchesPattern($str,$p)){
+                    return true;
+                }
+            }
+            return false;
+        }
+        if(substr($pattern,0,1) != '/'){
+            $pattern = '/'.$pattern;
+        }
+        if(substr($pattern,-1,1) != '/'){
+            $pattern.= '/';
+        }
+        return preg_match($pattern,$str) === 1;
     }
 
 }

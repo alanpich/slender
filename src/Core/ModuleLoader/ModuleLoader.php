@@ -81,7 +81,8 @@ class ModuleLoader implements ModuleLoaderInterface
                     'version' => '0.0.0',
                     'author' => 'unknown',
                     'autoload' => [],
-                    'invoke' => []
+                    'invoke' => [],
+                    'path' => $path,
                 ),
             ),
             $this->resolver->getConfig($module)
