@@ -13,22 +13,18 @@
         }
     ],
     "require": {
-        "php": ">=5.3.0",
+        "php": ">=5.4.0",
         "slim/slim": "dev-develop",
         "symfony/finder": "*",
         "symfony/yaml": "*",
         "symfony/class-loader": "2.4.2",
         "doctrine/annotations": "*",
-        "twig/twig": "*",
-        "slender/route-manager": "0.0.1",
-        "slender/service-manager": "0.0.1"
+        "slender/base": "dev-master "
     },
     "autoload": {
         "psr-4": {
-            "Slender\\": "src/",
-            "Slender\\Base\\": "core-modules/base",
             "Slender\\Module\\EventManager\\": "core-modules/event-manager/src",
-            "Slender\\Module\\AssetExposer\\": "core-modules/asset-exposer/src"
+            "Slender\\": "src/"
         }
     },
     "require-dev": {

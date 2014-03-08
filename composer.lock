@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "0e92dbc19641e3b0e8f8f3103982b81e",
+    "hash": "1041615dd633b6443b35782ce15a2f0a",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -178,6 +178,93 @@
             "time": "2014-02-10 08:05:32"
         },
         {
+            "name": "slender/asset-exposer",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alanpich/slender-asset-exposer.git",
+                "reference": "22e46ce8397180d369d61eba5a09f738d63f4ff6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alanpich/slender-asset-exposer/zipball/22e46ce8397180d369d61eba5a09f738d63f4ff6",
+                "reference": "22e46ce8397180d369d61eba5a09f738d63f4ff6",
+                "shasum": ""
+            },
+            "require-dev": {
+                "slender/slender": "dev-develop"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Slender\\Module\\AssetExposer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alan Pich",
+                    "email": "alan.pich@gmail.com"
+                }
+            ],
+            "description": "Expose module assets over http",
+            "homepage": "http://alanpich.github.io/slender",
+            "keywords": [
+                "assets",
+                "expose",
+                "slender-module"
+            ],
+            "time": "2014-03-08 18:54:37"
+        },
+        {
+            "name": "slender/base",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alanpich/slender-base.git",
+                "reference": "29fde6d5dbdf193f9b33f409ddef4f64ebbaea7a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alanpich/slender-base/zipball/29fde6d5dbdf193f9b33f409ddef4f64ebbaea7a",
+                "reference": "29fde6d5dbdf193f9b33f409ddef4f64ebbaea7a",
+                "shasum": ""
+            },
+            "require": {
+                "slender/asset-exposer": "0.1.0",
+                "slender/route-manager": "0.0.1",
+                "slender/service-manager": "0.0.1",
+                "slender/twig": "0.1.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Slender\\Base\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alan Pich",
+                    "email": "alan.pich@gmail.com"
+                }
+            ],
+            "description": "Bundle of Slender modules to set up an app",
+            "homepage": "http://alanpich.github.io/slender",
+            "keywords": [
+                "assets",
+                "expose",
+                "slender-module"
+            ],
+            "time": "2014-03-08 22:18:46"
+        },
+        {
             "name": "slender/route-manager",
             "version": "0.0.1",
             "source": {
@@ -262,6 +349,48 @@
                 "slender-module"
             ],
             "time": "2014-03-08 17:48:08"
+        },
+        {
+            "name": "slender/twig",
+            "version": "0.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alanpich/slender-twig.git",
+                "reference": "5117a72f1b42f332351a42f662ecc1ce4ceacee7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alanpich/slender-twig/zipball/5117a72f1b42f332351a42f662ecc1ce4ceacee7",
+                "reference": "5117a72f1b42f332351a42f662ecc1ce4ceacee7",
+                "shasum": ""
+            },
+            "require": {
+                "twig/twig": "v1.15.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Slender\\Module\\Twig\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alan Pich",
+                    "email": "alan.pich@gmail.com"
+                }
+            ],
+            "description": "Integrate twig templating with Slender",
+            "homepage": "http://alanpich.github.io/slender",
+            "keywords": [
+                "slender-module",
+                "template",
+                "twig"
+            ],
+            "time": "2014-03-08 21:35:49"
         },
         {
             "name": "slim/slim",
@@ -1977,6 +2106,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "slim/slim": 20,
+        "slender/base": 20,
         "alebear/versioncontrol_git": 20,
         "squizlabs/php_codesniffer": 20,
         "satooshi/php-coveralls": 20

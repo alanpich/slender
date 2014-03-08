@@ -3,7 +3,6 @@ chdir(dirname(__DIR__));
 require dirname(dirname(__DIR__)).'/vendor/autoload.php';
 
 
-
 function dump($mxd)
 {
     echo "<pre>Debug:\n";
@@ -24,4 +23,3 @@ $app = new Slender\App();
 
 $app->run();
 
-?>

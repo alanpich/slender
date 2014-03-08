@@ -9,7 +9,7 @@ modules:
   - docs
 
 modulePaths:
-  - ./core/module
+  - ./module
 
 routes:
   home:
