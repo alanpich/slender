@@ -18,8 +18,7 @@
         "symfony/finder": "*",
         "symfony/yaml": "*",
         "symfony/class-loader": "2.4.2",
-        "doctrine/annotations": "*",
-        "slender/base": "dev-master "
+        "doctrine/annotations": "*"
     },
     "autoload": {
         "psr-4": {
