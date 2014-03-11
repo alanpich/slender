@@ -103,7 +103,7 @@ class DependencyInjector
                     $name = $prop->getName();
                     $injects[$name] = array(
                         'identifier' => $identifier,
-                        'useSetter' => !$prop->isPublic()
+                        'useSetter' => !$prop->isPublic(),
                     );
                 }
             }
@@ -119,6 +119,7 @@ class DependencyInjector
      *
      * @param object $instance Class instance to prepare
      * @throws \RuntimeException
+     * @throws \InvalidArgumentException
      */
     public function prepare(&$instance)
     {
@@ -132,9 +133,16 @@ class DependencyInjector
                 $method = Util::setterMethodName($property);
 
                 if (!method_exists($instance, $method)) {
-                    throw new \RuntimeException("Dependency Injection requires method " . get_class(
-                            $instance
-                        ) . "::$method to exist");
+//                    throw new \RuntimeException("Dependency Injection requires method " . get_class(
+//                            $instance
+//                        ) . "::$method to exist");
+
+                    // Last ditch effort - force the sucker in via Reflection
+                    $refl = new \ReflectionClass($instance);
+                    $prop = $refl->getProperty($property);
+                    $prop->setAccessible(true);
+                    $prop->setValue($instance,$this->container[$dependency]);
+                    $prop->setAccessible(false);
                 }
                 if (!isset($this->container[$dependency])) {
                     throw new \InvalidArgumentException("Unable to resolve dependency $dependency for injection");
