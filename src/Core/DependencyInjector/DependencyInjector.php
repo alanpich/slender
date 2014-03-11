@@ -65,7 +65,7 @@ class DependencyInjector
     {
         $instance = new $class;
 
-        if($instance instanceof FactoryInterface){
+        if ($instance instanceof FactoryInterface) {
             $instance = $instance->create($this->container);
         }
 
@@ -94,17 +94,28 @@ class DependencyInjector
                     'Slender\Core\DependencyInjector\Annotation\Inject'
                 );
                 if ($inject) {
+
                     // Get the DI identifier
                     $identifier = $inject->getIdentifier();
                     if (!$identifier) {
                         $identifier = Util::hyphenCase($prop->getName());
                     }
-                    // Get the setter method to call
-                    $name = $prop->getName();
-                    $injects[$name] = array(
+
+                    $data = array(
                         'identifier' => $identifier,
-                        'useSetter' => !$prop->isPublic(),
+                        'isPublic' => $prop->isPublic(),
+                        'setter' => false
                     );
+
+                    // Is there a setter method (cos its still faster andrew...)
+                    if (!$prop->isPublic()) {
+                        $setter = Util::setterMethodName($prop->getName());
+                        if (method_exists($className, $setter)) {
+                            $data['hasSetter'] = $setter;
+                        };
+                    };
+
+                    $injects[$prop->getName()] = $data;
                 }
             }
             $this->classCache[$className] = $injects;
@@ -125,34 +136,30 @@ class DependencyInjector
     {
         $requirements = $this->getDiRequirements(get_class($instance));
 
-        foreach ($requirements as $property => $service) {
+        foreach ($requirements as $propertyName => $property) {
 
-            $dependency = $service['identifier'];
-            if ($service['useSetter']) {
-                // Private or Protected property - use the setter method
-                $method = Util::setterMethodName($property);
+            $dependencyIdentifier = $property['identifier'];
+            $dependency = $this->container[$dependencyIdentifier];
 
-                if (!method_exists($instance, $method)) {
-//                    throw new \RuntimeException("Dependency Injection requires method " . get_class(
-//                            $instance
-//                        ) . "::$method to exist");
+            if (!isset($this->container[$dependencyIdentifier])) {
+                throw new \InvalidArgumentException("Unable to resolve dependency $dependencyIdentifier for injection");
+            }
 
-                    // Last ditch effort - force the sucker in via Reflection
+            if ($property['isPublic']) {
+                // If its public, just set it!
+                $instance->$propertyName = $dependency;
+            } else {
+                if ($property['setter']) {
+                    // If there is a setter method, use that
+                    call_user_func($instance, $property['setter'], $dependency);
+                } else {
+                    // Otherwise set by brute force
                     $refl = new \ReflectionClass($instance);
-                    $prop = $refl->getProperty($property);
+                    $prop = $refl->getProperty($propertyName);
                     $prop->setAccessible(true);
-                    $prop->setValue($instance,$this->container[$dependency]);
+                    $prop->setValue($instance, $this->container[$dependencyIdentifier]);
                     $prop->setAccessible(false);
                 }
-                if (!isset($this->container[$dependency])) {
-                    throw new \InvalidArgumentException("Unable to resolve dependency $dependency for injection");
-                }
-
-                $dep = $this->container[$dependency];
-                call_user_func([$instance, $method], $dep);
-
-            } else {
-                $instance->$property = $this->container[$dependency];
             }
 
         }
